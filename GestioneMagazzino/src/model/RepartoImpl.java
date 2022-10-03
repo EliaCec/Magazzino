@@ -1,21 +1,23 @@
 package model;
 
 public class RepartoImpl implements Reparto {
-	private final int id;			// codice univoco del reparto
-	private final String nome;  	// nome del reparto
-	private int quantita; 			// numero scorte presenti nel reparto
-	private final int capacita;		// capacità del magazzino
+	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
+	private final int numeroReparto;			 // codice univoco del reparto
+	private final String nome;  				 // nome del reparto
+	private int quantita; 						 // numero scorte presenti nel reparto
+	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore
-	public RepartoImpl(int c, Giacenza g) {
-		this.id 	  = 100 + g.getId(); // l'id del reparto è uguale all'id della giacenza che viene stoccata aumentata di 100
-		this.nome 	  = "reparto_" + g.getNome();
-		this.quantita = 0;
-		this.capacita = c;
+	public RepartoImpl(int c, String name) {
+		this.numeroReparto 	  = RepartoImpl.NUOVO_NUMERO_REPARTO;
+		this.nome 	  		  = "reparto_" + name;
+		this.quantita 		  = 0;
+		this.capacita 		  = c;
+		RepartoImpl.NUOVO_NUMERO_REPARTO++;
 	}
 
 	public int getId() {
-		return this.id;
+		return this.numeroReparto;
 	}
 
 	public String getNome() {
