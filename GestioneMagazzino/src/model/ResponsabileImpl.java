@@ -1,40 +1,70 @@
 package model;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResponsabileImpl implements Responsabile{
+	
+	private final String nomeCognome;                   // nome e cognome del responsabile
+	private final int id;                               // ID del responsabile
+	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
+	List<Deposita> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
+	
+	// costruttore 
+	public ResponsabileImpl(String n, int i) {
+		this.nomeCognome            = n;
+		this.id                     = i;
+		this.prodottiVenduti        = new LinkedList<>();
+		this.semilavoratiDepositati = new LinkedList<>();
+	}
 
 	public String getNomeCognome() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.nomeCognome;
 	}
 
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
-	public LinkedList<ProdottoFinito> getProdottiVenduti() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProdottoFinito> getProdottiVenduti() {
+		return this.prodottiVenduti.stream()
+				                   .map(v -> v.getProdottoFinito())
+				                   .collect(Collectors.toList());
 	}
 
-	public LinkedList<Semilavorato> getSemilavoratiDepositati() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Semilavorato> getSemilavoratiDepositati() {
+		return this.semilavoratiDepositati.stream()
+				                          .map(d -> d.getSemilavorato())
+				                          .collect(Collectors.toList());
 	}
 
-	public boolean vendiProdottiFiniti(HashMap<ProdottoFinito, Integer> prodottofinito, Responsabile responsabile,
-			int giorno) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
+		if(reparto.getQuantita() >= n) {
+			for(int i = 0; i < n; i++) {
+				ProdottoFinito pf = reparto.prelevaScorte();
+				this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
+			}		
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
-	public boolean depositaSemilavorati(HashMap<Semilavorato, Integer> semilavorato, Responsabile responsabile,
-			int giorno) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean depositaSemilavorati(Reparto reparto, int n, Responsabile responsabile, Date data) {	
+		if(reparto.getQuantita() >= n) {
+			for(int i = 0; i < n; i++) {
+				Semilavorato s = reparto.depositaScorte();
+				this.semilavoratiDepositati.add(new DepositaImpl(s, responsabile, data));
+		    }
+			return true;
+		
+		}else{
+			return false;
+		}
+		
 	}
 
 }
