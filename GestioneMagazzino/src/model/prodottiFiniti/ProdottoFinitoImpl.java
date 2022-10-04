@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import model.GiacenzaImpl;
 import model.ProdottoFinito;
-import model.Semilavorato;
 
 public abstract class ProdottoFinitoImpl extends GiacenzaImpl implements ProdottoFinito {
 
