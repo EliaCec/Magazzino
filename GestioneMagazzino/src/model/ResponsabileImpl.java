@@ -1,39 +1,59 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResponsabileImpl implements Responsabile{
+	
+	private final String nomeCognome;
+	private final int id;
+	List<Vendita> prodottiVenduti;
+	List<Deposita> semilavoratiDepositati;
+	
+	public ResponsabileImpl(String n, int i) {
+		this.nomeCognome = n;
+		this.id = i;
+		this.prodottiVenduti = new LinkedList<>();
+		this.semilavoratiDepositati = new LinkedList<>();
+	}
 
 	public String getNomeCognome() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.nomeCognome;
 	}
 
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
-	public LinkedList<ProdottoFinito> getProdottiVenduti() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProdottoFinito> getProdottiVenduti() {
+		return this.prodottiVenduti.stream()
+				                   .map(v -> v.getProdottoFinito())
+				                   .collect(Collectors.toList());
 	}
 
-	public LinkedList<Semilavorato> getSemilavoratiDepositati() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Semilavorato> getSemilavoratiDepositati() {
+		return this.semilavoratiDepositati.stream()
+				                          .map(d -> d.getSemilavorato())
+				                          .collect(Collectors.toList());
 	}
 
-	public boolean vendiProdottiFiniti(HashMap<ProdottoFinito, Integer> prodottofinito, Responsabile responsabile,
-			int giorno) {
-		// TODO Auto-generated method stub
+	public boolean vendiProdottiFiniti(String prodottoFinito, int n, Responsabile responsabile, Date data) {
+		for(int i = 0; i < n; i++) {
+			ProdottoFinito pf = prelevaScorta(prodottoFinito);
+			this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
+		}
 		return false;
 	}
 
-	public boolean depositaSemilavorati(HashMap<Semilavorato, Integer> semilavorato, Responsabile responsabile,
-			int giorno) {
-		// TODO Auto-generated method stub
+	public boolean depositaSemilavorati(Semilavorato semilavorato, int n, Responsabile responsabile, Date data) {	
+		for(int i = 0; i < n; i++) {
+			Semilavorato s = aggiungiScorta(semilavorato);
+			this.semilavoratiDepositati.add(new DepositaImpl(semilavorato, responsabile, data));
+		}
 		return false;
 	}
 
