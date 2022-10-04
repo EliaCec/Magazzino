@@ -1,23 +1,22 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResponsabileImpl implements Responsabile{
 	
-	private final String nomeCognome;
-	private final int id;
-	List<Vendita> prodottiVenduti;
-	List<Deposita> semilavoratiDepositati;
+	private final String nomeCognome;                   // nome e cognome del responsabile
+	private final int id;                               // ID del responsabile
+	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
+	List<Deposita> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
 	
+	// costruttore 
 	public ResponsabileImpl(String n, int i) {
-		this.nomeCognome = n;
-		this.id = i;
-		this.prodottiVenduti = new LinkedList<>();
+		this.nomeCognome            = n;
+		this.id                     = i;
+		this.prodottiVenduti        = new LinkedList<>();
 		this.semilavoratiDepositati = new LinkedList<>();
 	}
 
@@ -41,20 +40,31 @@ public class ResponsabileImpl implements Responsabile{
 				                          .collect(Collectors.toList());
 	}
 
-	public boolean vendiProdottiFiniti(String prodottoFinito, int n, Responsabile responsabile, Date data) {
-		for(int i = 0; i < n; i++) {
-			ProdottoFinito pf = prelevaScorta(prodottoFinito);
-			this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
+	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
+		if(reparto.getQuantita() >= n) {
+			for(int i = 0; i < n; i++) {
+				ProdottoFinito pf = reparto.prelevaScorte();
+				this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
+			}		
+			return true;
+		}else{
+			return false;
 		}
-		return false;
+		
 	}
 
-	public boolean depositaSemilavorati(Semilavorato semilavorato, int n, Responsabile responsabile, Date data) {	
-		for(int i = 0; i < n; i++) {
-			Semilavorato s = aggiungiScorta(semilavorato);
-			this.semilavoratiDepositati.add(new DepositaImpl(semilavorato, responsabile, data));
+	public boolean depositaSemilavorati(Reparto reparto, int n, Responsabile responsabile, Date data) {	
+		if(reparto.getQuantita() >= n) {
+			for(int i = 0; i < n; i++) {
+				Semilavorato s = reparto.depositaScorte();
+				this.semilavoratiDepositati.add(new DepositaImpl(s, responsabile, data));
+		    }
+			return true;
+		
+		}else{
+			return false;
 		}
-		return false;
+		
 	}
 
 }

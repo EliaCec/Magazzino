@@ -20,19 +20,19 @@ public interface Responsabile {
 	public List<Semilavorato> getSemilavoratiDepositati();
 	
 	/* Metodo usato per la vendita dei prodotti finiti da parte del responsabile.
-	 * Prende in input i prodotti finiti da vendere , il numero , il responsabile che le ha vendute
+	 * Prende in input il reparto dei prodotti finiti da vendere , il numero , il responsabile che le ha vendute
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
-	public boolean vendiProdottiFiniti(ProdottoFinito prodottoFinito, 
+	public boolean vendiProdottiFiniti(Reparto reparto, 
 									   int n,
 			                           Responsabile responsabile, 
 			                           Date data);
 	
 	/* Metodo usato per il deposito dei semilavorati da parte del responsabile.
-	 * Prende in input la mappa dei semilavorati depositati, il responsabile che le ha vendute
+	 * Prende in input il reparto in cui verranno depositati i semilavorati,il numero di semilavorati, il responsabile che le ha vendute
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
-	public boolean depositaSemilavorati(Semilavorato semilavorato,
+	public boolean depositaSemilavorati(Reparto reparto,
 										int n,
 			                            Responsabile responsabile,
 			                            Date data);
