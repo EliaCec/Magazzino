@@ -17,13 +17,14 @@ public class MagazzinoImpl implements Magazzino {
 	private List<Reparto> reparti;							// reparti che compongono il magazzino
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
+	// costruttore
 	public MagazzinoImpl(LinkedList<Responsabile> responsabiliAssunti, LinkedList<Operaio> operaiAssunti) {
-		this.responsabili = responsabiliAssunti;
-		this.operai = operaiAssunti;
+		this.responsabili 		= responsabiliAssunti;
+		this.operai 			= operaiAssunti;
 		this.responsabiliAttivi = new LinkedList<>();
-		this.operaiAttivi = new LinkedList<>();
-		this.reparti = new LinkedList();
-		this.turnoCorrente = null;
+		this.operaiAttivi 		= new LinkedList<>();
+		this.reparti 			= new LinkedList();
+		this.turnoCorrente		= new Date();
 	}
 
 	public int getNumeroReparti() {
@@ -31,27 +32,23 @@ public class MagazzinoImpl implements Magazzino {
 	}
 	
 	public List<Vendita> storicoVenditeGiornaliero(Date giorno) {
-		return this.vendite.stream()
-						   .filter(v -> v.getData().getDay() == giorno.getDay())
-						   .collect(Collectors.toList());
+
 	}
 	
 	public List<ProdottoFinito> storicoCostruzioniGiornaliero(Date giorno) {
-		return this.costruzioni.stream()
-							   .filter(c -> c.getData().getDay() == giorno.getDay())
-							   .collect(Collectors.toList());
+		
 	}
 
 	public List<Semilavorato> storicoSemilavoratiUsatiGiornaliero(Date giorno) {
-		return new LinkedList<Semilavorato>(this.semilavoratiUsati);
+		
 	}
 
 	public List<Responsabile> getResponsabiliAttivi() {
-		return new LinkedList<>(this.responsabiliAttivi);;
+		
 	}
 
 	public List<Operaio> getOperaiAttivi() {
-		return new LinkedList<>(this.operaiAttivi);
+		
 	}
 
 	public boolean cambioTurno(LinkedList<Operaio> operai, LinkedList<Responsabile> responsabili, Date nuovoTurno) {

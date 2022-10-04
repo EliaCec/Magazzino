@@ -52,14 +52,11 @@ public class RepartoImpl implements Reparto {
 		return false;
 	}
 
-	public boolean prelevaScorte(int n) {
-		// il prelievo avviene solamente se nel reparto sono presenti almeno n scorte
-		if (n <= this.scorte.size()) {
-			for (int i = 0; i < n; i++)
-				this.scorte.remove(0);
-			return true;
-		}
-		return false;
+	public Giacenza prelevaScorte() {
+		// il prelievo avviene solamente se nel reparto è presente la scorta
+		if (this.isPresente())
+			return this.scorte.remove(0);
+		return null; //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
 	}
 	
 }
