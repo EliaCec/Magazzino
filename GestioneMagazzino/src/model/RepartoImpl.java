@@ -1,17 +1,20 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class RepartoImpl implements Reparto {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
 	private final int numeroReparto;			 // codice univoco del reparto
 	private final String nome;  				 // nome del reparto
-	private int quantita; 						 // numero scorte presenti nel reparto
+	private List<Giacenza> scorte; 				 // scorte presenti nel reparto
 	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore
 	public RepartoImpl(int c, String name) {
 		this.numeroReparto 	  = RepartoImpl.NUOVO_NUMERO_REPARTO;
 		this.nome 	  		  = "reparto_" + name;
-		this.quantita 		  = 0;
+		this.scorte 		  = new LinkedList<>();
 		this.capacita 		  = c;
 		RepartoImpl.NUOVO_NUMERO_REPARTO++;
 	}
@@ -25,7 +28,7 @@ public class RepartoImpl implements Reparto {
 	}
 
 	public int getQuantita() {
-		return this.quantita;
+		return this.scorte.size();
 	}
 
 	public int getCapacita() {
@@ -33,17 +36,17 @@ public class RepartoImpl implements Reparto {
 	}
 
 	public boolean isPresente() {
-		return this.quantita > 0;
+		return this.scorte.size() > 0;
 	}
 
 	public boolean isPieno() {
-		return this.quantita == this.capacita;
+		return this.scorte.size() == this.capacita;
 	}
 
-	public boolean depositaScorte(int n) {
+	public boolean depositaScorte(Giacenza g) {
 		// il deposito avviene solamente se il reparto non è pieno
 		if (!this.isPieno()) {
-			this.quantita++;
+			this.scorte.add(g);
 			return true;
 		}
 		return false;
@@ -51,8 +54,9 @@ public class RepartoImpl implements Reparto {
 
 	public boolean prelevaScorte(int n) {
 		// il prelievo avviene solamente se nel reparto sono presenti almeno n scorte
-		if (n <= this.quantita) {
-			this.quantita -= n;
+		if (n <= this.scorte.size()) {
+			for (int i = 0; i < n; i++)
+				this.scorte.remove(0);
 			return true;
 		}
 		return false;
