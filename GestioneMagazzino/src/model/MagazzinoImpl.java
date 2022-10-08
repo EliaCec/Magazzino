@@ -32,7 +32,7 @@ public class MagazzinoImpl implements Magazzino {
 	}
 	
 	public List<Vendita> storicoVenditeGiornaliero(Date giorno) {
-
+		
 	}
 	
 	public List<ProdottoFinito> storicoCostruzioniGiornaliero(Date giorno) {

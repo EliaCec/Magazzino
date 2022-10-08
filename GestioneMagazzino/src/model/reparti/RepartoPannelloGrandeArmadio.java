@@ -6,7 +6,7 @@ public class RepartoPannelloGrandeArmadio extends RepartoImpl {
 	
 	// costruttore
 	public RepartoPannelloGrandeArmadio() {
-		super(200, "pannello_grande_armadio");
+		super(200, NomiReparti.REPARTO_PANNELLO_GRANDE_ARMADIO);
 	}
 
 }

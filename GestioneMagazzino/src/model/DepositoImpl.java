@@ -2,14 +2,14 @@ package model;
 
 import java.util.Date;
 
-public class DepositaImpl implements Deposita{
+public class DepositoImpl implements Deposito{
 	
 	private final Semilavorato semilavorato;       // semilavorato da depositare
 	private final Responsabile responsabile;       // responsabile che lo deposita
 	private final Date data;                       // momento in cui lo deposita
 	
 	// costruttore
-	public DepositaImpl(Semilavorato s, Responsabile r, Date d) {
+	public DepositoImpl(Semilavorato s, Responsabile r, Date d) {
 		this.semilavorato = s;
 		this.responsabile = r;
 		this.data 		  = d;

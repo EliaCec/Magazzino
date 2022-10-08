@@ -6,7 +6,7 @@ public class RepartoGambaSedia extends RepartoImpl {
 	
 	// costruttore
 	public RepartoGambaSedia() {
-		super(350,  "gamba_sedia");
+		super(350,  NomiReparti.REPARTO_GAMBA_SEDIA);
 	}
 	
 }

@@ -6,7 +6,7 @@ public class RepartoScrivania extends RepartoImpl {
 	
 	// costruttore
 	public RepartoScrivania() {
-		super(200, "scrivania");
+		super(200, NomiReparti.REPARTO_SCRIVANIA);
 	}
 		
 }
