@@ -32,5 +32,5 @@ public interface Magazzino {
 	 * Restituisce true se il cambio di turno è avvenuto con successo, false altrimenti */
 	public boolean cambioTurno(LinkedList<Operaio> operai, 
 							   LinkedList<Responsabile> responsabili,
-							   Date giorno);
+							   Date nuovoTurno);
 }

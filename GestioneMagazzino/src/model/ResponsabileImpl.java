@@ -10,7 +10,7 @@ public class ResponsabileImpl implements Responsabile{
 	private final String nomeCognome;                   // nome e cognome del responsabile
 	private final int id;                               // ID del responsabile
 	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
-	List<Deposita> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
+	List<Deposito> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
 	
 	// costruttore 
 	public ResponsabileImpl(String n, int i) {
@@ -43,7 +43,7 @@ public class ResponsabileImpl implements Responsabile{
 	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
 		if(reparto.getQuantita() >= n) {
 			for(int i = 0; i < n; i++) {
-				ProdottoFinito pf = reparto.prelevaScorte();
+				ProdottoFinito pf = (ProdottoFinito)reparto.prelevaScorte();
 				this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
 			}		
 			return true;
@@ -56,8 +56,8 @@ public class ResponsabileImpl implements Responsabile{
 	public boolean depositaSemilavorati(Reparto reparto, int n, Responsabile responsabile, Date data) {	
 		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
-				Semilavorato s = reparto.depositaScorte();
-				this.semilavoratiDepositati.add(new DepositaImpl(s, responsabile, data));
+				Semilavorato s = (Semilavorato)reparto.depositaScorte();
+				this.semilavoratiDepositati.add(new DepositoImpl(s, responsabile, data));
 		    }
 			return true;
 		
@@ -66,5 +66,4 @@ public class ResponsabileImpl implements Responsabile{
 		}
 		
 	}
-
 }

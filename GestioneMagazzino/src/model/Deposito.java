@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 
-public interface Deposita {
+public interface Deposito {
 	
 	/* Metodo che restituisce il semilavorato depositato */
 	public Semilavorato getSemilavorato();
