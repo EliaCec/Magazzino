@@ -10,14 +10,15 @@ public class OperaioImpl implements Operaio {
 	
 	private final String nome_cognome;
 	private final int id;
-	private List<Semilavorato> semilavoratiUsati;
 	private List<Costruzione> costruzioni;
+	private List<Prelievo> prelievi;
 	
 	// costruttore
 	public OperaioImpl(String n, int id) {
 		this.nome_cognome 		= n;
 		this.id 				= id;
-		this.semilavoratiUsati	= new LinkedList<>();
+		this.costruzioni		= new LinkedList<>();
+		this.prelievi			= new LinkedList<>();
 	}
 
 	public String getNomeCognome() {
@@ -35,17 +36,17 @@ public class OperaioImpl implements Operaio {
 	}
 
 	public List<Semilavorato> getSemilavoratiPrelevati() {
-		return this.costruzioni.stream()
-				   .map(m -> m.getProdotto())
-				   .collect(Collectors.toList()).stream()
-				   								.map(m -> m.getComponenti())
-				   								.;
+		return this.prelievi.stream()
+							.map(m -> m.getSemilavorato())
+							.collect(Collectors.toList());
 	}
 
-	public boolean costruisciProdottiFiniti(ProdottoFinito pf, Operaio operaio, Date giorno) {
-		HashMap<String, Integer> componenti = new HashMap<>(pf.getComponenti());
-		this.
-		return false;
+	public boolean costruisciProdottiFiniti(Reparto rep, Operaio operaio, Date giorno) {
+		if(!rep.isPieno()){
+			
+			return true;
+		}else
+			return false;
 	}
 
 	public int costruzioniPerProdottoFinito(ProdottoFinito pf) {
@@ -57,12 +58,28 @@ public class OperaioImpl implements Operaio {
 	}
 
 	public int prelievoPerSemilavorato(Semilavorato sl) {
-		return 
+		return this.prelievi.stream()
+							.map(m -> m.getSemilavorato())
+							.filter(m -> m.getNome().equals(sl.getNome()))
+							.collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int calcoloProdottiFinitiCostruibili(ProdottoFinito pf) {
-		// TODO Auto-generated method stub
+	public int calcoloProdottiFinitiCostruibili(Reparto rep) {
+		
 		return 0;
+	}
+	
+	private List<String> componentiSemi(Reparto rep) {
+		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
+		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
+		List<Integer> listaQuantit‡Componenti = new LinkedList<>(componenti.values());
+		List<String> totSemi = new LinkedList<>();
+		for (int j = 0; j < listaQuantit‡Componenti.size(); j++) {
+			for (int i = 0; i < listaQuantit‡Componenti.get(j); i++) {
+				totSemi.add(listaComponenti.get(j));
+			}
+		}			
+		return totSemi;
 	}
 
 }

@@ -29,4 +29,6 @@ public interface Reparto {
 	/* Metodo usato per prelevare una scorta dal reparto corrente.
 	 * Restituisce true nel caso in cui il prelievo avvenga con successo, false altrimenti */
 	public Giacenza prelevaScorte();
+	
+	public Giacenza getGiacenzaReparto();
 }

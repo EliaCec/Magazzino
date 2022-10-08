@@ -1,7 +1,5 @@
 package model.reparti;
 
-import java.util.List;
-
 public enum NomiReparti {
 	// reparti armadio
 	REPARTO_ARMADIO("reparto_armadio"),
