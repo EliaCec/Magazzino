@@ -54,7 +54,7 @@ public class ResponsabileImpl implements Responsabile{
 	}
 
 	public boolean depositaSemilavorati(Reparto reparto, int n, Responsabile responsabile, Date data) {	
-		if(reparto.getQuantita() >= n) {
+		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
 				Semilavorato s = reparto.depositaScorte();
 				this.semilavoratiDepositati.add(new DepositaImpl(s, responsabile, data));
