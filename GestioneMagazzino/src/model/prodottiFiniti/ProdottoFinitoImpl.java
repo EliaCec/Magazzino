@@ -1,5 +1,4 @@
 package model.prodottiFiniti;
-
 import java.util.HashMap;
 
 import model.GiacenzaImpl;

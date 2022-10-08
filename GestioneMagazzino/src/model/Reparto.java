@@ -24,9 +24,9 @@ public interface Reparto {
 	
 	/* Metodo usato per depositare un numero n di scorte dal reparto corrente.
 	 * Restituisce true nel caso in cui il deposito avvenga con successo, false altrimenti */
-	public boolean depositaScorte(int n);
+	public Giacenza depositaScorte();
 	
-	/* Metodo usato per prelevare un numero n di scorte dal reparto corrente.
+	/* Metodo usato per prelevare una scorta dal reparto corrente.
 	 * Restituisce true nel caso in cui il prelievo avvenga con successo, false altrimenti */
-	public boolean prelevaScorte(int n);
+	public Giacenza prelevaScorte();
 }
