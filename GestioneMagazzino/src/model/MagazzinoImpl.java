@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MagazzinoImpl implements Magazzino {
-	private static final int DURATA_TURNO = 5;				// durata in ore di ogni turno
-	private static final int INIZIO_GIORNATA = 8;			// ora di apertuare del magazzino (e quindi del primo turno della giornata)
-	private static final int FINE_GIORNATA = 18;			// ora di chiusura del magazzino (e quindi fine lavoro per tutti i lavoratori)
-	
 	private List<Responsabile> responsabili;				// responsabili totali
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
