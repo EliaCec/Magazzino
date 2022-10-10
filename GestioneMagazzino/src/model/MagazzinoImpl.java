@@ -18,12 +18,12 @@ public class MagazzinoImpl implements Magazzino {
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
-	public MagazzinoImpl(LinkedList<Responsabile> responsabiliAssunti, LinkedList<Operaio> operaiAssunti) {
+	public MagazzinoImpl(List<Responsabile> responsabiliAssunti, List<Operaio> operaiAssunti, List<Reparto> reparti) {
 		this.responsabili 		= responsabiliAssunti;
 		this.operai 			= operaiAssunti;
 		this.responsabiliAttivi = new LinkedList<>();
 		this.operaiAttivi 		= new LinkedList<>();
-		this.reparti 			= new LinkedList();
+		this.reparti 			= reparti;
 		this.turnoCorrente		= new Date();
 	}
 
@@ -32,37 +32,49 @@ public class MagazzinoImpl implements Magazzino {
 	}
 	
 	public List<Vendita> storicoVenditeGiornaliero(Date giorno) {
-		
+		return this.responsabili.stream()
+								.map(r -> r.getProdottiVenduti().stream()
+																.filter(v -> v.getData().equals(giorno))
+																.findAny().get())
+								.collect(Collectors.toList());			 
 	}
 	
-	public List<ProdottoFinito> storicoCostruzioniGiornaliero(Date giorno) {
-		
+	public List<Costruzione> storicoCostruzioniGiornaliero(Date giorno) {
+		return this.operai.stream()
+						  .map(o -> o.getProdottiCostruiti().stream()
+								  							.filter(c -> c.getData().equals(giorno)))
+						  									.findAny().get())
+						  .collect(Collectors.toList());			 
 	}
 
-	public List<Semilavorato> storicoSemilavoratiUsatiGiornaliero(Date giorno) {
-		
+	public List<Prelievo> storicoSemilavoratiUsatiGiornaliero(Date giorno) {
+		return this.operai.stream()
+				  		  .map(o -> o.getSemilavoratiPrelevati().stream()
+						  										.filter(p -> p.getData().equals(giorno)))
+				  												.findAny().get())
+				  		  .collect(Collectors.toList());
 	}
 
 	public List<Responsabile> getResponsabiliAttivi() {
-		
+		return new LinkedList<>(this.responsabiliAttivi);
 	}
 
 	public List<Operaio> getOperaiAttivi() {
-		
+		return new LinkedList<>(this.operaiAttivi);
 	}
 
-	public boolean cambioTurno(LinkedList<Operaio> operai, LinkedList<Responsabile> responsabili, Date nuovoTurno) {
-		if (giorno.getYear() >= this.turnoCorrente.getYear() &&
-			giorno.getMonth() >= this.turnoCorrente.getMonth() &&
-			giorno.getDay() >= this.turnoCorrente.getDay() &&
-			giorno.getHours() > this.turnoCorrente.getHours()) {
+	public boolean cambioTurno(List<Operaio> operai, List<Responsabile> responsabili, Date nuovoTurno) {
+		if (nuovoTurno.after(this.turnoCorrente)) {
 			this.operaiAttivi = operai;
 			this.responsabiliAttivi = responsabili;
 			this.turnoCorrente = nuovoTurno;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
+	}
+
+	public void creaReparto(Reparto reparto) {
+		this.reparti.add(reparto);
 	}
 	
 }

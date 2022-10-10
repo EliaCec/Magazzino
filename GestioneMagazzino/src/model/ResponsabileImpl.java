@@ -3,7 +3,6 @@ package model;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ResponsabileImpl implements Responsabile{
 	
@@ -28,16 +27,12 @@ public class ResponsabileImpl implements Responsabile{
 		return this.id;
 	}
 
-	public List<ProdottoFinito> getProdottiVenduti() {
-		return this.prodottiVenduti.stream()
-				                   .map(v -> v.getProdottoFinito())
-				                   .collect(Collectors.toList());
+	public List<Vendita> getProdottiVenduti() {
+		return new LinkedList<>(this.prodottiVenduti);
 	}
 
-	public List<Semilavorato> getSemilavoratiDepositati() {
-		return this.semilavoratiDepositati.stream()
-				                          .map(d -> d.getSemilavorato())
-				                          .collect(Collectors.toList());
+	public List<Deposito> getSemilavoratiDepositati() {
+		return new LinkedList<>(this.semilavoratiDepositati);
 	}
 
 	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
@@ -66,4 +61,18 @@ public class ResponsabileImpl implements Responsabile{
 		}
 		
 	}
+	
+	public int venditaPerTipologia(String pf) {
+		return this.prodottiVenduti.stream()
+				                   .filter(p -> p.getProdottoFinito().getNome().equals(pf))
+				                   .collect(Collectors.summingInt(p -> 1));
+	}
+	
+	public int depositoPerSemilavorato(String sl) {
+		return this.semilavoratiDepositati.stream()
+				                          .filter(d -> d.getSemilavorato().getNome().equals(sl))
+				                          .collect(Collectors.summingInt(d -> 1));
+				              
+	}
+
 }

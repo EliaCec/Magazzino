@@ -12,11 +12,11 @@ public interface Responsabile {
 	
 	/* Metodo che serve per estrarre tutti i prodotti finiti venduti dal responsabile.
 	 * Restituisce la relativa lista di prodotti finiti */
-	public List<ProdottoFinito> getProdottiVenduti();
+	public List<Vendita> getProdottiVenduti();
 	
 	/* Metodo che serve per estrarre tutti i semilavorati depositati dal responsabile.
 	 * Restituisce la relativa lista dei semilavorati */
-	public List<Semilavorato> getSemilavoratiDepositati();
+	public List<Deposito> getSemilavoratiDepositati();
 	
 	/* Metodo usato per la vendita dei prodotti finiti da parte del responsabile.
 	 * Prende in input il reparto dei prodotti finiti da vendere , il numero , il responsabile che le ha vendute
@@ -35,4 +35,11 @@ public interface Responsabile {
 										int n,
 			                            Responsabile responsabile,
 			                            Date data);
+	
+	/* Metodo che restituisce il numero di prodotti finiti venduti per tipologia */
+    public int venditaPerTipologia(String pf);
+    
+    /* Metodo che restituisce il numero di semilavorati depositati in base al semilavorato
+     * dato in input*/
+    public int depositoPerSemilavorato(String sl);
 }
