@@ -35,4 +35,11 @@ public interface Responsabile {
 										int n,
 			                            Responsabile responsabile,
 			                            Date data);
+	
+	/* Metodo che restituisce il numero di prodotti finiti venduti per tipologia */
+    public int venditaPerTipologia(String pf);
+    
+    /* Metodo che restituisce il numero di semilavorati depositati in base al semilavorato
+     * dato in input*/
+    public int depositoPerSemilavorato(String sl);
 }

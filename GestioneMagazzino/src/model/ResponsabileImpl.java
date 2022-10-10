@@ -62,4 +62,18 @@ public class ResponsabileImpl implements Responsabile{
 		}
 		
 	}
+	
+	public int venditaPerTipologia(String pf) {
+		return this.prodottiVenduti.stream()
+				                   .filter(p -> p.getProdottoFinito().getNome().equals(pf))
+				                   .collect(Collectors.summingInt(p -> 1));
+	}
+	
+	public int depositoPerSemilavorato(String sl) {
+		return this.semilavoratiDepositati.stream()
+				                          .filter(d -> d.getSemilavorato().getNome().equals(sl))
+				                          .collect(Collectors.summingInt(d -> 1));
+				              
+	}
+
 }
