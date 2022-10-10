@@ -3,7 +3,6 @@ package model;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ResponsabileImpl implements Responsabile{
 	
