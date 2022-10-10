@@ -28,16 +28,12 @@ public class ResponsabileImpl implements Responsabile{
 		return this.id;
 	}
 
-	public List<ProdottoFinito> getProdottiVenduti() {
-		return this.prodottiVenduti.stream()
-				                   .map(v -> v.getProdottoFinito())
-				                   .collect(Collectors.toList());
+	public List<Vendita> getProdottiVenduti() {
+		return new LinkedList<>(this.prodottiVenduti);
 	}
 
-	public List<Semilavorato> getSemilavoratiDepositati() {
-		return this.semilavoratiDepositati.stream()
-				                          .map(d -> d.getSemilavorato())
-				                          .collect(Collectors.toList());
+	public List<Deposito> getSemilavoratiDepositati() {
+		return new LinkedList<>(this.semilavoratiDepositati);
 	}
 
 	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
