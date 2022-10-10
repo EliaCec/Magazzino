@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 
 public interface Operaio {
 	
@@ -14,11 +14,11 @@ public interface Operaio {
 	
 	/* Metodo che serve per estrarre tutti i prodotti finiti costruiti.
 	 * Restituisce la relativa lista di prodotti finiti */ 
-	public LinkedList<ProdottoFinito> getProdottiCostruiti();
+	public List<ProdottoFinito> getProdottiCostruiti();
 	
 	/* Metodo che serve per estrarre tutti i semilavorati utilizzati.
 	 * Restituisce la relativa lista di semilavorati */ 
-	public LinkedList<Semilavorato> getSemilavoratiPrelevati();
+	public List<Semilavorato> getSemilavoratiPrelevati();
 	
 	/* Metodo che serve per costruire un prodotto finito (pf).
 	 * Prende in input la mappa dei prodotti finiti da costruire, l'operaio responsabile alla costruzione e la giornata.
