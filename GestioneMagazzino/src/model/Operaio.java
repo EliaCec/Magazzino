@@ -14,11 +14,11 @@ public interface Operaio {
 	
 	/* Metodo che serve per estrarre tutti i prodotti finiti costruiti.
 	 * Restituisce la relativa lista di prodotti finiti */ 
-	public List<ProdottoFinito> getProdottiCostruiti();
+	public List<Costruzione> getProdottiCostruiti();
 	
 	/* Metodo che serve per estrarre tutti i semilavorati utilizzati.
 	 * Restituisce la relativa lista di semilavorati */ 
-	public List<Semilavorato> getSemilavoratiPrelevati();
+	public List<Prelievo> getSemilavoratiPrelevati();
 	
 	/* Metodo che serve per costruire un prodotto finito (pf).
 	 * Prende in input la mappa dei prodotti finiti da costruire, l'operaio responsabile alla costruzione e la giornata.

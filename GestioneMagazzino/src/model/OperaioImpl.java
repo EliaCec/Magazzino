@@ -6,6 +6,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import model.reparti.NomiReparti;
+import model.semilavorati.AntaArmadio;
+import model.semilavorati.BraccioloSedia;
+import model.semilavorati.GambaSedia;
+import model.semilavorati.PannelloGrandeArmadio;
+import model.semilavorati.PannelloPiccoloArmadio;
+import model.semilavorati.PianaleScrivania;
+import model.semilavorati.RipianoMensola;
+import model.semilavorati.SchienaleSedia;
+import model.semilavorati.SedutaSedia;
+import model.semilavorati.StaffaMensola;
+
 public class OperaioImpl implements Operaio {
 	
 	private final String nome_cognome;
@@ -29,16 +41,12 @@ public class OperaioImpl implements Operaio {
 		return this.id;
 	}
 
-	public List<ProdottoFinito> getProdottiCostruiti() {
-		return this.costruzioni.stream()
-							   .map(m -> m.getProdotto())
-							   .collect(Collectors.toList());
+	public List<Costruzione> getProdottiCostruiti() {
+		return new LinkedList<>(this.costruzioni);
 	}
 
-	public List<Semilavorato> getSemilavoratiPrelevati() {
-		return this.prelievi.stream()
-							.map(m -> m.getSemilavorato())
-							.collect(Collectors.toList());
+	public List<Prelievo> getSemilavoratiPrelevati() {
+		return new LinkedList<>(this.prelievi);
 	}
 
 	public boolean costruisciProdottiFiniti(Reparto rep, Operaio operaio, Date giorno) {
@@ -51,16 +59,13 @@ public class OperaioImpl implements Operaio {
 
 	public int costruzioniPerProdottoFinito(ProdottoFinito pf) {
 		return this.costruzioni.stream()
-				   			   .map(m -> m.getProdotto())
-				   			   .collect(Collectors.toList()).stream()
-				   											.filter(m -> m.equals(pf))
-				   											.collect(Collectors.summingInt(m -> 1));
+				   			   .filter(m -> m.getProdotto().getNome().equals(pf.getNome()))
+				   			   .collect(Collectors.summingInt(m -> 1));
 	}
 
 	public int prelievoPerSemilavorato(Semilavorato sl) {
 		return this.prelievi.stream()
-							.map(m -> m.getSemilavorato())
-							.filter(m -> m.getNome().equals(sl.getNome()))
+							.filter(m -> m.getSemilavorato().getNome().equals(sl.getNome()))
 							.collect(Collectors.summingInt(m -> 1));
 	}
 
@@ -81,5 +86,4 @@ public class OperaioImpl implements Operaio {
 		}			
 		return totSemi;
 	}
-
 }
