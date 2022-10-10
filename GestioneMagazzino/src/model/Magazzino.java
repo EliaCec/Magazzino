@@ -33,4 +33,8 @@ public interface Magazzino {
 	public boolean cambioTurno(List<Operaio> operai, 
 							   List<Responsabile> responsabili,
 							   Date nuovoTurno);
+	
+	/* Metodo che serve per aggiungere un nuovo reparto all'interno del magazzino */
+	public void creaReparto(Reparto reparto);
+	
 }

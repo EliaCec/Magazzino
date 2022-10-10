@@ -18,12 +18,12 @@ public class MagazzinoImpl implements Magazzino {
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
-	public MagazzinoImpl(LinkedList<Responsabile> responsabiliAssunti, LinkedList<Operaio> operaiAssunti) {
+	public MagazzinoImpl(List<Responsabile> responsabiliAssunti, List<Operaio> operaiAssunti, List<Reparto> reparti) {
 		this.responsabili 		= responsabiliAssunti;
 		this.operai 			= operaiAssunti;
 		this.responsabiliAttivi = new LinkedList<>();
 		this.operaiAttivi 		= new LinkedList<>();
-		this.reparti 			= new LinkedList<>();
+		this.reparti 			= reparti;
 		this.turnoCorrente		= new Date();
 	}
 
@@ -71,6 +71,10 @@ public class MagazzinoImpl implements Magazzino {
 			return true;
 		}
 		return false;
+	}
+
+	public void creaReparto(Reparto reparto) {
+		this.reparti.add(reparto);
 	}
 	
 }
