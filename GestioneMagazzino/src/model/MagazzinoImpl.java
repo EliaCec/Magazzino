@@ -42,7 +42,7 @@ public class MagazzinoImpl implements Magazzino {
 	public List<Costruzione> storicoCostruzioniGiornaliero(Date giorno) {
 		return this.operai.stream()
 						  .map(o -> o.getProdottiCostruiti().stream()
-								  							.filter(c -> c.getData().equals(giorno)))
+								  							.filter(c -> c.getData().equals(giorno))
 						  									.findAny().get())
 						  .collect(Collectors.toList());			 
 	}
@@ -50,7 +50,7 @@ public class MagazzinoImpl implements Magazzino {
 	public List<Prelievo> storicoSemilavoratiUsatiGiornaliero(Date giorno) {
 		return this.operai.stream()
 				  		  .map(o -> o.getSemilavoratiPrelevati().stream()
-						  										.filter(p -> p.getData().equals(giorno)))
+						  										.filter(p -> p.getData().equals(giorno))
 				  												.findAny().get())
 				  		  .collect(Collectors.toList());
 	}
