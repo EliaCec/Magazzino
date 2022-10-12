@@ -17,7 +17,7 @@ public interface Responsabile extends Dipendente{
 	 * Prende in input il reparto dei prodotti finiti da vendere , il numero , il responsabile che le ha vendute
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
-	public boolean vendiProdottiFiniti(Reparto reparto, 
+	public boolean vendiProdottiFiniti(RepartoSemilavorati reparto, 
 									   int n,
 			                           Responsabile responsabile, 
 			                           Date data);
@@ -26,7 +26,7 @@ public interface Responsabile extends Dipendente{
 	 * Prende in input il reparto in cui verranno depositati i semilavorati,il numero di semilavorati, il responsabile che le ha vendute
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
-	public boolean depositaSemilavorati(Reparto reparto,
+	public boolean depositaSemilavorati(RepartoSemilavorati reparto,
 										int n,
 			                            Responsabile responsabile,
 			                            Date data);

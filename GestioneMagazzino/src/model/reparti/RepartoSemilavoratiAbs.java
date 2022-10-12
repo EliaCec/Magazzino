@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Giacenza;
-import model.Reparto;
+import model.RepartoSemilavorati;
 
-public abstract class RepartoAbs implements Reparto {
+public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
 	private final int numeroReparto;			 // codice univoco del reparto
 	private final NomiReparti nome;  			 // nome del reparto
@@ -14,12 +14,12 @@ public abstract class RepartoAbs implements Reparto {
 	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore
-	public RepartoAbs(int c, NomiReparti name) {
-		this.numeroReparto 	  = RepartoAbs.NUOVO_NUMERO_REPARTO;
+	public RepartoSemilavoratiAbs(int c, NomiReparti name) {
+		this.numeroReparto 	  = RepartoSemilavoratiAbs.NUOVO_NUMERO_REPARTO;
 		this.nome 	  		  = name;
 		this.scorte 		  = new LinkedList<>();
 		this.capacita 		  = c;
-		RepartoAbs.NUOVO_NUMERO_REPARTO++;
+		RepartoSemilavoratiAbs.NUOVO_NUMERO_REPARTO++;
 	}
 
 	public int getId() {

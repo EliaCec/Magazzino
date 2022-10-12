@@ -26,15 +26,12 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		return new LinkedList<>(this.prelievi);
 	}
 
-	public boolean costruisciProdottiFiniti(Reparto rep, int n, Operaio operaio, Date giorno) {
-		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto())
-																				.getComponenti());
-		if(!rep.isPieno()){											// getListaRepartiSemilavorati
+	public boolean costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Operaio operaio, Date giorno) {
+		if(!rep.isPieno()){
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)rep.depositaScorte();
 				this.costruzioni.add(new CostruzioneImpl(operaio, pf, giorno));
-				if(componenti.containsKey(rep.getListaRepartiSemilavorati.));
-				
+				this.prelevaScorte(rep, operaio, giorno);
 		    }
 			return true;
 		}else
@@ -53,21 +50,25 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 							.collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int calcoloProdottiFinitiCostruibili(Reparto rep) {
-		// TODO Auto-generated method stub
+	public int calcoloProdottiFinitiCostruibili(RepartoSemilavorati rep) {
+		
 		return 0;
 	}
 	
-	private List<String> componentiSemi(Reparto rep) {
+	private void prelevaScorte(RepartoProdottiFiniti rep, Operaio op, Date g) {
 		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
 		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
-		List<Integer> listaQuantit‡Componenti = new LinkedList<>(componenti.values());
-		List<String> totSemi = new LinkedList<>();
-		for (int j = 0; j < listaQuantit‡Componenti.size(); j++) {
-			for (int i = 0; i < listaQuantit‡Componenti.get(j); i++) {
-				totSemi.add(listaComponenti.get(j));
+		for (int j = 0; j < rep.getListaRepartiSemilavorati().size(); j++) {
+			for (int k = 0; k < listaComponenti.size(); k++) {
+				if(rep.getListaRepartiSemilavorati().get(j).getGiacenzaReparto()
+														   .getNome()
+														   .equals(listaComponenti.get(k))) {
+					for(int i = 0; i < componenti.get(listaComponenti.get(k)); i++) {
+						Semilavorato semi = (Semilavorato)rep.getListaRepartiSemilavorati().get(j).prelevaScorte();
+						this.prelievi.add(new PrelievoImpl(op, semi, g));
+					}
+				}	
 			}
 		}			
-		return totSemi;
 	}
 }
