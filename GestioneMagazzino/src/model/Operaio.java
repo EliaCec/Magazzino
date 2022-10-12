@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public interface Operaio extends Dipendente {
@@ -18,7 +17,7 @@ public interface Operaio extends Dipendente {
 	 * Prende in input la mappa dei prodotti finiti da costruire, l'operaio responsabile alla costruzione e la giornata.
 	 * Il metodo preleva anche i semilavorati necessari alla costruzione del prodotto finito.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
-	public boolean costruisciProdottiFiniti(HashMap<ProdottoFinito, Integer> pf, Operaio operaio, Date giorno);
+	public boolean costruisciProdottiFiniti(Reparto rep, int n, Operaio operaio, Date giorno);
 	
 	/* Metodo che restituisce il numero totale di prodotti finiti costruiti */
 	public int costruzioniPerProdottoFinito(ProdottoFinito pf);
@@ -28,6 +27,5 @@ public interface Operaio extends Dipendente {
 	
 	/* Metodo che restituisce il numero di prodotti finiti ancora costruibili 
 	 * basandosi sui semilavorati rimanenti in magazzino */
-	public int calcoloProdottiFinitiCostruibili(ProdottoFinito pf);
-	
+	public int calcoloProdottiFinitiCostruibili(Reparto rep);	
 }

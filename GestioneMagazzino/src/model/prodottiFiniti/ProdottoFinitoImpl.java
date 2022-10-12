@@ -15,9 +15,12 @@ public abstract class ProdottoFinitoImpl extends GiacenzaImpl implements Prodott
 	}
 
 	public HashMap<String, Integer> getComponenti() {
-		return this.componenti;
+		return new HashMap<>(this.componenti);
 	}
 
-	public abstract void inserisciComponenti();
+	protected abstract void inserisciComponenti();
 
+	protected HashMap<String, Integer> getListaComponenti() {
+		return this.componenti;
+	}
 }

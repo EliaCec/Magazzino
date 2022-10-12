@@ -8,9 +8,9 @@ public class Scrivania extends ProdottoFinitoImpl{
 		this.inserisciComponenti();	
 	}
 
-	public void inserisciComponenti() {
-		this.getComponenti().put("gamba_scrivania", 4);
-		this.getComponenti().put("pianale_scrivania", 1);
+	protected void inserisciComponenti() {
+		this.getListaComponenti().put("gamba_scrivania", 4);
+		this.getListaComponenti().put("pianale_scrivania", 1);
 	}
 	
 }

@@ -8,11 +8,11 @@ public class Sedia extends ProdottoFinitoImpl{
 		this.inserisciComponenti();	
 	}
 
-	public void inserisciComponenti() {
-		this.getComponenti().put("schienale_sedia", 1);
-		this.getComponenti().put("bracciolo_sedia", 2);
-		this.getComponenti().put("seduta_sedia", 1);
-		this.getComponenti().put("gamba_sedia", 4);
+	protected void inserisciComponenti() {
+		this.getListaComponenti().put("schienale_sedia", 1);
+		this.getListaComponenti().put("bracciolo_sedia", 2);
+		this.getListaComponenti().put("seduta_sedia", 1);
+		this.getListaComponenti().put("gamba_sedia", 4);
 	}
 	
 }

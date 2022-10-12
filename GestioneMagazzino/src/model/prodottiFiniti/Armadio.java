@@ -8,10 +8,10 @@ public class Armadio extends ProdottoFinitoImpl{
 		this.inserisciComponenti();	
 	}
 
-	public void inserisciComponenti() {
-		this.getComponenti().put("anta_armadio", 2);
-		this.getComponenti().put("pannello_piccolo_armadio", 4);
-		this.getComponenti().put("pannello_grande_armadio", 1);
+	protected void inserisciComponenti() {
+		this.getListaComponenti().put("anta_armadio", 2);
+		this.getListaComponenti().put("pannello_piccolo_armadio", 4);
+		this.getListaComponenti().put("pannello_grande_armadio", 1);
 	}
 	
 }

@@ -8,6 +8,4 @@ public interface ProdottoFinito extends Giacenza{
 	 * di un prodotto finito. */
 	public HashMap<String, Integer> getComponenti();
 	
-	/* Metodo che serve per inserire i componenti dei vari prodotti finiti */
-	public void inserisciComponenti();
 }
