@@ -3,7 +3,7 @@ package model.reparti;
 import model.Giacenza;
 import model.semilavorati.PannelloPiccoloArmadio;
 
-public class RepartoPannelloPiccoloArmadio extends RepartoAbs{
+public class RepartoPannelloPiccoloArmadio extends RepartoSemilavoratiAbs{
 	
 	// costruttore
 	public RepartoPannelloPiccoloArmadio() {

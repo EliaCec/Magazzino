@@ -3,7 +3,7 @@ package model.reparti;
 import model.semilavorati.SchienaleSedia;
 import model.Giacenza;
 
-public class RepartoSchienaleSedia extends RepartoAbs {
+public class RepartoSchienaleSedia extends RepartoSemilavoratiAbs {
 	
 	// costruttore
 	public RepartoSchienaleSedia() {

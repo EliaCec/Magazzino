@@ -10,7 +10,7 @@ public class MagazzinoImpl implements Magazzino {
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
 	private List<Operaio> operaiAttivi;						// operai che stanno lavorando
-	private List<RepartoSemilavorati> reparti;							// reparti che compongono il magazzino
+	private List<RepartoSemilavorati> reparti;				// reparti che compongono il magazzino
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
@@ -75,9 +75,9 @@ public class MagazzinoImpl implements Magazzino {
 	
 	public void assumiDipendente(Dipendente dip) {
 		if (dip instanceof Operaio)
-			this.operai.add(dip);
+			this.operai.add((Operaio)dip);
 		else
-			this.responsabili.add(dip);
+			this.responsabili.add((Responsabile)dip);
 	}
 	
 }
