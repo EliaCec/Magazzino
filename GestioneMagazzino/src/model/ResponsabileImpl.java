@@ -5,27 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResponsabileImpl implements Responsabile{
+public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 	
-	private final String nomeCognome;                   // nome e cognome del responsabile
-	private final int id;                               // ID del responsabile
 	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
 	List<Deposito> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
 	
 	// costruttore 
-	public ResponsabileImpl(String n, int i) {
-		this.nomeCognome            = n;
-		this.id                     = i;
+	public ResponsabileImpl(String n) {
+		super(n);
 		this.prodottiVenduti        = new LinkedList<>();
 		this.semilavoratiDepositati = new LinkedList<>();
-	}
-
-	public String getNomeCognome() {
-		return this.nomeCognome;
-	}
-
-	public int getId() {
-		return this.id;
 	}
 
 	public List<Vendita> getProdottiVenduti() {
@@ -75,5 +64,4 @@ public class ResponsabileImpl implements Responsabile{
 				                          .collect(Collectors.summingInt(d -> 1));
 				              
 	}
-
 }
