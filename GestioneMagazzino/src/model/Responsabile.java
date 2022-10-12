@@ -3,12 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public interface Responsabile {
-	/* Metodo che restituisce il nome e il cognome del responsabile */
-	public String getNomeCognome();   
-	
-	/* Meteodo che restituisce l'id del responsabile */
-	public int getId();
+public interface Responsabile extends Dipendente{
 	
 	/* Metodo che serve per estrarre tutti i prodotti finiti venduti dal responsabile.
 	 * Restituisce la relativa lista di prodotti finiti */
