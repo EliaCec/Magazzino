@@ -10,7 +10,7 @@ public abstract class ProdottoFinitoImpl extends GiacenzaImpl implements Prodott
 	
 	// costruttore
 	public ProdottoFinitoImpl(String n) {
-		super(n, "prodotto_finito");
+		super(n);
 		this.componenti = new HashMap<>();
 	}
 

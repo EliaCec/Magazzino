@@ -18,7 +18,7 @@ import model.semilavorati.SchienaleSedia;
 import model.semilavorati.SedutaSedia;
 import model.semilavorati.StaffaMensola;
 
-public class OperaioImpl implements Operaio {
+public class OperaioImpl extends DipendenteImpl implements Operaio {
 	
 	private final String nome_cognome;
 	private final int id;
@@ -26,21 +26,12 @@ public class OperaioImpl implements Operaio {
 	private List<Prelievo> prelievi;
 	
 	// costruttore
-	public OperaioImpl(String n, int id) {
-		this.nome_cognome 		= n;
-		this.id 				= id;
+	public OperaioImpl(String n) {
+		super(n);
 		this.costruzioni		= new LinkedList<>();
 		this.prelievi			= new LinkedList<>();
 	}
-
-	public String getNomeCognome() {
-		return this.nome_cognome;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
+	
 	public List<Costruzione> getProdottiCostruiti() {
 		return new LinkedList<>(this.costruzioni);
 	}
@@ -49,9 +40,12 @@ public class OperaioImpl implements Operaio {
 		return new LinkedList<>(this.prelievi);
 	}
 
-	public boolean costruisciProdottiFiniti(Reparto rep, Operaio operaio, Date giorno) {
-		if(!rep.isPieno()){
-			
+	public boolean costruisciProdottiFiniti(Reparto rep, int n, Operaio operaio, Date giorno) {
+		if(!rep.isPieno()){											// getListaRepartiSemilavorati
+			for(int i = 0; i < n; i++) {
+				ProdottoFinito pf = (ProdottoFinito)rep.depositaScorte();
+				this.costruzioni.add(new CostruzioneImpl(operaio, pf, giorno));
+		    }
 			return true;
 		}else
 			return false;

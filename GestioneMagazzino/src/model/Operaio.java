@@ -4,14 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public interface Operaio {
-	
-	/* Metodo che restituisce il nome e il cognome dell'operaio */
-	public String getNomeCognome();
-	
-	/* Metodo che restituisce l'ID dell'operaio */
-	public int getId();
-	
+public interface Operaio extends Dipendente {
+
 	/* Metodo che serve per estrarre tutti i prodotti finiti costruiti.
 	 * Restituisce la relativa lista di prodotti finiti */ 
 	public List<Costruzione> getProdottiCostruiti();
