@@ -1,10 +1,18 @@
 package model.reparti;
 
-public class RepartoPannelloPiccoloArmadio extends RepartoImpl{
+import model.Giacenza;
+import model.semilavorati.PannelloPiccoloArmadio;
+
+public class RepartoPannelloPiccoloArmadio extends RepartoAbs{
 	
 	// costruttore
 	public RepartoPannelloPiccoloArmadio() {
 		super(300, NomiReparti.REPARTO_PANNELLO_PICCOLO_ARMADIO);
+	}
+
+	protected Giacenza creaGiacenza() {
+		// TODO Auto-generated method stub
+		return new PannelloPiccoloArmadio();
 	}
 	
 }

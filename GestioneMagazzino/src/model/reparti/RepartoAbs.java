@@ -16,7 +16,7 @@ import model.semilavorati.SchienaleSedia;
 import model.semilavorati.SedutaSedia;
 import model.semilavorati.StaffaMensola;
 
-public class RepartoImpl implements Reparto {
+public abstract class RepartoAbs implements Reparto {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
 	private final int numeroReparto;			 // codice univoco del reparto
 	private final NomiReparti nome;  			 // nome del reparto
@@ -24,12 +24,12 @@ public class RepartoImpl implements Reparto {
 	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore
-	public RepartoImpl(int c, NomiReparti name) {
-		this.numeroReparto 	  = RepartoImpl.NUOVO_NUMERO_REPARTO;
+	public RepartoAbs(int c, NomiReparti name) {
+		this.numeroReparto 	  = RepartoAbs.NUOVO_NUMERO_REPARTO;
 		this.nome 	  		  = name;
 		this.scorte 		  = new LinkedList<>();
 		this.capacita 		  = c;
-		RepartoImpl.NUOVO_NUMERO_REPARTO++;
+		RepartoAbs.NUOVO_NUMERO_REPARTO++;
 	}
 
 	public int getId() {
@@ -77,31 +77,7 @@ public class RepartoImpl implements Reparto {
 		return this.scorte.get(0);
 	}
 	
-	private Giacenza creaGiacenza() {
-		switch (this.getNome()) {
-			case "reparto_staffa_mensola":
-				return new StaffaMensola();
-			case "reparto_seduta_sedia":
-				return new SedutaSedia();
-			case "reparto_schienale_sedia":
-				return new SchienaleSedia();
-			case "reparto_ripiano_mensola":
-				return new RipianoMensola();
-			case "reparto_pianale_scrivania":
-				return new PianaleScrivania();
-			case "reparto_pannello_piccolo_armadio":
-				return new PannelloPiccoloArmadio();
-			case "reparto_pannello_grande_armadio":
-				return new PannelloGrandeArmadio();
-			case "reparto_gamba_sedia":
-				return new GambaSedia();
-			case "reparto_bracciolo_sedia":
-				return new BraccioloSedia();
-			case "reparto_anta_armadio":
-				return new AntaArmadio();
-			default:
-				return null; // !!!!lancia eccezzioneeeee!!!!!
-		}
-	}
+	protected abstract Giacenza creaGiacenza();
+	
 }
 

@@ -1,6 +1,6 @@
 package model.reparti;
 
-public class RepartoStaffaMensola extends RepartoImpl{
+public class RepartoStaffaMensola extends RepartoAbs{
 	
 	// costruttore
 	public RepartoStaffaMensola() {
