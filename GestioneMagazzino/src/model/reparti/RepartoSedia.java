@@ -1,5 +1,9 @@
 package model.reparti;
 
+import model.prodottiFiniti.Sedia;
+import model.Giacenza;
+
+
 public class RepartoSedia extends RepartoAbs {
 	
 	// costruttore
@@ -7,4 +11,7 @@ public class RepartoSedia extends RepartoAbs {
 		super(200, NomiReparti.REPARTO_SEDIA);
 	}
 
+	protected Giacenza creaGiacenza() {
+		return new Sedia();
+	}
 }

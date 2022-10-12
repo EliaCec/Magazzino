@@ -1,7 +1,6 @@
 package model.reparti;
 
 import model.Giacenza;
-import model.semilavorati.GambaScrivania;
 import model.semilavorati.GambaSedia;
 
 public class RepartoGambaSedia extends RepartoAbs {

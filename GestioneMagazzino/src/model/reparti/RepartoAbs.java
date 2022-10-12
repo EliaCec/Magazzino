@@ -5,16 +5,6 @@ import java.util.List;
 
 import model.Giacenza;
 import model.Reparto;
-import model.semilavorati.AntaArmadio;
-import model.semilavorati.BraccioloSedia;
-import model.semilavorati.GambaSedia;
-import model.semilavorati.PannelloGrandeArmadio;
-import model.semilavorati.PannelloPiccoloArmadio;
-import model.semilavorati.PianaleScrivania;
-import model.semilavorati.RipianoMensola;
-import model.semilavorati.SchienaleSedia;
-import model.semilavorati.SedutaSedia;
-import model.semilavorati.StaffaMensola;
 
 public abstract class RepartoAbs implements Reparto {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
