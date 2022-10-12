@@ -36,7 +36,7 @@ public class ResponsabileImpl implements Responsabile{
 		return new LinkedList<>(this.semilavoratiDepositati);
 	}
 
-	public boolean vendiProdottiFiniti(Reparto reparto, int n, Responsabile responsabile, Date data) {
+	public boolean vendiProdottiFiniti(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {
 		if(reparto.getQuantita() >= n) {
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)reparto.prelevaScorte();
@@ -49,7 +49,7 @@ public class ResponsabileImpl implements Responsabile{
 		
 	}
 
-	public boolean depositaSemilavorati(Reparto reparto, int n, Responsabile responsabile, Date data) {	
+	public boolean depositaSemilavorati(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {	
 		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
 				Semilavorato s = (Semilavorato)reparto.depositaScorte();
