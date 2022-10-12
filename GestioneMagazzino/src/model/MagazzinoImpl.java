@@ -10,16 +10,16 @@ public class MagazzinoImpl implements Magazzino {
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
 	private List<Operaio> operaiAttivi;						// operai che stanno lavorando
-	private List<Reparto> reparti;							// reparti che compongono il magazzino
+	private List<RepartoSemilavorati> reparti;				// reparti che compongono il magazzino
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
-	public MagazzinoImpl(List<Responsabile> responsabiliAssunti, List<Operaio> operaiAssunti, List<Reparto> reparti) {
-		this.responsabili 		= responsabiliAssunti;
-		this.operai 			= operaiAssunti;
+	public MagazzinoImpl() {
+		this.responsabili 		= new LinkedList<>();
+		this.operai 			= new LinkedList<>();
 		this.responsabiliAttivi = new LinkedList<>();
 		this.operaiAttivi 		= new LinkedList<>();
-		this.reparti 			= reparti;
+		this.reparti 			= new LinkedList<>();
 		this.turnoCorrente		= new Date();
 	}
 
@@ -66,11 +66,18 @@ public class MagazzinoImpl implements Magazzino {
 			this.turnoCorrente = nuovoTurno;
 			return true;
 		}
-		return false;
+		return false; //!!!!!!!!lancio eccezzione!!!!!!!!!
 	}
 
-	public void creaReparto(Reparto reparto) {
+	public void creaReparto(RepartoProdottiFiniti reparto) {
 		this.reparti.add(reparto);
+	}
+	
+	public void assumiDipendente(Dipendente dip) {
+		if (dip instanceof Operaio)
+			this.operai.add((Operaio)dip);
+		else
+			this.responsabili.add((Responsabile)dip);
 	}
 	
 }

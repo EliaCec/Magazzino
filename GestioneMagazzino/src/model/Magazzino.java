@@ -35,6 +35,9 @@ public interface Magazzino {
 							   Date nuovoTurno);
 	
 	/* Metodo che serve per aggiungere un nuovo reparto all'interno del magazzino */
-	public void creaReparto(Reparto reparto);
+	public void creaReparto(RepartoProdottiFiniti reparto);
+	
+	/* Metodo che serve per assumere un nuovo dipendente (operaio o responsabile) del magazzino */
+	public void assumiDipendente(Dipendente dip);
 	
 }

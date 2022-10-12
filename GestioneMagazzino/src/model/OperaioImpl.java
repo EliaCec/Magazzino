@@ -49,7 +49,7 @@ public class OperaioImpl implements Operaio {
 		return new LinkedList<>(this.prelievi);
 	}
 
-	public boolean costruisciProdottiFiniti(Reparto rep, Operaio operaio, Date giorno) {
+	public boolean costruisciProdottiFiniti(RepartoSemilavorati rep, Operaio operaio, Date giorno) {
 		if(!rep.isPieno()){
 			
 			return true;
@@ -69,12 +69,12 @@ public class OperaioImpl implements Operaio {
 							.collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int calcoloProdottiFinitiCostruibili(Reparto rep) {
+	public int calcoloProdottiFinitiCostruibili(RepartoSemilavorati rep) {
 		
 		return 0;
 	}
 	
-	private List<String> componentiSemi(Reparto rep) {
+	private List<String> componentiSemi(RepartoSemilavorati rep) {
 		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
 		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
 		List<Integer> listaQuantit‡Componenti = new LinkedList<>(componenti.values());
