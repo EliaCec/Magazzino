@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.Giacenza;
+import model.IllegalException;
 import model.Reparto;
 
 public abstract class RepartoAbs implements Reparto {
@@ -46,21 +47,22 @@ public abstract class RepartoAbs implements Reparto {
 		return this.scorte.size() == this.capacita;
 	}
 
-	public Giacenza depositaScorte() {
+	public Giacenza depositaScorte(){
 		// il deposito avviene solamente se il reparto non è pieno
 		Giacenza daDepositare = creaGiacenza();
 		if (!this.isPieno()) {
 			this.scorte.add(daDepositare);
 			return daDepositare;
-		}
-		return null;  //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
+		}else
+			throw new IllegalException("Magazzino pieno");  //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
 	}
 
 	public Giacenza prelevaScorte() {
 		// il prelievo avviene solamente se nel reparto è presente la scorta
 		if (this.isPresente())
 			return this.scorte.remove(0);
-		return null; //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
+		else 
+			throw new IllegalException("Nel reparto non è presente la scorta"); //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
 	}
 	
 	public Giacenza getGiacenzaReparto() {
