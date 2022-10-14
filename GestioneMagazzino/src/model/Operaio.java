@@ -27,5 +27,5 @@ public interface Operaio extends Dipendente {
 	
 	/* Metodo che restituisce il numero di prodotti finiti ancora costruibili 
 	 * basandosi sui semilavorati rimanenti in magazzino */
-	public int calcoloProdottiFinitiCostruibili(RepartoSemilavorati rep);	
+	public int calcoloProdottiFinitiCostruibili(RepartoProdottiFiniti rep);	
 }

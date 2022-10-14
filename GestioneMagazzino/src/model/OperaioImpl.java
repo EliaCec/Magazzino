@@ -50,9 +50,23 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 							.collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int calcoloProdottiFinitiCostruibili(RepartoSemilavorati rep) {
-		
-		return 0;
+	public int calcoloProdottiFinitiCostruibili(RepartoProdottiFiniti rep) {
+		int prodottiCostruibili = 1000;
+		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
+		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
+		for (int j = 0; j < rep.getListaRepartiSemilavorati().size(); j++) {
+			for (int k = 0; k < listaComponenti.size(); k++) {
+				if (rep.getListaRepartiSemilavorati().get(j).getGiacenzaReparto()
+														    .getNome()
+														    .equals(listaComponenti.get(k))) {
+					int costruzionePerSingoloSemi = rep.getListaRepartiSemilavorati().get(j).getQuantita() / componenti.get(listaComponenti.get(k));
+					if (costruzionePerSingoloSemi < prodottiCostruibili) {
+						prodottiCostruibili = costruzionePerSingoloSemi;
+					}			
+				}	
+			}
+		}	
+		return prodottiCostruibili;
 	}
 	
 	private void prelevaScorte(RepartoProdottiFiniti rep, Operaio op, Date g) {
@@ -60,10 +74,10 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
 		for (int j = 0; j < rep.getListaRepartiSemilavorati().size(); j++) {
 			for (int k = 0; k < listaComponenti.size(); k++) {
-				if(rep.getListaRepartiSemilavorati().get(j).getGiacenzaReparto()
-														   .getNome()
-														   .equals(listaComponenti.get(k))) {
-					for(int i = 0; i < componenti.get(listaComponenti.get(k)); i++) {
+				if (rep.getListaRepartiSemilavorati().get(j).getGiacenzaReparto()
+														    .getNome()
+														    .equals(listaComponenti.get(k))) {
+					for (int i = 0; i < componenti.get(listaComponenti.get(k)); i++) {
 						Semilavorato semi = (Semilavorato)rep.getListaRepartiSemilavorati().get(j).prelevaScorte();
 						this.prelievi.add(new PrelievoImpl(op, semi, g));
 					}
