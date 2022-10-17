@@ -5,7 +5,6 @@ import java.util.List;
 
 import model.Giacenza;
 import model.RepartoSemilavorati;
-import model.classi.exception.IllegalException;
 
 public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
@@ -48,21 +47,13 @@ public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	}
 
 	public Giacenza depositaScorte(){
-		// il deposito avviene solamente se il reparto non è pieno
 		Giacenza daDepositare = creaGiacenza();
-		if (!this.isPieno()) {
-			this.scorte.add(daDepositare);
-			return daDepositare;
-		}else
-			throw new IllegalException("Magazzino pieno");  //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
+		this.scorte.add(daDepositare);
+		return daDepositare;
 	}
 
 	public Giacenza prelevaScorte() {
-		// il prelievo avviene solamente se nel reparto è presente la scorta
-		if (this.isPresente())
-			return this.scorte.remove(0);
-		else 
-			throw new IllegalException("Nel reparto non è presente la scorta"); //!!!!!!!!aggiungere lancio eccezzione!!!!!!!!
+		return this.scorte.remove(0);
 	}
 	
 	public Giacenza getGiacenzaReparto() {
