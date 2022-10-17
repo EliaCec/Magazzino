@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import model.*;
 import model.classi.exception.ProdottiInsufficientiException;
+import model.classi.exception.RepartoPienoException;
 
 public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 	
 	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
 	List<Deposito> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
-	private ProdottoFinito pf;
 	
 	// costruttore 
 	public ResponsabileImpl(String n) {
