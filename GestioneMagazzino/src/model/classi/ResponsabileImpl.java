@@ -5,11 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.*;
+import model.classi.exception.ProdottiInsufficientiException;
 
 public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 	
 	List<Vendita> prodottiVenduti;                      // lista dei prodotti venduti dal responsabile in un dato momento
 	List<Deposito> semilavoratiDepositati;              // lista dei semilavorati depositati dal reponsabile in un dato momento
+	private ProdottoFinito pf;
 	
 	// costruttore 
 	public ResponsabileImpl(String n) {
@@ -26,29 +28,27 @@ public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 		return new LinkedList<>(this.semilavoratiDepositati);
 	}
 
-	public boolean vendiProdottiFiniti(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {
+	public void vendiProdottiFiniti(RepartoProdottiFiniti reparto, int n, Responsabile responsabile, Date data) {   
 		if(reparto.getQuantita() >= n) {
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)reparto.prelevaScorte();
 				this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
-			}		
-			return true;
+			}	
 		}else{
-			return false;
+			ProdottoFinito	pf = (ProdottoFinito) reparto.getGiacenzaReparto();
+			throw new ProdottiInsufficientiException(pf.getNome() ,n - reparto.getQuantita());
 		}
 		
 	}
 
-	public boolean depositaSemilavorati(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {	
+	public void depositaSemilavorati(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {	
 		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
 				Semilavorato s = (Semilavorato)reparto.depositaScorte();
 				this.semilavoratiDepositati.add(new DepositoImpl(s, responsabile, data));
-		    }
-			return true;
-		
+			}
 		}else{
-			return false;
+			throw new RepartoPienoException(reparto.getQuantita(), reparto.getCapacita());
 		}
 		
 	}
