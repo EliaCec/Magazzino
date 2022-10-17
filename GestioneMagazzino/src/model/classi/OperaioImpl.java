@@ -6,17 +6,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.*;
+import model.classi.exception.RepartoPienoException;
+import model.classi.exception.SemilavoratiInsufficientiException;
 
 public class OperaioImpl extends DipendenteImpl implements Operaio {
 	
-	private List<Costruzione> costruzioni;			// lista per tener conto delle costruzioni
-	private List<Prelievo> prelievi;				// lista per tener conto dei prelievi
+	private List<Costruzione> costruzioni;							// lista per tener conto delle costruzioni
+	private List<Prelievo> prelievi;								// lista per tener conto dei prelievi
+	private HashMap<String, Integer> semilavoratiMancanti;			/* mappa utilizzata quando non ci sono abbastanza semilavorati per
+																	   la costruzione di un prodotto finito. stamperà i semilavorati mancanti */
+	
 	
 	// costruttore
 	public OperaioImpl(String n) {
 		super(n);
 		this.costruzioni		= new LinkedList<>();
 		this.prelievi			= new LinkedList<>();
+		this.semilavoratiMancanti = new HashMap<>();
 	}
 	
 	public List<Costruzione> getProdottiCostruiti() {
@@ -27,16 +33,18 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		return new LinkedList<>(this.prelievi);
 	}
 
-	public boolean costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Operaio operaio, Date giorno) {
-		if(!rep.isPieno()){
+	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Operaio operaio, Date giorno) {
+		if(rep.isPieno()) {
+			throw new RepartoPienoException(rep.getQuantita(), rep.getCapacita());
+		}else if(this.calcoloProdottiFinitiCostruibili(rep) >= n) {
+			throw new SemilavoratiInsufficientiException(semilavoratiMancanti);
+		}else {
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)rep.depositaScorte();
 				this.costruzioni.add(new CostruzioneImpl(operaio, pf, giorno));
 				this.prelevaScorte(rep, operaio, giorno);
 		    }
-			return true;
-		}else
-			return false;
+		}
 	}
 
 	public int costruzioniPerProdottoFinito(ProdottoFinito pf) {
@@ -52,6 +60,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 	}
 
 	public int calcoloProdottiFinitiCostruibili(RepartoProdottiFiniti rep) {
+		this.semilavoratiMancanti.clear();
 		int prodottiCostruibili = 1000;
 		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
 		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
@@ -60,6 +69,12 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 				if (rep.getListaRepartiSemilavorati().get(j).getGiacenzaReparto()
 														    .getNome()
 														    .equals(listaComponenti.get(k))) {
+					
+					if(rep.getListaRepartiSemilavorati().get(j).getQuantita() < componenti.get(listaComponenti.get(k))) {
+						int numSemilavoratiMancanti = componenti.get(listaComponenti.get(k)) - rep.getListaRepartiSemilavorati().get(j).getQuantita();
+						this.semilavoratiMancanti.put(listaComponenti.get(k), numSemilavoratiMancanti);
+					}
+					
 					int costruzionePerSingoloSemi = rep.getListaRepartiSemilavorati().get(j).getQuantita() / componenti.get(listaComponenti.get(k));
 					if (costruzionePerSingoloSemi < prodottiCostruibili) {
 						prodottiCostruibili = costruzionePerSingoloSemi;
