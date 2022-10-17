@@ -30,7 +30,7 @@ public interface Magazzino {
 	
 	/* Metodo che serve per effettuare il cambio turno degli impiegati del magazzino.
 	 * Restituisce true se il cambio di turno è avvenuto con successo, false altrimenti */
-	public boolean cambioTurno(List<Operaio> operai, 
+	public void cambioTurno(List<Operaio> operai, 
 							   List<Responsabile> responsabili,
 							   Date nuovoTurno);
 	

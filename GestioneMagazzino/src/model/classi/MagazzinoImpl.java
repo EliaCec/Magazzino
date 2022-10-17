@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.*;
+import model.classi.exception.TurnoInvalidoException;
 
 public class MagazzinoImpl implements Magazzino {
 	private List<Responsabile> responsabili;				// responsabili totali
@@ -60,14 +61,14 @@ public class MagazzinoImpl implements Magazzino {
 		return new LinkedList<>(this.operaiAttivi);
 	}
 
-	public boolean cambioTurno(List<Operaio> operai, List<Responsabile> responsabili, Date nuovoTurno) {
+	public void cambioTurno(List<Operaio> operai, List<Responsabile> responsabili, Date nuovoTurno) {
 		if (nuovoTurno.after(this.turnoCorrente)) {
 			this.operaiAttivi = operai;
 			this.responsabiliAttivi = responsabili;
 			this.turnoCorrente = nuovoTurno;
-			return true;
+		} else {
+			throw new TurnoInvalidoException("L'ultimo turno è iniziato il: " + this.turnoCorrente + ", inserire un turno con data/ora successivi a questo");
 		}
-		return false; //!!!!!!!!lancio eccezzione!!!!!!!!!
 	}
 
 	public void creaReparto(RepartoProdottiFiniti reparto) {
