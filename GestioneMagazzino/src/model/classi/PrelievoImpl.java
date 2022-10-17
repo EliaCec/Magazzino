@@ -1,6 +1,10 @@
-package model;
+package model.classi;
 
 import java.util.Date;
+
+import model.Operaio;
+import model.Prelievo;
+import model.Semilavorato;
 
 public class PrelievoImpl implements Prelievo {
 	
