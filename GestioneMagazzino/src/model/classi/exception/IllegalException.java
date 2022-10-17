@@ -1,4 +1,4 @@
-package model.classi;
+package model.classi.exception;
 
 public class IllegalException extends RuntimeException{
 	

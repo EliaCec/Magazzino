@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.Giacenza;
 import model.RepartoSemilavorati;
-import model.classi.IllegalException;
+import model.classi.exception.IllegalException;
 
 public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
