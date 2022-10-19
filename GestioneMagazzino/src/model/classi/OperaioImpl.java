@@ -33,7 +33,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		return new LinkedList<>(this.prelievi);
 	}
 
-	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Operaio operaio, Date giorno) {
+	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Date giorno) {
 		if(rep.isPieno()) {
 			throw new RepartoPienoException(rep.getQuantita(), rep.getCapacita());
 		}else if(this.calcoloProdottiFinitiCostruibili(rep) >= n) {
@@ -41,8 +41,8 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		}else {
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)rep.depositaScorte();
-				this.costruzioni.add(new CostruzioneImpl(operaio, pf, giorno));
-				this.prelevaScorte(rep, operaio, giorno);
+				this.costruzioni.add(new CostruzioneImpl(this, pf, giorno));
+				this.prelevaScorte(rep, giorno);
 		    }
 		}
 	}
@@ -85,7 +85,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		return prodottiCostruibili;
 	}
 	
-	private void prelevaScorte(RepartoProdottiFiniti rep, Operaio op, Date g) {
+	private void prelevaScorte(RepartoProdottiFiniti rep, Date g) {
 		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
 		List<String> listaComponenti = new LinkedList<>(componenti.keySet());
 		for (int j = 0; j < rep.getListaRepartiSemilavorati().size(); j++) {
@@ -95,7 +95,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 														    .equals(listaComponenti.get(k))) {
 					for (int i = 0; i < componenti.get(listaComponenti.get(k)); i++) {
 						Semilavorato semi = (Semilavorato)rep.getListaRepartiSemilavorati().get(j).prelevaScorte();
-						this.prelievi.add(new PrelievoImpl(op, semi, g));
+						this.prelievi.add(new PrelievoImpl(this, semi, g));
 					}
 				}	
 			}

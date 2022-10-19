@@ -18,18 +18,16 @@ public interface Responsabile extends Dipendente{
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
 	public void vendiProdottiFiniti(RepartoProdottiFiniti reparto, 
-									   int n,
-			                           Responsabile responsabile, 
-			                           Date data);
+								    int n,
+			                        Date data);
 	
 	/* Metodo usato per il deposito dei semilavorati da parte del responsabile.
 	 * Prende in input il reparto in cui verranno depositati i semilavorati,il numero di semilavorati, il responsabile che le ha vendute
 	 * e la giornata.
 	 * Restituisce true se la costruzione è stata effettuata con successo */
 	public void depositaSemilavorati(RepartoSemilavorati reparto,
-										int n,
-			                            Responsabile responsabile,
-			                            Date data);
+									 int n,
+			                         Date data);
 	
 	/* Metodo che restituisce il numero di prodotti finiti venduti per tipologia */
     public int venditaPerTipologia(String pf);

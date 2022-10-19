@@ -40,4 +40,10 @@ public interface Magazzino {
 	/* Metodo che serve per assumere un nuovo dipendente (operaio o responsabile) del magazzino */
 	public void assumiDipendente(Dipendente dip);
 	
+	/* Metodo che restituisce gli operai assunti */
+	public List<Operaio> getOperaiAssunti();
+	
+	/* Metodo che restituisce i responsabili assunti*/
+	public List<Responsabile> getResponsabiliAssunti();
+	
 }

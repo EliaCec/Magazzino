@@ -28,11 +28,11 @@ public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 		return new LinkedList<>(this.semilavoratiDepositati);
 	}
 
-	public void vendiProdottiFiniti(RepartoProdottiFiniti reparto, int n, Responsabile responsabile, Date data) {   
+	public void vendiProdottiFiniti(RepartoProdottiFiniti reparto, int n, Date data) {   
 		if(reparto.getQuantita() >= n) {
 			for(int i = 0; i < n; i++) {
 				ProdottoFinito pf = (ProdottoFinito)reparto.prelevaScorte();
-				this.prodottiVenduti.add(new VenditaImpl(pf, responsabile, data));
+				this.prodottiVenduti.add(new VenditaImpl(pf, this, data));
 			}	
 		}else{
 			ProdottoFinito	pf = (ProdottoFinito) reparto.getGiacenzaReparto();
@@ -41,11 +41,11 @@ public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 		
 	}
 
-	public void depositaSemilavorati(RepartoSemilavorati reparto, int n, Responsabile responsabile, Date data) {	
+	public void depositaSemilavorati(RepartoSemilavorati reparto, int n, Date data) {	
 		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
 				Semilavorato s = (Semilavorato)reparto.depositaScorte();
-				this.semilavoratiDepositati.add(new DepositoImpl(s, responsabile, data));
+				this.semilavoratiDepositati.add(new DepositoImpl(s, this, data));
 			}
 		}else{
 			throw new RepartoPienoException(reparto.getQuantita(), reparto.getCapacita());

@@ -82,4 +82,12 @@ public class MagazzinoImpl implements Magazzino {
 			this.responsabili.add((Responsabile)dip);
 	}
 	
+	public List<Operaio> getOperaiAssunti(){
+		return new LinkedList<>(this.operai);
+	}
+	
+	public List<Responsabile> getResponsabiliAssunti(){
+		return new LinkedList<>(this.responsabili);
+	}	
+	
 }
