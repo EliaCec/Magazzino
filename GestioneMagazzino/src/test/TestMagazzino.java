@@ -67,8 +67,33 @@ class TestMagazzino {
 		mag.getOperaiAttivi().get(0).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 8, 30));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testResponsabile() {
+		
+		// vendita prodotti finiti
+	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repArmadio, 1, new Date(2022, 10, 11, 8, 30));
+	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repMensola, 2, new Date(2022, 10, 11, 8, 30));
+	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repSedia, 2, new Date(2022, 10, 11, 8, 30));
+	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repScrivania, 1, new Date(2022, 10, 11, 8, 30));
+	    
+	    // deposito semilavorati
+	    mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(0), 2, new Date(2022, 10, 11, 8, 30));
+		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repMensola.getListaRepartiSemilavorati().get(1), 6, new Date(2022, 10, 11, 8, 30));
+		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repSedia.getListaRepartiSemilavorati().get(0), 5, new Date(2022, 10, 11, 8, 30));
+		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repScrivania.getListaRepartiSemilavorati().get(0), 4, new Date(2022, 10, 11, 8, 30));
+		
+		// vendite per tipologia
+		assertTrue(mag.getResponsabiliAttivi().get(0).venditaPerTipologia("armadio") == 1);
+		/*mag.getResponsabiliAttivi().get(0).venditaPerTipologia("mensola");
+		mag.getResponsabiliAttivi().get(0).venditaPerTipologia("sedia");
+		mag.getResponsabiliAttivi().get(0).venditaPerTipologia("scrivania");*/
+		
+		// numero semilavorati depositati
+		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("anta_armadio") == 2);
+		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("ripiano_mensola") == 6);
+		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("schienale_sedia") == 5);
+		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("pianale_scrivania") == 4);   
 	}
 
 }

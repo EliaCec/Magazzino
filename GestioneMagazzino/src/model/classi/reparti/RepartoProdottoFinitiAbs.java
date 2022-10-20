@@ -11,6 +11,7 @@ public abstract class RepartoProdottoFinitiAbs extends RepartoSemilavoratiAbs im
 
 	public RepartoProdottoFinitiAbs(int c, NomiReparti name) {
 		super(c, name);
+		this.listaRepartiSemilavorati = new LinkedList<>();
 	}
 	
 	public List<RepartoSemilavorati> getListaRepartiSemilavorati() {
