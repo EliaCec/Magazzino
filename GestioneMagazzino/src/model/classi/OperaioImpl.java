@@ -20,9 +20,9 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 	// costruttore
 	public OperaioImpl(String n) {
 		super(n);
-		this.costruzioni		= new LinkedList<>();
-		this.prelievi			= new LinkedList<>();
-		this.semilavoratiMancanti = new HashMap<>();
+		this.costruzioni			= new LinkedList<>();
+		this.prelievi				= new LinkedList<>();
+		this.semilavoratiMancanti 	= new HashMap<>();
 	}
 	
 	public List<Costruzione> getProdottiCostruiti() {
@@ -36,7 +36,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Date giorno) {
 		if(rep.isPieno()) {
 			throw new RepartoPienoException(rep.getQuantita(), rep.getCapacita());
-		}else if(this.calcoloProdottiFinitiCostruibili(rep) >= n) {
+		}else if(this.calcoloProdottiFinitiCostruibili(rep) < n) {
 			throw new SemilavoratiInsufficientiException(semilavoratiMancanti);
 		}else {
 			for(int i = 0; i < n; i++) {

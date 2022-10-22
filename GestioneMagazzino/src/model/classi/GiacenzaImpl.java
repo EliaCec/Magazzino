@@ -23,4 +23,8 @@ public class GiacenzaImpl implements Giacenza {
 		return this.id;
 	}
 
+	public void setId (int nuovoID) {
+		NUOVOID = nuovoID;
+	}
+
 }
