@@ -58,7 +58,7 @@ public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	
 	public Giacenza getGiacenzaReparto() {
 		Giacenza g = creaGiacenza();
-		g.setId(g.getId()--);
+		g.setId(g.getId() - 1);
 		return g;
 	}
 	
