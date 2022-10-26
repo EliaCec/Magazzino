@@ -12,7 +12,7 @@ public class MagazzinoImpl implements Magazzino {
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
 	private List<Operaio> operaiAttivi;						// operai che stanno lavorando
-	private List<RepartoSemilavorati> reparti;				// reparti che compongono il magazzino
+	private List<RepartoProdottiFiniti> reparti;			// reparti che compongono il magazzino
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
@@ -91,18 +91,22 @@ public class MagazzinoImpl implements Magazzino {
 		return new LinkedList<>(this.responsabili);
 	}
 	
-	public Dipendente cercaDipendentePerNome(String nome, List<Dipendente> lista) {
+	public Dipendente cercaDipendentePerNome(String nome, List<? extends Dipendente> lista) {
 		return lista.stream()
 					.filter(d -> d.getNomeCognome().equals(nome))
 					.findAny()
 					.get();
 	}
 	
-	public T<? super RepartoSemilavorati> T cercaRepartoPerNome(String nome, List<? extends RepartoSemilavorati> lista) {
+	public RepartoSemilavorati cercaRepartoPerNome(String nome, List<? extends RepartoSemilavorati> lista) {
 		return lista.stream()
 					.filter(r -> r.getNome().equals(nome))
 					.findAny()
 					.get();
+	}
+
+	public List<RepartoProdottiFiniti> getReparti() {
+		return new LinkedList<>(this.reparti);
 	}
 	
 }
