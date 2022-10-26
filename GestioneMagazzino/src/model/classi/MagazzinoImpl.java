@@ -12,17 +12,18 @@ public class MagazzinoImpl implements Magazzino {
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
 	private List<Operaio> operaiAttivi;						// operai che stanno lavorando
-	private List<RepartoSemilavorati> reparti;				// reparti che compongono il magazzino
+	private List<RepartoProdottiFiniti> reparti;			// reparti che compongono il magazzino
 	private Date turnoCorrente;								// data e ora che indica l'orario di inizio del turno corrente
 	
 	// costruttore
+	@SuppressWarnings("deprecation")
 	public MagazzinoImpl() {
 		this.responsabili 		= new LinkedList<>();
 		this.operai 			= new LinkedList<>();
 		this.responsabiliAttivi = new LinkedList<>();
 		this.operaiAttivi 		= new LinkedList<>();
 		this.reparti 			= new LinkedList<>();
-		this.turnoCorrente		= new Date();
+		this.turnoCorrente		= new Date(2022, 1, 01, 7, 30);
 	}
 
 	public int getNumeroReparti() {
@@ -88,6 +89,24 @@ public class MagazzinoImpl implements Magazzino {
 	
 	public List<Responsabile> getResponsabiliAssunti(){
 		return new LinkedList<>(this.responsabili);
-	}	
+	}
+	
+	public Dipendente cercaDipendentePerNome(String nome, List<? extends Dipendente> lista) {
+		return lista.stream()
+					.filter(d -> d.getNomeCognome().equals(nome))
+					.findAny()
+					.get();
+	}
+	
+	public RepartoSemilavorati cercaRepartoPerNome(String nome, List<? extends RepartoSemilavorati> lista) {
+		return lista.stream()
+					.filter(r -> r.getNome().equals(nome))
+					.findAny()
+					.get();
+	}
+
+	public List<RepartoProdottiFiniti> getReparti() {
+		return new LinkedList<>(this.reparti);
+	}
 	
 }

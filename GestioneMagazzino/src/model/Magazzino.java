@@ -5,7 +5,10 @@ import java.util.List;
 
 public interface Magazzino {
 	/* Metodo che restituisce il numero totale dei reparti presenti nel magazzino */
-	public int getNumeroReparti(); 
+	public int getNumeroReparti();
+	
+	/* Metodo che restituisce il numero totale dei reparti presenti nel magazzino */
+	public List<RepartoProdottiFiniti> getReparti(); 
 	
 	/* Metodo che serve per estrarre tutti i prodotti finiti che sono stati venduti in
 	 * un determinato giorno nell'intero magazzino.
@@ -45,5 +48,11 @@ public interface Magazzino {
 	
 	/* Metodo che restituisce i responsabili assunti*/
 	public List<Responsabile> getResponsabiliAssunti();
+	
+	/* metodo che permette la ricerca per nome dei dipendenti assunti. Restituisce il dipendente se presente */
+	public Dipendente cercaDipendentePerNome(String nome, List<? extends Dipendente> lista);
+	
+	/* metodo che permette la ricerca per nome dei reparti presenti nel magazzino. Restituisce il reparto se presente */
+	public RepartoSemilavorati cercaRepartoPerNome(String nome, List<? extends RepartoSemilavorati> lista);
 	
 }
