@@ -19,7 +19,7 @@ public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 		this.prodottiVenduti        = new LinkedList<>();
 		this.semilavoratiDepositati = new LinkedList<>();
 	}
-
+    
 	public List<Vendita> getProdottiVenduti() {
 		return new LinkedList<>(this.prodottiVenduti);
 	}
