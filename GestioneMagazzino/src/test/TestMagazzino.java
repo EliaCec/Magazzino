@@ -1,23 +1,28 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import model.*;
-import model.classi.*;
+import model.Magazzino;
+import model.Operaio;
+import model.RepartoProdottiFiniti;
+import model.Responsabile;
+import model.classi.MagazzinoImpl;
+import model.classi.OperaioImpl;
+import model.classi.ResponsabileImpl;
+import model.classi.exception.TurnoInvalidoException;
+import model.classi.reparti.NomiReparti;
 import model.classi.reparti.RepartoArmadio;
 import model.classi.reparti.RepartoMensola;
 import model.classi.reparti.RepartoScrivania;
 import model.classi.reparti.RepartoSedia;
 
 class TestMagazzino {
-
-	// inizializzazione prima di eseguire un qualunque test
+	
 	Magazzino mag = new MagazzinoImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
 	Operaio f = new OperaioImpl("Fausto_Bianchi");
@@ -30,70 +35,78 @@ class TestMagazzino {
 	RepartoProdottiFiniti repSedia = new RepartoSedia();
 	RepartoProdottiFiniti repMensola = new RepartoMensola();
 	
-	@SuppressWarnings("deprecation")
-	@Before
-	public void creaMagazzino() {
+	// metodo che testa la creazione reparti
+	@Test
+	void testCreazioneReparti() {
+		assertEquals(0, mag.getNumeroReparti()); // verifica assenza reparti
+		assertEquals(new LinkedList<RepartoProdottiFiniti>(), mag.getReparti());
+		// creazione di quattro reparti
+		mag.creaReparto(repArmadio);
+		mag.creaReparto(repMensola);
+		mag.creaReparto(repScrivania);
+		mag.creaReparto(repSedia);
+		LinkedList<RepartoProdottiFiniti> reparti = new LinkedList<>();
+		reparti.add(repArmadio);
+		reparti.add(repMensola);
+		reparti.add(repScrivania);
+		reparti.add(repSedia);
+		assertEquals(4, mag.getNumeroReparti()); // verifica numero corretto di reparti
+		assertEquals(reparti, mag.getReparti()); // verifica presenza dei quattro reparti
+	}
 	
-		// assunzione operai
+	// metodo che testa l'assunzione dipendenti (sia operai che responsabili)
+	@Test
+	void testAssunzioneDipendenti() {
+		assertEquals(0, mag.getOperaiAssunti().size()); // verifica assenza di operai
+		assertEquals(0, mag.getResponsabiliAssunti().size()); // verifica assenza di operai
+		// assunzione di quattro operai
 		mag.assumiDipendente(d);
 		mag.assumiDipendente(f);
-		mag.assumiDipendente(l);
-		mag.assumiDipendente(a);
-		
-		// assunzione responsabili
 		mag.assumiDipendente(t);
+		mag.assumiDipendente(a);
+		assertEquals(4, mag.getOperaiAssunti().size()); // verifica numero corretto di operai
+		// assunzione di due responsabili
+		mag.assumiDipendente(l);
 		mag.assumiDipendente(m);
-		
-		// creazione reparti
-		mag.creaReparto(repArmadio);
-		mag.creaReparto(repScrivania);
-	    mag.creaReparto(repSedia);
-		mag.creaReparto(repMensola);
-		
-		// avvio giornata
-		List<Operaio> operaiAttivi = new LinkedList<>();
-		operaiAttivi.add(a);
-		operaiAttivi.add(f);
-		List<Responsabile> responsabiliAttivi = new LinkedList<>();
-		responsabiliAttivi.add(l);
-		mag.cambioTurno(operaiAttivi, responsabiliAttivi, new Date(2022, 10, 11, 7, 30));
-		
-		// deposito semilavorati
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(0), 8, new Date(2022, 10, 11, 8, 00));
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(1), 4, new Date(2022, 10, 11, 8, 00));
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(2), 16, new Date(2022, 10, 11, 8, 00));
-		
-		// costruzione prodottifiniti
-		mag.getOperaiAttivi().get(0).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 8, 30));
+		assertEquals(2, mag.getResponsabiliAssunti().size()); // verifica numero corretto di responsabili
 	}
 	
+	// metodo che testa i cambi turni dei dipendenti
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testResponsabile() {
-		
-		// vendita prodotti finiti
-	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repArmadio, 1, new Date(2022, 10, 11, 8, 30));
-	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repMensola, 2, new Date(2022, 10, 11, 8, 30));
-	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repSedia, 2, new Date(2022, 10, 11, 8, 30));
-	    mag.getResponsabiliAttivi().get(0).vendiProdottiFiniti(repScrivania, 1, new Date(2022, 10, 11, 8, 30));
-	    
-	    // deposito semilavorati
-	    mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(0), 2, new Date(2022, 10, 11, 8, 30));
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repMensola.getListaRepartiSemilavorati().get(1), 6, new Date(2022, 10, 11, 8, 30));
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repSedia.getListaRepartiSemilavorati().get(0), 5, new Date(2022, 10, 11, 8, 30));
-		mag.getResponsabiliAttivi().get(0).depositaSemilavorati(repScrivania.getListaRepartiSemilavorati().get(0), 4, new Date(2022, 10, 11, 8, 30));
-		
-		// vendite per tipologia
-		assertTrue(mag.getResponsabiliAttivi().get(0).venditaPerTipologia("armadio") == 1);
-		/*mag.getResponsabiliAttivi().get(0).venditaPerTipologia("mensola");
-		mag.getResponsabiliAttivi().get(0).venditaPerTipologia("sedia");
-		mag.getResponsabiliAttivi().get(0).venditaPerTipologia("scrivania");*/
-		
-		// numero semilavorati depositati
-		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("anta_armadio") == 2);
-		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("ripiano_mensola") == 6);
-		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("schienale_sedia") == 5);
-		assertTrue(mag.getResponsabiliAttivi().get(0).depositoPerSemilavorato("pianale_scrivania") == 4);   
+	void testInizioTurno() {
+		assertEquals(0, mag.getOperaiAttivi().size()); // verifica assenza di operai in turno
+		assertEquals(0, mag.getResponsabiliAttivi().size()); // verifica assenza di responsabili in turno
+		// creazione lista di operai e responsabili che iniziano a lavorare
+		List<Operaio> operai = new LinkedList<>();
+		operai.add(a);
+		operai.add(d);
+		List<Responsabile> responsabili = new LinkedList<>();
+		responsabili.add(l);
+		// cambio turno corretto
+		mag.cambioTurno(operai, responsabili, new Date(2022, 1, 2, 7, 30));
+		assertEquals(2, mag.getOperaiAttivi().size());
+		assertEquals(1, mag.getResponsabiliAttivi().size());
+		// cambio turno errato (data nuovo turno più vecchia)
+		assertThrows(TurnoInvalidoException.class, () -> mag.cambioTurno(operai, responsabili, new Date(1900, 1, 2, 7, 30)));
 	}
+	
+	// metodo che testa la correttezza della ricerca dei dipendenti assunti
+	@Test
+	void testCercaDipendentiAssuntiPerNome() {
+		mag.assumiDipendente(a);
+		assertEquals(a, mag.cercaDipendentePerNome("Alberto_Antonelli", mag.getOperaiAssunti()));
+		assertThrows(NoSuchElementException.class, () -> mag.cercaDipendentePerNome("Operaio_inventato", mag.getResponsabiliAssunti()));
+	}
+	
+	// metodo che testa la correttezza della ricerca dei dipendenti assunti
+	@Test
+	void testCercaRepartiPerNome() {
+		mag.creaReparto(repArmadio);
+		assertEquals(repArmadio, mag.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(), mag.getReparti()));
+		assertThrows(NoSuchElementException.class, () -> mag.cercaRepartoPerNome("Reparto_inventato", mag.getReparti()));
+	}
+	
+	// il metodo che testa la correttezza degli storici giornalieri si trova nel classe TestGenerale
 
 }
