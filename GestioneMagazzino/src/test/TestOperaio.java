@@ -15,6 +15,8 @@ import model.Semilavorato;
 import model.classi.MagazzinoImpl;
 import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
+import model.classi.exception.RepartoPienoException;
+import model.classi.exception.SemilavoratiInsufficientiException;
 import model.classi.reparti.RepartoArmadio;
 import model.classi.reparti.RepartoMensola;
 import model.classi.reparti.RepartoScrivania;
@@ -85,6 +87,15 @@ class TestOperaio {
 		// controllo presenza di tutti i prodotti costruiti in lista
 		assertEquals(12, d.getProdottiCostruiti().size()); // 10 scrivanie e 2 armadi
 		
+		// controllo correttezza exception quando non ho abbastanza semilavorati per costruire un prodotto finito
+		assertThrows(SemilavoratiInsufficientiException.class, () -> d.costruisciProdottiFiniti(repSedia, 1, new Date(2022, 10, 13, 7, 40)));
+		
+		// aggiungo tanti prodotti finiti quanto è la capacità massima del reparto per un successivo test
+		for(int i = 0; i < repSedia.getCapacita(); i++) {
+			repSedia.depositaScorte();
+		}
+		
+		// controllo correttezza exception quando non ho abbastanza semilavorati per costruire un prodotto finito
+		assertThrows(RepartoPienoException.class, () -> d.costruisciProdottiFiniti(repSedia, 1, new Date(2022, 10, 14, 7, 40)));
 	}
-
 }
