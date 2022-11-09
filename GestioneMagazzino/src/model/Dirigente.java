@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public interface Magazzino {
+public interface Dirigente {
 	/* Metodo che restituisce il numero totale dei reparti presenti nel magazzino */
 	public int getNumeroReparti();
 	

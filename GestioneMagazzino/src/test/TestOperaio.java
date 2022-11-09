@@ -6,13 +6,13 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import model.Magazzino;
+import model.Dirigente;
 import model.Operaio;
 import model.ProdottoFinito;
 import model.RepartoProdottiFiniti;
 import model.Responsabile;
 import model.Semilavorato;
-import model.classi.MagazzinoImpl;
+import model.classi.DirigenteImpl;
 import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
 import model.classi.exception.RepartoPienoException;
@@ -25,7 +25,7 @@ import model.classi.reparti.RepartoSedia;
 class TestOperaio {
 	
 	// inizializzazione prima di eseguire un qualunque test
-	Magazzino mag = new MagazzinoImpl();
+	Dirigente mag = new DirigenteImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
 	Operaio f = new OperaioImpl("Fausto_Bianchi");
 	Operaio t = new OperaioImpl("Tommaso_Nardelli");

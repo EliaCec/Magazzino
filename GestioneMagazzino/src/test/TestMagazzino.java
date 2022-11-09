@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
-import model.Magazzino;
+import model.Dirigente;
 import model.Operaio;
 import model.RepartoProdottiFiniti;
 import model.Responsabile;
-import model.classi.MagazzinoImpl;
+import model.classi.DirigenteImpl;
 import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
 import model.classi.exception.TurnoInvalidoException;
@@ -23,7 +23,7 @@ import model.classi.reparti.RepartoSedia;
 
 class TestMagazzino {
 	
-	Magazzino mag = new MagazzinoImpl();
+	Dirigente mag = new DirigenteImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
 	Operaio f = new OperaioImpl("Fausto_Bianchi");
 	Operaio t = new OperaioImpl("Tommaso_Nardelli");

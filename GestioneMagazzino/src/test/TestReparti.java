@@ -2,14 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import model.Magazzino;
+import model.Dirigente;
 import model.RepartoProdottiFiniti;
-import model.classi.MagazzinoImpl;
+import model.classi.DirigenteImpl;
 import model.classi.reparti.RepartoSedia;
 
 class TestReparti {
 	
-	Magazzino mag = new MagazzinoImpl();
+	Dirigente mag = new DirigenteImpl();
 	RepartoProdottiFiniti repSedia = new RepartoSedia();
 	
 	// metodo che testa il deposito delle scorte in un reparto

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import model.*;
 import model.classi.exception.TurnoInvalidoException;
 
-public class MagazzinoImpl implements Magazzino {
+public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 	private List<Responsabile> responsabili;				// responsabili totali
 	private List<Operaio> operai;							// operai totali
 	private List<Responsabile> responsabiliAttivi;			// responsabili che stanno lavorando
@@ -17,7 +17,8 @@ public class MagazzinoImpl implements Magazzino {
 	
 	// costruttore
 	@SuppressWarnings("deprecation")
-	public MagazzinoImpl() {
+	public DirigenteImpl() {
+		super("DIRIGENTE");
 		this.responsabili 		= new LinkedList<>();
 		this.operai 			= new LinkedList<>();
 		this.responsabiliAttivi = new LinkedList<>();
