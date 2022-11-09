@@ -33,7 +33,7 @@ public class TestResponsabile {
 	
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testResponsabile() {
+	void testResponsabile() {
 		
 		// deposito semilavorati per test
 	    l.depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(0), 8, new Date(2022, 10, 11, 8, 30));

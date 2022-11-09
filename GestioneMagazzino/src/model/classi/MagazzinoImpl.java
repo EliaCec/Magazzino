@@ -33,7 +33,7 @@ public class MagazzinoImpl implements Magazzino {
 	public List<Vendita> storicoVenditeGiornaliero(Date giorno) {
 		return this.responsabili.stream()
 								.map(r -> r.getProdottiVenduti().stream()
-																.filter(v -> v.getData().equals(giorno))
+																.filter(v -> v.getData().compareTo(giorno) == 0)
 																.findAny().get())
 								.collect(Collectors.toList());			 
 	}
