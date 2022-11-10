@@ -23,7 +23,7 @@ import model.classi.reparti.RepartoSedia;
 
 class TestMagazzino {
 	
-	Dirigente mag = new DirigenteImpl();
+	Dirigente dir = new DirigenteImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
 	Operaio f = new OperaioImpl("Fausto_Bianchi");
 	Operaio t = new OperaioImpl("Tommaso_Nardelli");
@@ -38,45 +38,45 @@ class TestMagazzino {
 	// metodo che testa la creazione reparti
 	@Test
 	void testCreazioneReparti() {
-		assertEquals(0, mag.getNumeroReparti()); // verifica assenza reparti
-		assertEquals(new LinkedList<RepartoProdottiFiniti>(), mag.getReparti());
+		assertEquals(0, dir.getNumeroReparti()); // verifica assenza reparti
+		assertEquals(new LinkedList<RepartoProdottiFiniti>(), dir.getReparti());
 		// creazione di quattro reparti
-		mag.creaReparto(repArmadio);
-		mag.creaReparto(repMensola);
-		mag.creaReparto(repScrivania);
-		mag.creaReparto(repSedia);
+		dir.creaReparto(repArmadio);
+		dir.creaReparto(repMensola);
+		dir.creaReparto(repScrivania);
+		dir.creaReparto(repSedia);
 		LinkedList<RepartoProdottiFiniti> reparti = new LinkedList<>();
 		reparti.add(repArmadio);
 		reparti.add(repMensola);
 		reparti.add(repScrivania);
 		reparti.add(repSedia);
-		assertEquals(4, mag.getNumeroReparti()); // verifica numero corretto di reparti
-		assertEquals(reparti, mag.getReparti()); // verifica presenza dei quattro reparti
+		assertEquals(4, dir.getNumeroReparti()); // verifica numero corretto di reparti
+		assertEquals(reparti, dir.getReparti()); // verifica presenza dei quattro reparti
 	}
 	
 	// metodo che testa l'assunzione dipendenti (sia operai che responsabili)
 	@Test
 	void testAssunzioneDipendenti() {
-		assertEquals(0, mag.getOperaiAssunti().size()); // verifica assenza di operai
-		assertEquals(0, mag.getResponsabiliAssunti().size()); // verifica assenza di operai
+		assertEquals(0, dir.getOperaiAssunti().size()); // verifica assenza di operai
+		assertEquals(0, dir.getResponsabiliAssunti().size()); // verifica assenza di operai
 		// assunzione di quattro operai
-		mag.assumiDipendente(d);
-		mag.assumiDipendente(f);
-		mag.assumiDipendente(t);
-		mag.assumiDipendente(a);
-		assertEquals(4, mag.getOperaiAssunti().size()); // verifica numero corretto di operai
+		dir.assumiDipendente(d);
+		dir.assumiDipendente(f);
+		dir.assumiDipendente(t);
+		dir.assumiDipendente(a);
+		assertEquals(4, dir.getOperaiAssunti().size()); // verifica numero corretto di operai
 		// assunzione di due responsabili
-		mag.assumiDipendente(l);
-		mag.assumiDipendente(m);
-		assertEquals(2, mag.getResponsabiliAssunti().size()); // verifica numero corretto di responsabili
+		dir.assumiDipendente(l);
+		dir.assumiDipendente(m);
+		assertEquals(2, dir.getResponsabiliAssunti().size()); // verifica numero corretto di responsabili
 	}
 	
 	// metodo che testa i cambi turni dei dipendenti
 	@SuppressWarnings("deprecation")
 	@Test
 	void testInizioTurno() {
-		assertEquals(0, mag.getOperaiAttivi().size()); // verifica assenza di operai in turno
-		assertEquals(0, mag.getResponsabiliAttivi().size()); // verifica assenza di responsabili in turno
+		assertEquals(0, dir.getOperaiAttivi().size()); // verifica assenza di operai in turno
+		assertEquals(0, dir.getResponsabiliAttivi().size()); // verifica assenza di responsabili in turno
 		// creazione lista di operai e responsabili che iniziano a lavorare
 		List<Operaio> operai = new LinkedList<>();
 		operai.add(a);
@@ -84,27 +84,27 @@ class TestMagazzino {
 		List<Responsabile> responsabili = new LinkedList<>();
 		responsabili.add(l);
 		// cambio turno corretto
-		mag.cambioTurno(operai, responsabili, new Date(2022, 1, 2, 7, 30));
-		assertEquals(2, mag.getOperaiAttivi().size());
-		assertEquals(1, mag.getResponsabiliAttivi().size());
+		dir.cambioTurno(operai, responsabili, new Date(2022, 1, 2, 7, 30));
+		assertEquals(2, dir.getOperaiAttivi().size());
+		assertEquals(1, dir.getResponsabiliAttivi().size());
 		// cambio turno errato (data nuovo turno più vecchia)
-		assertThrows(TurnoInvalidoException.class, () -> mag.cambioTurno(operai, responsabili, new Date(1900, 1, 2, 7, 30)));
+		assertThrows(TurnoInvalidoException.class, () -> dir.cambioTurno(operai, responsabili, new Date(1900, 1, 2, 7, 30)));
 	}
 	
 	// metodo che testa la correttezza della ricerca dei dipendenti assunti
 	@Test
 	void testCercaDipendentiAssuntiPerNome() {
-		mag.assumiDipendente(a);
-		assertEquals(a, mag.cercaDipendentePerNome("Alberto_Antonelli", mag.getOperaiAssunti()));
-		assertThrows(NoSuchElementException.class, () -> mag.cercaDipendentePerNome("Operaio_inventato", mag.getResponsabiliAssunti()));
+		dir.assumiDipendente(a);
+		assertEquals(a, dir.cercaDipendentePerNome("Alberto_Antonelli", dir.getOperaiAssunti()));
+		assertThrows(NoSuchElementException.class, () -> dir.cercaDipendentePerNome("Operaio_inventato", dir.getResponsabiliAssunti()));
 	}
 	
 	// metodo che testa la correttezza della ricerca dei dipendenti assunti
 	@Test
 	void testCercaRepartiPerNome() {
-		mag.creaReparto(repArmadio);
-		assertEquals(repArmadio, mag.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(), mag.getReparti()));
-		assertThrows(NoSuchElementException.class, () -> mag.cercaRepartoPerNome("Reparto_inventato", mag.getReparti()));
+		dir.creaReparto(repArmadio);
+		assertEquals(repArmadio, dir.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(), dir.getReparti()));
+		assertThrows(NoSuchElementException.class, () -> dir.cercaRepartoPerNome("Reparto_inventato", dir.getReparti()));
 	}
 	
 	// il metodo che testa la correttezza degli storici giornalieri si trova nel classe TestGenerale

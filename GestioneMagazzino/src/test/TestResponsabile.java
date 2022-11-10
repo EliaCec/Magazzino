@@ -19,7 +19,7 @@ import model.classi.reparti.RepartoSedia;
 
 public class TestResponsabile {
 	
-	Dirigente mag = new DirigenteImpl();
+	Dirigente dir = new DirigenteImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
 	Operaio f = new OperaioImpl("Fausto_Bianchi");
 	Operaio t = new OperaioImpl("Tommaso_Nardelli");

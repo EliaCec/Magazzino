@@ -9,7 +9,7 @@ import model.classi.reparti.RepartoSedia;
 
 class TestReparti {
 	
-	Dirigente mag = new DirigenteImpl();
+	Dirigente dir = new DirigenteImpl();
 	RepartoProdottiFiniti repSedia = new RepartoSedia();
 	
 	// metodo che testa il deposito delle scorte in un reparto

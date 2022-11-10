@@ -31,12 +31,15 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 		return this.reparti.size();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public List<Vendita> storicoVenditeGiornaliero(Date giorno) {
 		return this.responsabili.stream()
 								.map(r -> r.getProdottiVenduti().stream()
-																.filter(v -> v.getData().compareTo(giorno) == 0)
-																.findAny().get())
-								.collect(Collectors.toList());			 
+																.filter(v -> v.getData().getDay() == giorno.getDay() &&
+																		 	 v.getData().getMonth() == giorno.getMonth() && 
+																		 	 v.getData().getYear() == giorno.getYear())
+																.collect(Collectors.toList()))
+								.findAny().get();			 
 	}
 	
 	public List<Costruzione> storicoCostruzioniGiornaliero(Date giorno) {
