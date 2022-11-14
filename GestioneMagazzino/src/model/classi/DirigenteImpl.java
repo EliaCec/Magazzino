@@ -24,7 +24,7 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 		this.responsabiliAttivi = new LinkedList<>();
 		this.operaiAttivi 		= new LinkedList<>();
 		this.reparti 			= new LinkedList<>();
-		this.turnoCorrente		= new Date(2022, 1, 01, 7, 30);
+		this.turnoCorrente		= new Date(2022, 1, 01, 0, 0);
 	}
 
 	public int getNumeroReparti() {
