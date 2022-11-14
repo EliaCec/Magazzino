@@ -42,20 +42,26 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 								.findAny().get();			 
 	}
 	
+	@SuppressWarnings("deprecation")
 	public List<Costruzione> storicoCostruzioniGiornaliero(Date giorno) {
 		return this.operai.stream()
 						  .map(o -> o.getProdottiCostruiti().stream()
-								  							.filter(c -> c.getData().equals(giorno))
-						  									.findAny().get())
-						  .collect(Collectors.toList());			 
+								  							.filter(c -> c.getData().getDay() == giorno.getDay() &&
+								  									     c.getData().getMonth() == giorno.getMonth() && 
+								  									     c.getData().getYear() == giorno.getYear())
+								  							.collect(Collectors.toList()))
+						  .findAny().get();			 
 	}
 
+	@SuppressWarnings("deprecation")
 	public List<Prelievo> storicoSemilavoratiUsatiGiornaliero(Date giorno) {
 		return this.operai.stream()
 				  		  .map(o -> o.getSemilavoratiPrelevati().stream()
-						  										.filter(p -> p.getData().equals(giorno))
-				  												.findAny().get())
-				  		  .collect(Collectors.toList());
+				  				  								.filter(p -> p.getData().getDay() == giorno.getDay() &&
+				  				  											 p.getData().getMonth() == giorno.getMonth() && 
+				  				  											 p.getData().getYear() == giorno.getYear())
+				  				  								.collect(Collectors.toList()))
+				  		  .findAny().get();			 
 	}
 
 	public List<Responsabile> getResponsabiliAttivi() {
@@ -83,7 +89,7 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 	public void assumiDipendente(Dipendente dip) {
 		if (dip instanceof Operaio)
 			this.operai.add((Operaio)dip);
-		else
+		else if (dip instanceof Responsabile)
 			this.responsabili.add((Responsabile)dip);
 	}
 	

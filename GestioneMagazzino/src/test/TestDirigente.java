@@ -21,7 +21,7 @@ import model.classi.reparti.RepartoMensola;
 import model.classi.reparti.RepartoScrivania;
 import model.classi.reparti.RepartoSedia;
 
-class TestMagazzino {
+class TestDirigente {
 	
 	Dirigente dir = new DirigenteImpl();
 	Operaio d = new OperaioImpl("Daniele_Rossi");
