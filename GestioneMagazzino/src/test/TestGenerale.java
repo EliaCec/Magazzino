@@ -83,13 +83,11 @@ public class TestGenerale {
 		// test controllo vendite giornaliere
 		assertEquals(3, dir.storicoVenditeGiornaliero(new Date(2022, 10, 11)).size());
 
-		/*
 		// test controllo costruzioni giornaliere
-		assertEquals(1, mag.storicoCostruzioniGiornaliero(new Date(2022, 10, 11)).size());
+		assertEquals(3, dir.storicoCostruzioniGiornaliero(new Date(2022, 10, 11)).size());
 		
 		// test controllo semilavorati usati in un giorno
-		assertEquals(4, mag.storicoSemilavoratiUsatiGiornaliero(new Date(2022, 10, 11)).size());*/
-		
+		assertEquals(19, dir.storicoSemilavoratiUsatiGiornaliero(new Date(2022, 10, 11)).size());
 		
 	}
 }
