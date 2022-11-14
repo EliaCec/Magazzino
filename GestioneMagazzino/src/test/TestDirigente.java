@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Date;
 import java.util.LinkedList;
@@ -107,6 +108,78 @@ class TestDirigente {
 		assertThrows(NoSuchElementException.class, () -> dir.cercaRepartoPerNome("Reparto_inventato", dir.getReparti()));
 	}
 	
-	// il metodo che testa la correttezza degli storici giornalieri si trova nel classe TestGenerale
+	//metodo che testa la correttezza degli storici giornalieri
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGenerale() {
+		// creazione reparti
+		dir.creaReparto(repArmadio);
+		dir.creaReparto(repMensola);
+		dir.creaReparto(repScrivania);
+		dir.creaReparto(repSedia);
+		
+		// assunzione di quattro operai
+		dir.assumiDipendente(d);
+		dir.assumiDipendente(f);
+		dir.assumiDipendente(t);
+		dir.assumiDipendente(a);
+		
+		// assunzione due responsabili
+		dir.assumiDipendente(l);
+		dir.assumiDipendente(m);
+		
+		// attivo operai e responsabili
+		List<Operaio> operai = new LinkedList<>();
+		List<Responsabile> responsabili = new LinkedList<>();
+		operai.add(d);
+		responsabili.add(l);
+		dir.cambioTurno(operai, responsabili, new Date(2022, 10, 11, 7, 30));
+		
+		// deposito semilavorati per test
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi()))
+	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_ANTA_ARMADIO.getNome(),
+	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(),
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 12, new Date(2022, 10, 11, 8, 30));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi()))
+	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PANNELLO_GRANDE_ARMADIO.getNome(),
+	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(),
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 6, new Date(2022, 10, 11, 8, 30));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi()))
+	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PANNELLO_PICCOLO_ARMADIO.getNome(),
+	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_ARMADIO.getNome(),
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 20, new Date(2022, 10, 11, 8, 30));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi()))
+	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_GAMBA_SCRIVANIA.getNome(),
+	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_SCRIVANIA.getNome(),
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 8, new Date(2022, 10, 11, 8, 30));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi()))
+	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PIANALE_SCRIVANIA.getNome(),
+	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_SCRIVANIA.getNome(),
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 9, new Date(2022, 10, 11, 8, 30));
+	    
+	    // costruisco prodotti finiti
+	    ((Operaio) dir.cercaDipendentePerNome("Daniele_Rossi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 9, 00));
+	    ((Operaio) dir.cercaDipendentePerNome("Daniele_Rossi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 1, new Date(2022, 10, 11, 9, 00));
+	    ((Operaio) dir.cercaDipendentePerNome("Daniele_Rossi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repScrivania, 2, new Date(2022, 8, 11, 9, 30));
+	    
+		// vendita prodotti finiti
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi())).vendiProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 9, 30));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi())).vendiProdottiFiniti(repScrivania, 1, new Date(2022, 10, 11, 12, 00));
+	    ((Responsabile) dir.cercaDipendentePerNome("Luca_Amadori", dir.getResponsabiliAttivi())).vendiProdottiFiniti(repScrivania, 1, new Date(2022, 8, 11, 12, 00));
+	   
+	    
+		// test controllo vendite giornaliere
+		assertEquals(3, dir.storicoVenditeGiornaliero(new Date(2022, 10, 11)).size());
+		assertEquals(1, dir.storicoVenditeGiornaliero(new Date(2022, 8, 11)).size());
+
+		// test controllo costruzioni giornaliere
+		assertEquals(3, dir.storicoCostruzioniGiornaliero(new Date(2022, 10, 11)).size());
+		assertEquals(2, dir.storicoCostruzioniGiornaliero(new Date(2022, 8, 11)).size());
+		
+		// test controllo semilavorati usati in un giorno
+		assertEquals(21, dir.storicoSemilavoratiUsatiGiornaliero(new Date(2022, 10, 11)).size());
+		assertEquals(10, dir.storicoSemilavoratiUsatiGiornaliero(new Date(2022, 8, 11)).size());
+		
+	}
 
 }
