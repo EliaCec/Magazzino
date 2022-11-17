@@ -5,8 +5,8 @@ import javax.swing.WindowConstants;
 
 import controller.Magazzino;
 
-@SuppressWarnings("serial")
-public class Pannello extends JFrame {
+
+public class Pannello {
 	
 	// costruttore
 	public Pannello(Magazzino mag) {
@@ -17,6 +17,7 @@ public class Pannello extends JFrame {
 		for (final JFrame inter : interfacce) {
 			inter.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			inter.setVisible(true);
+			//inter.setSize(500, 500);
 		}
 	}
 	
