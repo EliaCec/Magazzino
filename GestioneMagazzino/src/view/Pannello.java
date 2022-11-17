@@ -6,7 +6,7 @@ import javax.swing.WindowConstants;
 import controller.Magazzino;
 
 @SuppressWarnings("serial")
-public class Pannello extends JFrame {
+public class Pannello {
 	
 	// costruttore
 	public Pannello(Magazzino mag) {
@@ -19,6 +19,5 @@ public class Pannello extends JFrame {
 			inter.setVisible(true);
 		}
 	}
-	
 	
 }
