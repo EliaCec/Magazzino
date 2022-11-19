@@ -5,7 +5,6 @@ import javax.swing.WindowConstants;
 
 import controller.Magazzino;
 
-@SuppressWarnings("serial")
 public class Pannello {
 	
 	// costruttore
@@ -17,6 +16,7 @@ public class Pannello {
 		for (final JFrame inter : interfacce) {
 			inter.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			inter.setVisible(true);
+			//inter.setSize(500, 500);
 		}
 	}
 	
