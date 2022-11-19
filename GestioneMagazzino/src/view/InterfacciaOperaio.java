@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,6 +46,10 @@ public class InterfacciaOperaio extends JFrame {
 		layoutSinistro.setVgap(5);
 		pannelloSx.setLayout(layoutSinistro);
 
+		// creo JcomboBox per operai
+		JComboBox<String> Operai = new JComboBox<>();
+		
+		
 		// creo textArea
 		final JTextArea areaStampa = new JTextArea(10, 10);
 		pannelloSx.add(new JScrollPane(areaStampa),  BorderLayout.PAGE_END);

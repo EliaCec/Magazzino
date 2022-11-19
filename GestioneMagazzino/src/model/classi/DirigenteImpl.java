@@ -3,6 +3,7 @@ package model.classi;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import model.*;
 import model.classi.exception.TurnoInvalidoException;
@@ -51,6 +52,17 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 								  									     c.getData().getYear() == giorno.getYear())
 								  							.collect(Collectors.toList()))
 						  .findAny().get();			 
+	/*	List<Costruzione> ciao = new LinkedList<>();
+		for(int i = 0; i< operai.size() ;i++) {
+			for(int j = 0; j< operai.get(i).getProdottiCostruiti().size() ;j++) {
+				if(operai.get(i).getProdottiCostruiti().get(j).getData().getDay() == giorno.getDay() &&
+					operai.get(i).getProdottiCostruiti().get(j).getData().getMonth() == giorno.getMonth() &&
+					operai.get(i).getProdottiCostruiti().get(j).getData().getYear() == giorno.getYear()) {
+					ciao.add(operai.get(i).getProdottiCostruiti().get(j));
+				}				
+			}
+		}
+		return ciao;*/
 	}
 
 	@SuppressWarnings("deprecation")
