@@ -1,7 +1,7 @@
 package view;
 
 import java.awt.Dimension;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -32,37 +32,38 @@ public class InterfacciaDirigente extends JFrame {
 		final JPanel pannelloPrincipale = new JPanel();
 		pannelloPrincipale.setLayout(new BoxLayout(pannelloPrincipale, BoxLayout.Y_AXIS));
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
-		this.creaPannelloStoricoVendite(pannelloPrincipale);
-		this.creaPannelloStoricoCostruzioni(pannelloPrincipale);
-		this.creaPannelloStoricoSemilavoratiUsati(pannelloPrincipale);
+		this.creaPannelloBottoni(pannelloPrincipale);
+		// creazione casella di testo output
+		JTextArea res = new JTextArea();
+		res.setPreferredSize(new Dimension(400, 100));
+		pannelloPrincipale.add(res);
 		this.add(pannelloPrincipale);
 	}
 	
 	// metodo che genera il pannello dello storico dei semilavorati usati in un giorno
-	private void creaPannelloStoricoSemilavoratiUsati(JPanel pp) {
-		JPanel pannelloSemi = new JPanel();
-		pannelloSemi.setBorder(BorderFactory.createTitledBorder("Storico semilavorati giornalieri"));
-		// creazione casella di testo output
-		JTextArea res = new JTextArea();
-		res.setPreferredSize(new Dimension(400, 100));
-		pannelloSemi.add(res);
-		// acquisizione giorno in input
-		JFormattedTextField inputData = new JFormattedTextField(new SimpleDateFormat("mm-dd-yyyy"));
-		pannelloSemi.add(inputData);
-		// creazione bottone per ricerca
-		JButton btn = new JButton("Ricerca");
-		btn.addActionListener(e -> mag.getDirigente().storicoSemilavoratiUsatiGiornaliero((Date) inputData.getValue()));
-		pannelloSemi.add(btn);
-		pp.add(pannelloSemi);
-	}
-
-	private void creaPannelloStoricoCostruzioni(JPanel pp) {
-		// TODO Auto-generated method stub
-	}
-
-	private void creaPannelloStoricoVendite(JPanel pp) {
-		// TODO Auto-generated method stub
+	@SuppressWarnings("deprecation")
+	private void creaPannelloBottoni(JPanel pp) {
+		JPanel pannelloBot = new JPanel();
+		pannelloBot.setBorder(BorderFactory.createTitledBorder("Storici giornalieri"));
 		
+		// acquisizione giorno in input
+		JFormattedTextField inputData = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+		inputData.setValue(new Date(2022, 0, 1));
+		inputData.setPreferredSize(new Dimension(70, 30));
+		pannelloBot.add(inputData);
+		// creazione bottone per storico giornaliero semilavorati utilizzati
+		JButton btnStoricoSemi = new JButton("Ricerca semilavorati utilizzati");
+		btnStoricoSemi.addActionListener(e -> mag.getDirigente().storicoSemilavoratiUsatiGiornaliero((Date)inputData.getValue()));
+		pannelloBot.add(btnStoricoSemi);
+		// creazione bottone per storico giornaliero vendite effettuate
+		JButton btnStoricoVendite = new JButton("Ricerca vendite effettuate");
+		btnStoricoVendite.addActionListener(e -> mag.getDirigente().storicoSemilavoratiUsatiGiornaliero((Date)inputData.getValue()));
+		pannelloBot.add(btnStoricoVendite);
+		// creazione bottone per storico giornaliero semilavorati utilizzati
+		JButton btnStoricoCostr = new JButton("Ricerca costruzioni effettuate");
+		btnStoricoCostr.addActionListener(e -> mag.getDirigente().storicoSemilavoratiUsatiGiornaliero((Date)inputData.getValue()));
+		pannelloBot.add(btnStoricoCostr);
+		pp.add(pannelloBot);
 	}
 	
 }
