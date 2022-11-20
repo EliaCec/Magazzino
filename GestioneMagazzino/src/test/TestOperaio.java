@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import model.Dirigente;
 import model.Operaio;
-import model.ProdottoFinito;
 import model.RepartoProdottiFiniti;
 import model.Responsabile;
 import model.classi.DirigenteImpl;
@@ -60,13 +59,13 @@ class TestOperaio {
 															.getGiacenzaReparto().getNome()));
 		
 		// controllo prodotti finiti costruiti
-		assertEquals(2, d.costruzioniPerProdottoFinito((ProdottoFinito)repArmadio.getGiacenzaReparto()));
+		assertEquals(2, d.costruzioniPerProdottoFinito(repArmadio.getGiacenzaReparto().getNome()));
 		
 		// controllo che i prodotti finiti costruiti e i semilavorati prelevati di un altro operaio siano vuoti
 		assertEquals(0, f.prelievoPerSemilavorato(repArmadio.getListaRepartiSemilavorati()
 				  											.get(2)
 				  											.getGiacenzaReparto().getNome()));
-		assertEquals(0, f.costruzioniPerProdottoFinito((ProdottoFinito)repArmadio.getGiacenzaReparto()));
+		assertEquals(0, f.costruzioniPerProdottoFinito(repArmadio.getGiacenzaReparto().getNome()));
 		
 		// aggiunti semilavorati per test
 		l.depositaSemilavorati(repScrivania.getListaRepartiSemilavorati().get(0), 30,  new Date(2022, 10, 12, 7, 30));

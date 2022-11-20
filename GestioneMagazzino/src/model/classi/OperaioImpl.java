@@ -47,9 +47,9 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 		}
 	}
 
-	public int costruzioniPerProdottoFinito(ProdottoFinito pf) {
+	public int costruzioniPerProdottoFinito(String pf) {
 		return this.costruzioni.stream()
-				   			   .filter(m -> m.getProdotto().getNome().equals(pf.getNome()))
+				   			   .filter(m -> m.getProdotto().getNome().equals(pf))
 				   			   .collect(Collectors.summingInt(m -> 1));
 	}
 

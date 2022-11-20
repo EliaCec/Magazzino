@@ -62,7 +62,7 @@ public class InterfacciaOperaio extends JFrame {
 		
 		//creazione pannello per inserimento dei pulsanti 
 		final JPanel pannelloPulsanti = new JPanel();
-		GridLayout layout = new GridLayout (3, 3);
+		GridLayout layout = new GridLayout (4, 3);
 		layout.setHgap(10);
 		layout.setVgap(10);
 		pannelloPulsanti.setLayout(layout);
@@ -109,6 +109,17 @@ public class InterfacciaOperaio extends JFrame {
 					 								 .prelievoPerSemilavorato(semilav.getSelectedItem().toString())) + "\n");
 		});
 		pannelloSemilavorati.add(terzo);
+		
+		// creo JcomboBox per lista Pfiniti
+		JComboBox<String> pFiniti = new JComboBox<>();
+		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
+			pFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
+		}
+		
+		// aggiunta lista pfinit usati e creazione pannello pfinit
+		final JPanel pannelloPfiniti = new JPanel();
+		pannelloPulsanti.add(pannelloPfiniti);
+		pannelloPfiniti.add(pFiniti);
 
 		// bottone per numero prodotti finiti costruiti
 		final JButton quarto = new JButton("numero prodotti finiti costruiti");
@@ -116,9 +127,9 @@ public class InterfacciaOperaio extends JFrame {
 				areaStampa.append(String.valueOf(this.mag.getDirigente()
 						  .getOperaiAttivi()
 						  .get(operai.getSelectedIndex())
-						  .costruzioniPerProdottoFinito(/* BARRA PER IL PRODOTTO FINITO */null)) + "\n");
+						  .costruzioniPerProdottoFinito(pFiniti.getSelectedItem().toString())) + "\n");
 		});
-		pannelloPulsanti.add(quarto);
+		pannelloPfiniti.add(quarto);
 
 		// bottone per numero prodotti finiti costruibili
 		final JButton quinto = new JButton("numero prodotti finiti costruibili");
@@ -126,10 +137,10 @@ public class InterfacciaOperaio extends JFrame {
 				areaStampa.append(String.valueOf(this.mag.getDirigente()
 					  .getOperaiAttivi()
 					  .get(operai.getSelectedIndex())
-					  .calcoloProdottiFinitiCostruibili(/* BARRA PER IL PRODOTTO FINITO */null)) + "\n");
+					  .calcoloProdottiFinitiCostruibili(mag.repPfinit(pFiniti.getSelectedItem().toString()))) + "\n");
 		});
 		
-		pannelloPulsanti.add(quinto);
+		pannelloPfiniti.add(quinto);
 		
 		// bottone per ripulire textarea
 		final JButton sesto = new JButton("clear");

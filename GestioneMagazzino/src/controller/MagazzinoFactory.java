@@ -19,7 +19,9 @@ import model.classi.reparti.RepartoSedia;
 public class MagazzinoFactory {
 	
 	// costruttore
-	public MagazzinoFactory() {}
+	public MagazzinoFactory() {
+		
+	}
 	
 	// metodo che crea un dirigente
 	public static Magazzino creaMagazzino() {
@@ -69,11 +71,11 @@ public class MagazzinoFactory {
 	    ((Responsabile) dir.cercaDipendentePerNome("Gianfranco_Blu", dir.getResponsabiliAttivi()))
 	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_GAMBA_SCRIVANIA.getNome(),
 	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_SCRIVANIA.getNome(),
-	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 8, new Date(2022, 10, 11, 8, 30));
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 40, new Date(2022, 10, 11, 8, 30));
 	    ((Responsabile) dir.cercaDipendentePerNome("Gianfranco_Blu", dir.getResponsabiliAttivi()))
 	    				   .depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PIANALE_SCRIVANIA.getNome(),
 	    						   				((RepartoProdottiFiniti) dir.cercaRepartoPerNome(NomiReparti.REPARTO_SCRIVANIA.getNome(),
-	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 9, new Date(2022, 10, 11, 8, 30));
+	    						   				dir.getReparti())).getListaRepartiSemilavorati()), 40, new Date(2022, 10, 11, 8, 30));
 	    
 	    // costruisco prodotti finiti
 	    ((Operaio) dir.cercaDipendentePerNome("Gianluca_Bianchi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 9, 00));

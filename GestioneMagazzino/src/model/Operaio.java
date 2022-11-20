@@ -20,7 +20,7 @@ public interface Operaio extends Dipendente {
 	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Date giorno);
 	
 	/* Metodo che restituisce il numero totale di prodotti finiti costruiti */
-	public int costruzioniPerProdottoFinito(ProdottoFinito pf);
+	public int costruzioniPerProdottoFinito(String pf);
 	
 	/* Metodo che restituisce il numero totale dei semilavorati prelevati */
 	public int prelievoPerSemilavorato(String sl);
