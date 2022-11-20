@@ -53,9 +53,9 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 				   			   .collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int prelievoPerSemilavorato(Semilavorato sl) {
+	public int prelievoPerSemilavorato(String sl) {
 		return this.prelievi.stream()
-							.filter(m -> m.getSemilavorato().getNome().equals(sl.getNome()))
+							.filter(m -> m.getSemilavorato().getNome().equals(sl))
 							.collect(Collectors.summingInt(m -> 1));
 	}
 

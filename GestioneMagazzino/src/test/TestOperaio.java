@@ -11,7 +11,6 @@ import model.Operaio;
 import model.ProdottoFinito;
 import model.RepartoProdottiFiniti;
 import model.Responsabile;
-import model.Semilavorato;
 import model.classi.DirigenteImpl;
 import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
@@ -56,17 +55,17 @@ class TestOperaio {
 		assertEquals(2, d.calcoloProdottiFinitiCostruibili(repArmadio));
 		
 		// controllo quanti pannelli grandi ho utilizzato (get(2))
-		assertEquals(8, d.prelievoPerSemilavorato((Semilavorato)repArmadio.getListaRepartiSemilavorati()
-																		  .get(2)
-																		  .getGiacenzaReparto()));
+		assertEquals(8, d.prelievoPerSemilavorato(repArmadio.getListaRepartiSemilavorati()
+															.get(2)
+															.getGiacenzaReparto().getNome()));
 		
 		// controllo prodotti finiti costruiti
 		assertEquals(2, d.costruzioniPerProdottoFinito((ProdottoFinito)repArmadio.getGiacenzaReparto()));
 		
 		// controllo che i prodotti finiti costruiti e i semilavorati prelevati di un altro operaio siano vuoti
-		assertEquals(0, f.prelievoPerSemilavorato((Semilavorato)repArmadio.getListaRepartiSemilavorati()
-				  														  .get(2)
-				  														  .getGiacenzaReparto()));
+		assertEquals(0, f.prelievoPerSemilavorato(repArmadio.getListaRepartiSemilavorati()
+				  											.get(2)
+				  											.getGiacenzaReparto().getNome()));
 		assertEquals(0, f.costruzioniPerProdottoFinito((ProdottoFinito)repArmadio.getGiacenzaReparto()));
 		
 		// aggiunti semilavorati per test

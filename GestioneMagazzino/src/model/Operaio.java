@@ -23,7 +23,7 @@ public interface Operaio extends Dipendente {
 	public int costruzioniPerProdottoFinito(ProdottoFinito pf);
 	
 	/* Metodo che restituisce il numero totale dei semilavorati prelevati */
-	public int prelievoPerSemilavorato(Semilavorato sl);
+	public int prelievoPerSemilavorato(String sl);
 	
 	/* Metodo che restituisce il numero di prodotti finiti ancora costruibili 
 	 * basandosi sui semilavorati rimanenti in magazzino */

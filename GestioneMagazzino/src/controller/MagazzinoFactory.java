@@ -77,7 +77,8 @@ public class MagazzinoFactory {
 	    
 	    // costruisco prodotti finiti
 	    ((Operaio) dir.cercaDipendentePerNome("Gianluca_Bianchi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 9, 00));
-	  // FINO A QUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+	    ((Operaio) dir.cercaDipendentePerNome("Marco_Rossi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 1, new Date(2022, 10, 11, 9, 00));
+	    // FINO A QUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 		return dir;
 	}
 	
