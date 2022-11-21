@@ -26,8 +26,7 @@ public class InterfacciaOperaio extends JFrame {
 		
 		pack();
 	}
-	
-	
+		
 	private void InizializzaInterfaccia() {
 		setResizable(false);
 		
@@ -36,8 +35,6 @@ public class InterfacciaOperaio extends JFrame {
 		pannelloPrincipale.setLayout(new BorderLayout());
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		this.add(pannelloPrincipale);
-		
 		// creazione pannello per il gestionale
 		final JPanel pannelloSx = new JPanel();
 		pannelloSx.setBorder(BorderFactory.createTitledBorder("Gestionale"));
@@ -45,11 +42,20 @@ public class InterfacciaOperaio extends JFrame {
 		layoutSinistro.setVgap(5);
 		pannelloSx.setLayout(layoutSinistro);
 		
+		//creazione pannello per inserimento dei pulsanti 
+		final JPanel pannelloPulsanti = new JPanel();
+		GridLayout layout = new GridLayout (5, 2);
+		layout.setHgap(10);
+		layout.setVgap(10);
+		pannelloPulsanti.setLayout(layout);
+		
+		// creazione pannello semilavorati e pannello prodotti finiti
+		final JPanel pannelloSemilavorati = new JPanel();
+		final JPanel pannelloPfiniti = new JPanel();
+		
 		// creo textArea
 		final JTextArea areaStampa = new JTextArea(10, 10);
-		pannelloSx.add(new JScrollPane(areaStampa),  BorderLayout.PAGE_END);
 		
-
 		// creo JcomboBox per operai
 		JComboBox<String> operai = new JComboBox<>();
 		operai.addActionListener(e -> {
@@ -58,102 +64,86 @@ public class InterfacciaOperaio extends JFrame {
 		for (int i = 0; i < mag.getDirigente().getOperaiAttivi().size(); i++) {
 		operai.addItem(mag.getDirigente().getOperaiAttivi().get(i).getNomeCognome());
 		}
-		pannelloPrincipale.add(operai, BorderLayout.PAGE_START);
-		
-		//creazione pannello per inserimento dei pulsanti 
-		final JPanel pannelloPulsanti = new JPanel();
-		GridLayout layout = new GridLayout (4, 3);
-		layout.setHgap(10);
-		layout.setVgap(10);
-		pannelloPulsanti.setLayout(layout);
 		
 		// bottone per Lista semilavorati usati
-		final JButton primo = new JButton("Lista semilavorati");
-		primo.addActionListener(e -> {
+		final JButton listaSemilavorati = new JButton("Lista semilavorati");
+		listaSemilavorati.addActionListener(e -> {
 			this.mag.getDirigente().getOperaiAttivi().get(operai.getSelectedIndex())
 									 				 .getSemilavoratiPrelevati()
 									 				 .forEach(n -> areaStampa.append(n.getSemilavorato().getNome() + "\n"));
 		});
-		pannelloPulsanti.add(primo);
 		
 		// bottone per lista prodotti finiti costruiti
-		final JButton secondo = new JButton("Lista prodotti finiti costruiti");
-		secondo.addActionListener(e -> {
+		final JButton listaProdottiFiniti = new JButton("Lista prodotti finiti costruiti");
+		listaProdottiFiniti.addActionListener(e -> {
 				this.mag.getDirigente().getOperaiAttivi().get(operai.getSelectedIndex())
 									   .getProdottiCostruiti()
 									   .forEach(n -> areaStampa.append(n.getProdotto().getNome() + "\n"));
-		});
-		pannelloPulsanti.add(secondo);
-		
+		});		
 
 		// creo JcomboBox per lista semilavorati
-		JComboBox<String> semilav = new JComboBox<>();
+		JComboBox<String> elencoSemilavorati = new JComboBox<>();
 		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
 			for(int j = 0; j < mag.getDirigente().getReparti().get(i).getListaRepartiSemilavorati().size(); j++) {
-					semilav.addItem(mag.getDirigente().getReparti().get(i)
+					elencoSemilavorati.addItem(mag.getDirigente().getReparti().get(i)
 										  .getListaRepartiSemilavorati().get(j).getGiacenzaReparto().getNome());
 			}
 		}
 		
-		// aggiunta lista semilavorati usati e creazione pannello semilavorati
-		final JPanel pannelloSemilavorati = new JPanel();
-		pannelloPulsanti.add(pannelloSemilavorati);
-		pannelloSemilavorati.add(semilav);
-		
 		// bottone per numero semilavorati usati
-		final JButton terzo = new JButton("numero semilavorati usati");
-		terzo.addActionListener(e -> {
+		final JButton numSemilavorati = new JButton("n° semilavorati usati");
+		numSemilavorati.addActionListener(e -> {
 			areaStampa.append(String.valueOf(this.mag.getDirigente()
 													 .getOperaiAttivi()
 													 .get(operai.getSelectedIndex())
-					 								 .prelievoPerSemilavorato(semilav.getSelectedItem().toString())) + "\n");
+					 								 .prelievoPerSemilavorato(elencoSemilavorati.getSelectedItem().toString())) + "\n");
 		});
-		pannelloSemilavorati.add(terzo);
 		
 		// creo JcomboBox per lista Pfiniti
-		JComboBox<String> pFiniti = new JComboBox<>();
+		JComboBox<String> elencoProdottiFiniti = new JComboBox<>();
 		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
-			pFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
+			elencoProdottiFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
 		}
-		
-		// aggiunta lista pfinit usati e creazione pannello pfinit
-		final JPanel pannelloPfiniti = new JPanel();
-		pannelloPulsanti.add(pannelloPfiniti);
-		pannelloPfiniti.add(pFiniti);
 
 		// bottone per numero prodotti finiti costruiti
-		final JButton quarto = new JButton("numero prodotti finiti costruiti");
-		quarto.addActionListener(e -> {
+		final JButton numProdottiFiniti = new JButton("n° prodotti finiti costruiti");
+		numProdottiFiniti.addActionListener(e -> {
 				areaStampa.append(String.valueOf(this.mag.getDirigente()
 						  .getOperaiAttivi()
 						  .get(operai.getSelectedIndex())
-						  .costruzioniPerProdottoFinito(pFiniti.getSelectedItem().toString())) + "\n");
+						  .costruzioniPerProdottoFinito(elencoProdottiFiniti.getSelectedItem().toString())) + "\n");
 		});
-		pannelloPfiniti.add(quarto);
 
 		// bottone per numero prodotti finiti costruibili
-		final JButton quinto = new JButton("numero prodotti finiti costruibili");
-		quinto.addActionListener(e -> {
+		final JButton numProdFinitiCostruibili = new JButton("n° prodotti finiti costruibili");
+		numProdFinitiCostruibili.addActionListener(e -> {
 				areaStampa.append(String.valueOf(this.mag.getDirigente()
 					  .getOperaiAttivi()
 					  .get(operai.getSelectedIndex())
-					  .calcoloProdottiFinitiCostruibili(mag.repPfinit(pFiniti.getSelectedItem().toString()))) + "\n");
+					  .calcoloProdottiFinitiCostruibili(mag.repPfinit(elencoProdottiFiniti.getSelectedItem().toString()))) + "\n");
 		});
-		
-		pannelloPfiniti.add(quinto);
 		
 		// bottone per ripulire textarea
-		final JButton sesto = new JButton("clear");
-		sesto.addActionListener(e -> {
+		final JButton Clear = new JButton("clear");
+		Clear.addActionListener(e -> {
 				areaStampa.setText("");
 		});
-		pannelloPulsanti.add(sesto);
 
-		
-		pannelloSx.add(pannelloPulsanti,  BorderLayout.PAGE_START);
-		
-		//aggiungo pannello gestione al pannello principale
-		pannelloPrincipale.add(pannelloSx, BorderLayout.LINE_START);
+		pannelloSemilavorati.add(elencoSemilavorati);								// aggiunto combobox al pannello Semilavorati
+		pannelloPfiniti.add(elencoProdottiFiniti);									// aggiunto combobox al pannello prodotti finiti
+		pannelloSemilavorati.add(numSemilavorati);									// aggiungo bottone per numero semilavorati usati
+		pannelloPfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti costruiti
+		pannelloPfiniti.add(numProdFinitiCostruibili);								// aggiungo bottone per numero prodotti finiti costruibili
+		pannelloPulsanti.add(pannelloPfiniti);										// aggiunto al pannello pulsanti il pannello prodotti finiti
+		pannelloPulsanti.add(pannelloSemilavorati);									// aggiunto al pannello pulsanti il pannello semilavorati
+		pannelloPulsanti.add(listaSemilavorati);									// aggiungo bottone per Lista semilavorati usati
+		pannelloPulsanti.add(listaProdottiFiniti);									// aggiungo bottone per lista prodotti finiti costruiti
+		pannelloPulsanti.add(Clear);												// aggiungo bottone per ripulire textarea
+		pannelloSx.add(new JScrollPane(areaStampa),  BorderLayout.PAGE_END);		// aggiungo casella di testa al pannello sinistro
+		pannelloSx.add(pannelloPulsanti,  BorderLayout.PAGE_START);					// aggiungo pannello pulsanti al pannello sinistro
+		pannelloPrincipale.add(operai, BorderLayout.PAGE_START);					// aggiungo combobox per scelta operaio al pannello principale
+		pannelloPrincipale.add(pannelloSx, BorderLayout.LINE_START);				// aggiungo pannello gestione al pannello principale
+		this.add(pannelloPrincipale);												// aggiungo pannello al frame
 		
 		
 		// creazione pannello per la costruzione
