@@ -42,7 +42,7 @@ public class ResponsabileImpl extends DipendenteImpl implements Responsabile{
 	}
 
 	public void depositaSemilavorati(RepartoSemilavorati reparto, int n, Date data) {	
-		if(!reparto.isPieno() || reparto.getQuantita() + n <= reparto.getCapacita()) {
+		if(!reparto.isPieno() && reparto.getQuantita() + n <= reparto.getCapacita()) {
 			for(int i = 0; i < n; i++) {
 				Semilavorato s = (Semilavorato)reparto.depositaScorte();
 				this.semilavoratiDepositati.add(new DepositoImpl(s, this, data));

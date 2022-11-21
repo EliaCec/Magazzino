@@ -15,6 +15,7 @@ import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
 import model.classi.exception.RepartoPienoException;
 import model.classi.exception.SemilavoratiInsufficientiException;
+import model.classi.reparti.NomiReparti;
 import model.classi.reparti.RepartoArmadio;
 import model.classi.reparti.RepartoMensola;
 import model.classi.reparti.RepartoScrivania;
@@ -39,9 +40,9 @@ class TestOperaio {
 	@Test
 	void testOperaio() {
 		// aggiunti semilavorati per test
-		l.depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(0), 8,  new Date(2022, 10, 11, 7, 30));
-		l.depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(1), 4,  new Date(2022, 10, 11, 7, 40));
-		l.depositaSemilavorati(repArmadio.getListaRepartiSemilavorati().get(2), 16,  new Date(2022, 10, 11, 7, 50));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_ANTA_ARMADIO.getNome(), repArmadio.getListaRepartiSemilavorati()), 8, new Date(2022, 10, 11, 7, 30));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PANNELLO_PICCOLO_ARMADIO.getNome(), repArmadio.getListaRepartiSemilavorati()), 16, new Date(2022, 10, 11, 7, 40));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PANNELLO_GRANDE_ARMADIO.getNome(), repArmadio.getListaRepartiSemilavorati()), 4, new Date(2022, 10, 11, 7, 50));
 		
 		// test su quanti prodotti posso costruirci
 		assertEquals(4, d.calcoloProdottiFinitiCostruibili(repArmadio));
