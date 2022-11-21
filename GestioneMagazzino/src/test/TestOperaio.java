@@ -93,6 +93,14 @@ class TestOperaio {
 		for(int i = 0; i < repSedia.getCapacita(); i++) {
 			repSedia.depositaScorte();
 		}
+		// aggiungo semilavorati per la costruzione di una sedia nel successivo test
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_SCHIENALE_SEDIA.getNome(), repSedia.getListaRepartiSemilavorati()), 1, new Date(2022, 10, 11, 7, 30));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_BRACCIOLO_SEDIA.getNome(), repSedia.getListaRepartiSemilavorati()), 2, new Date(2022, 10, 11, 7, 40));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_SEDUTA_SEDIA.getNome(), repSedia.getListaRepartiSemilavorati()), 1, new Date(2022, 10, 11, 7, 50));
+		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_GAMBA_SEDIA.getNome(), repSedia.getListaRepartiSemilavorati()), 4, new Date(2022, 10, 11, 8, 00));
+		
+		// controllo correttezza exception quando il reparto di semilavorati è pieno
+		assertThrows(RepartoPienoException.class, () -> d.costruisciProdottiFiniti(repSedia, 1, new Date(2022, 10, 14, 7, 40)));
 		
 		// controllo correttezza exception quando non ho abbastanza semilavorati per costruire un prodotto finito
 		assertThrows(RepartoPienoException.class, () -> d.costruisciProdottiFiniti(repSedia, 1, new Date(2022, 10, 14, 7, 40)));
