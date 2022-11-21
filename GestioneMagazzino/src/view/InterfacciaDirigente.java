@@ -22,7 +22,7 @@ public class InterfacciaDirigente extends JFrame {
 	public InterfacciaDirigente(Magazzino mag) {
 		this.mag = mag;
 		this.setTitle("Pannello dirigente");
-		this.setLocation(10,100);
+		this.setLocation(100, 0);
 		this.inizializzaInterfaccia();
 		pack();
 	}
@@ -159,21 +159,31 @@ public class InterfacciaDirigente extends JFrame {
 		// creazione bottone per storico giornaliero semilavorati utilizzati
 		JButton btnStoricoSemi = new JButton("Ricerca semilavorati utilizzati");
 		btnStoricoSemi.addActionListener(e -> {
-			mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).forEach(n -> ris.append(n.getSemilavorato().getNome() + "\n"));
+			mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																			Integer.parseInt(mese.getText()),
+																			Integer.parseInt(giorno.getText())))
+																			.forEach(n -> ris.append(n.getSemilavorato().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoSemi);
 		// creazione bottone per storico giornaliero vendite effettuate
 		JButton btnStoricoVendite = new JButton("Ricerca vendite effettuate");
 		btnStoricoVendite.addActionListener(e -> {
-			ris.append(String.valueOf(this.mag.getDirigente().storicoVenditeGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).size()));
+			this.mag.getDirigente().storicoVenditeGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																	   Integer.parseInt(mese.getText()),
+																	   Integer.parseInt(giorno.getText())))
+																	   .forEach(n -> ris.append(n.getProdottoFinito().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoVendite);
 		// creazione bottone per storico giornaliero costruzioni effettuate
 		JButton btnStoricoCostr = new JButton("Ricerca costruzioni effettuate");
 		btnStoricoCostr.addActionListener(e -> {
-			ris.append(String.valueOf(this.mag.getDirigente().storicoCostruzioniGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).size()));
+			this.mag.getDirigente().storicoCostruzioniGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																		   Integer.parseInt(mese.getText()),
+																		   Integer.parseInt(giorno.getText())))
+																	   	   .forEach(n -> ris.append(n.getProdotto().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoCostr);
+		
 		// creazione bottone per cancellare il contenuto dell'output
 		JButton btnPulisci = new JButton("Pulisci");
 		btnPulisci.addActionListener(e -> {
