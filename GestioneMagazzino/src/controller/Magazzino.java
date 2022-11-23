@@ -1,12 +1,17 @@
 package controller;
 
+import java.time.DateTimeException;
 import java.util.Date;
+import java.util.List;
 
 import model.Dirigente;
 import model.RepartoProdottiFiniti;
 import model.classi.exception.DataErrataException;
+import model.classi.exception.ProdottiInsufficientiException;
 import model.classi.exception.RepartoPienoException;
 import model.classi.exception.SemilavoratiInsufficientiException;
+import model.Operaio;
+import model.Responsabile;
 
 public class Magazzino {
 	
@@ -35,15 +40,53 @@ public class Magazzino {
 		return null;
 	}
 	
-	// metodo che costruisce i prodotti finiti e stampa il messaggio di conferma/errore
+	// metodo che costruisce i prodotti finiti e restituisce il messaggio di conferma/errore
 	public String costruisciProdotti(RepartoProdottiFiniti rep, int o, int n, Date giorno) {
 		try {
-			dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
+			this.controllaData(giorno);
+			this.dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
 			return "prodotto costruito con successo";
 		} catch(RepartoPienoException e){
 			return e.getMessage();
 		} catch(SemilavoratiInsufficientiException f) {
 			return f.getMessage();
+		} catch(DataErrataException d) {
+			return d.getMessage();
+		}
+	}
+	
+	// metodo che vende i prodotti finiti e restituisce il messaggio di conferma/errore
+	public String vendiProdotti(RepartoProdottiFiniti rep, int r, int n, Date giorno) {
+		try {
+			this.controllaData(giorno);
+			this.dir.getResponsabiliAttivi().get(r).vendiProdottiFiniti(rep, n, giorno);
+			return "prodotto venduto con successo";
+		} catch(ProdottiInsufficientiException p) {
+			return p.getMessage();
+		} catch(DataErrataException d) {
+			return d.getMessage();
+		}
+	}
+	
+	// metodo che deposita i semilavorati e restituisce il messaggio di conferma/errore
+	public String depositaSemilavorati(RepartoProdottiFiniti rep, int r, int n, Date giorno) {
+		try {
+			this.controllaData(giorno);
+			this.dir.getResponsabiliAttivi().get(r).depositaSemilavorati(rep, n, giorno);
+			return "semilavorati depositati con successo";
+		} catch(RepartoPienoException e) {
+			return e.getMessage();
+		} catch(DataErrataException d) {
+			return d.getMessage();
+		}
+	}
+	
+	// metodo che effettua il cambio di turno e restituisce il messaggio di conferma/errore
+	public String cambioTurno(List<Operaio> nuoviOperai, List<Responsabile> nuoviResponsabili, Date data) {
+		try {
+			this.controllaData(data);
+			this.dir.cambioTurno(nuoviOperai, nuoviResponsabili, data);
+			return "cambio turno avvenuto con successo";
 		} catch(DataErrataException d) {
 			return d.getMessage();
 		}
