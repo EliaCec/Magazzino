@@ -160,13 +160,24 @@ public class InterfacciaResponasbile extends JFrame {
 		this.add(pannelloPrincipale);														// aggiungo pannello al frame	
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void inizializzaDestra(JPanel pannelloPrincipale, JComboBox<String> listaOperai) {
+	private void inizializzaDestra(JPanel pannelloPrincipale, JComboBox<String> listaResponsabili) {
 		
 		// creazione pannello per la costruzione
 		final JPanel pannelloDestro = new JPanel();
-		pannelloDestro.setPreferredSize(new Dimension(380, 100));
-		pannelloDestro.setBorder(BorderFactory.createTitledBorder("pannello vendite"));
+		pannelloDestro.setLayout(new BorderLayout());
+		
+		this.inizializzaDeposito(pannelloDestro, listaResponsabili);
+		this.inizializzaVendita(pannelloDestro, listaResponsabili);
+		
+		pannelloPrincipale.add(pannelloDestro, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
+	}
+
+
+	private void inizializzaDeposito(JPanel pannelloDestro, JComboBox<String> listaResponsabili) {
+		
+		final JPanel pannelloDeposito = new JPanel();
+		pannelloDeposito.setBorder(BorderFactory.createTitledBorder("pannello deposito"));
+		pannelloDeposito.setPreferredSize(new Dimension(400, 200));
 		
 		// creo JcomboBox per lista Pfiniti
 		JComboBox<String> elencoProdottiFiniti1 = new JComboBox<>();
@@ -185,32 +196,53 @@ public class InterfacciaResponasbile extends JFrame {
 		testoQuantità.setPreferredSize(new Dimension(70, 18));
 		
 		// PANNELLO DATA ---------------------------------
-	    //creazione pannello data
-	    JPanel pannelloData = new JPanel();
-	    // acquisizione giorno in input
-	    JTextArea giorno = new JTextArea();
-	    JLabel lGiorno = new JLabel();
-	    lGiorno.setText("Data (dd/MM/yyyy): ");
-	    giorno.setPreferredSize(new Dimension(70, 18));
-	    giorno.setText(String.valueOf(1));
-	    pannelloData.add(lGiorno);
-	    pannelloData.add(giorno);
-	    // acquisizione mese in input
-	    JTextArea mese = new JTextArea();
-	    JLabel lMese = new JLabel();
-	    lMese.setText("/");
-	    mese.setPreferredSize(new Dimension(70, 18));
-	    mese.setText(String.valueOf(1));
-	    pannelloData.add(lMese);
-	    pannelloData.add(mese);
-	    // acquisizione anno in input
-	    JTextArea anno = new JTextArea();
-	    JLabel lAnno = new JLabel();
-	    lAnno.setText("/");
-	    anno.setPreferredSize(new Dimension(70, 18));
-	    anno.setText(String.valueOf(2022));
-	    pannelloData.add(lAnno);
-	    pannelloData.add(anno);
+        //creazione pannello data
+		JPanel pannelloDataTotale = new JPanel();
+		pannelloDataTotale.setLayout(new BorderLayout());
+        JPanel pannelloData = new JPanel();
+        // acquisizione titolo
+        JTextArea minuto = new JTextArea();
+        JLabel lMinuto = new JLabel();
+        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
+        // acquisizione minuto in input
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(1));
+        pannelloData.add(minuto);
+        // acquisizione ora in input
+        JTextArea ora = new JTextArea();
+        JLabel lora = new JLabel();
+        lora.setText("/");
+        ora.setPreferredSize(new Dimension(70, 18));
+        ora.setText(String.valueOf(1));
+        pannelloData.add(lora);
+        pannelloData.add(ora);
+        // acquisizione giorno in input
+        JTextArea giorno = new JTextArea();
+        JLabel lGiorno = new JLabel();
+        lGiorno.setText("/");
+        giorno.setPreferredSize(new Dimension(70, 18));
+        giorno.setText(String.valueOf(1));
+        pannelloData.add(lGiorno);
+        pannelloData.add(giorno);
+        // acquisizione mese in input
+        JTextArea mese = new JTextArea();
+        JLabel lMese = new JLabel();
+        lMese.setText("/");
+        mese.setPreferredSize(new Dimension(70, 18));
+        mese.setText(String.valueOf(1));
+        pannelloData.add(lMese);
+        pannelloData.add(mese);
+        // acquisizione anno in input
+        JTextArea anno = new JTextArea();
+        JLabel lAnno = new JLabel();
+        lAnno.setText("/");
+        anno.setPreferredSize(new Dimension(70, 18));
+        anno.setText(String.valueOf(2022));
+        pannelloData.add(lAnno);
+        pannelloData.add(anno);
+        // aggiunto titolo e data al pannelloDataTotale
+        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
 		final JButton costruisci = new JButton("costruisci");
@@ -220,22 +252,128 @@ public class InterfacciaResponasbile extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				RepartoProdottiFiniti rep = mag.getRepPfinit(elencoProdottiFiniti1.getSelectedItem().toString());
 				int q = Integer.parseInt(testoQuantità.getText());
+				@SuppressWarnings("deprecation")
 				Date data =  new Date(Integer.parseInt(anno.getText()),
-						   			  Integer.parseInt(mese.getText()),
-						   			  Integer.parseInt(giorno.getText()));
+			   			  			  Integer.parseInt(mese.getText()),
+			   			  			  Integer.parseInt(giorno.getText()),
+			   			  			  Integer.parseInt(ora.getText()),
+			   			  			  Integer.parseInt(minuto.getText()));
 				
-				String ris = mag.costruisciProdotti(rep, listaOperai.getSelectedIndex(), q, data);
+				String ris = mag.costruisciProdotti(rep, listaResponsabili.getSelectedIndex(), q, data);
 	
 				JOptionPane.showMessageDialog(costruisci, ris);
 			}	
 		});
 	
-		pannelloDestro.add(elencoProdottiFiniti1);							// aggiunto combobox dei prodotti finiti al pannello principale
-		pannelloQuant.add(testo);												// aggiunto testo a quantità
-		pannelloQuant.add(testoQuantità);										// aggiunto text area a quantità
-		pannelloDestro.add(pannelloQuant);									// aggiunto quantità al pannello principale
-		pannelloDestro.add(pannelloData);									// aggiunto data al pannello principale
-		pannelloDestro.add(costruisci);									// aggiunto bottone costruisco al pannello principale
-		pannelloPrincipale.add(pannelloDestro, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
+		pannelloDeposito.add(elencoProdottiFiniti1);						// aggiunto combobox dei prodotti finiti al pannello principale
+		pannelloQuant.add(testo);											// aggiunto testo a quantità
+		pannelloQuant.add(testoQuantità);									// aggiunto text area a quantità
+		pannelloDeposito.add(pannelloQuant);								// aggiunto quantità al pannello principale
+		pannelloDeposito.add(pannelloDataTotale);							// aggiunto data al pannello principale
+		pannelloDeposito.add(costruisci);									// aggiunto bottone costruisco al pannello principale
+		pannelloDestro.add(pannelloDeposito, BorderLayout.PAGE_START);
+				
+	}
+
+
+	private void inizializzaVendita(JPanel pannelloDestro, JComboBox<String> listaResponsabili) {
+		
+		final JPanel pannelloVendite = new JPanel();
+		pannelloVendite.setBorder(BorderFactory.createTitledBorder("pannello vendite"));
+		pannelloVendite.setPreferredSize(new Dimension(440, 200));
+		
+		// creo JcomboBox per lista Pfiniti
+		JComboBox<String> elencoProdottiFiniti1 = new JComboBox<>();
+		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
+			elencoProdottiFiniti1.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
+		}
+		
+		// PANNELLO QUANTIA ---------------------------------
+		// creato pannello
+		JPanel pannelloQuant = new JPanel();
+		// creato testo quantità
+		JLabel testo = new JLabel();
+		testo.setText("quantità");
+		// creo Text area per quantità
+		JTextArea testoQuantità = new JTextArea();
+		testoQuantità.setPreferredSize(new Dimension(70, 18));
+		
+		// PANNELLO DATA ---------------------------------
+        //creazione pannello data
+		JPanel pannelloDataTotale = new JPanel();
+		pannelloDataTotale.setLayout(new BorderLayout());
+        JPanel pannelloData = new JPanel();
+        // acquisizione titolo
+        JTextArea minuto = new JTextArea();
+        JLabel lMinuto = new JLabel();
+        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
+        // acquisizione minuto in input
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(1));
+        pannelloData.add(minuto);
+        // acquisizione ora in input
+        JTextArea ora = new JTextArea();
+        JLabel lora = new JLabel();
+        lora.setText("/");
+        ora.setPreferredSize(new Dimension(70, 18));
+        ora.setText(String.valueOf(1));
+        pannelloData.add(lora);
+        pannelloData.add(ora);
+        // acquisizione giorno in input
+        JTextArea giorno = new JTextArea();
+        JLabel lGiorno = new JLabel();
+        lGiorno.setText("/");
+        giorno.setPreferredSize(new Dimension(70, 18));
+        giorno.setText(String.valueOf(1));
+        pannelloData.add(lGiorno);
+        pannelloData.add(giorno);
+        // acquisizione mese in input
+        JTextArea mese = new JTextArea();
+        JLabel lMese = new JLabel();
+        lMese.setText("/");
+        mese.setPreferredSize(new Dimension(70, 18));
+        mese.setText(String.valueOf(1));
+        pannelloData.add(lMese);
+        pannelloData.add(mese);
+        // acquisizione anno in input
+        JTextArea anno = new JTextArea();
+        JLabel lAnno = new JLabel();
+        lAnno.setText("/");
+        anno.setPreferredSize(new Dimension(70, 18));
+        anno.setText(String.valueOf(2022));
+        pannelloData.add(lAnno);
+        pannelloData.add(anno);
+        // aggiunto titolo e data al pannelloDataTotale
+        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
+		
+		// bottone per far partire la costruzione
+		final JButton costruisci = new JButton("costruisci");
+		costruisci.addActionListener(new ActionListener() {
+	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RepartoProdottiFiniti rep = mag.getRepPfinit(elencoProdottiFiniti1.getSelectedItem().toString());
+				int q = Integer.parseInt(testoQuantità.getText());
+				@SuppressWarnings("deprecation")
+				Date data =  new Date(Integer.parseInt(anno.getText()),
+			   			  			  Integer.parseInt(mese.getText()),
+			   			  			  	Integer.parseInt(giorno.getText()),
+			   			  			  	Integer.parseInt(ora.getText()),
+			   			  			  	Integer.parseInt(minuto.getText()));
+				
+				String ris = mag.costruisciProdotti(rep, listaResponsabili.getSelectedIndex(), q, data);
+	
+				JOptionPane.showMessageDialog(costruisci, ris);
+			}	
+		});
+	
+		pannelloVendite.add(elencoProdottiFiniti1);							// aggiunto combobox dei prodotti finiti al pannello principale
+		pannelloQuant.add(testo);											// aggiunto testo a quantità
+		pannelloQuant.add(testoQuantità);									// aggiunto text area a quantità
+		pannelloVendite.add(pannelloQuant);									// aggiunto quantità al pannello principale
+		pannelloVendite.add(pannelloDataTotale);							// aggiunto data al pannello principale
+		pannelloVendite.add(costruisci);									// aggiunto bottone costruisco al pannello principale
+		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);		
 	}
 }

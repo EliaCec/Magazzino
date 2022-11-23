@@ -27,7 +27,7 @@ public class InterfacciaOperaio extends JFrame {
 		this.mag = mag;
 		
 		this.setTitle("Pannello operaio");
-		this.setLocation(670, 320);
+		this.setLocation(600, 320);
 		
 		InizializzaInterfaccia();
 		
@@ -170,11 +170,11 @@ public class InterfacciaOperaio extends JFrame {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void inizializzaCostruzione(JPanel pannelloPrincipale, JComboBox<String> listaOperai) {
+	private void inizializzaCostruzione(JPanel pannelloPrincipale, JComboBox<String> listaOperai) {
 		
 		// creazione pannello per la costruzione
 		final JPanel pannelloCostruzione = new JPanel();
-		pannelloCostruzione.setPreferredSize(new Dimension(380, 100));
+		pannelloCostruzione.setPreferredSize(new Dimension(440, 100));
 		pannelloCostruzione.setBorder(BorderFactory.createTitledBorder("pannello costruzioni"));
 		
 		// creo JcomboBox per lista Pfiniti
@@ -195,11 +195,29 @@ public class InterfacciaOperaio extends JFrame {
 		
 		// PANNELLO DATA ---------------------------------
         //creazione pannello data
+		JPanel pannelloDataTotale = new JPanel();
+		pannelloDataTotale.setLayout(new BorderLayout());
         JPanel pannelloData = new JPanel();
+        // acquisizione titolo
+        JTextArea minuto = new JTextArea();
+        JLabel lMinuto = new JLabel();
+        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
+        // acquisizione minuto in input
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(1));
+        pannelloData.add(minuto);
+        // acquisizione ora in input
+        JTextArea ora = new JTextArea();
+        JLabel lora = new JLabel();
+        lora.setText("/");
+        ora.setPreferredSize(new Dimension(70, 18));
+        ora.setText(String.valueOf(1));
+        pannelloData.add(lora);
+        pannelloData.add(ora);
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
         JLabel lGiorno = new JLabel();
-        lGiorno.setText("Data (dd/MM/yyyy): ");
+        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
         pannelloData.add(lGiorno);
@@ -220,6 +238,9 @@ public class InterfacciaOperaio extends JFrame {
         anno.setText(String.valueOf(2022));
         pannelloData.add(lAnno);
         pannelloData.add(anno);
+        // aggiunto titolo e data al pannelloDataTotale
+        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
 		final JButton costruisci = new JButton("costruisci");
@@ -231,7 +252,9 @@ public class InterfacciaOperaio extends JFrame {
 				int q = Integer.parseInt(testoQuantità.getText());
 				Date data =  new Date(Integer.parseInt(anno.getText()),
 						   			  Integer.parseInt(mese.getText()),
-						   			  Integer.parseInt(giorno.getText()));
+						   			  Integer.parseInt(giorno.getText()),
+						   			  Integer.parseInt(ora.getText()),
+						   			  Integer.parseInt(minuto.getText()));
 				
 				String ris = mag.costruisciProdotti(rep, listaOperai.getSelectedIndex(), q, data);
 
@@ -243,7 +266,7 @@ public class InterfacciaOperaio extends JFrame {
 		pannelloQuant.add(testo);												// aggiunto testo a quantità
 		pannelloQuant.add(testoQuantità);										// aggiunto text area a quantità
 		pannelloCostruzione.add(pannelloQuant);									// aggiunto quantità al pannello principale
-		pannelloCostruzione.add(pannelloData);									// aggiunto data al pannello principale
+		pannelloCostruzione.add(pannelloDataTotale);							// aggiunto data al pannello principale
 		pannelloCostruzione.add(costruisci);									// aggiunto bottone costruisco al pannello principale
 		pannelloPrincipale.add(pannelloCostruzione, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
 	}
