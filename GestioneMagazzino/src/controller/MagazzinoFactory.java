@@ -24,9 +24,10 @@ public class MagazzinoFactory {
 	}
 	
 	// metodo che crea un dirigente
+	@SuppressWarnings("deprecation")
 	public static Magazzino creaMagazzino() {
 		Dirigente dir = creaDirigente();
-		return new Magazzino(dir);
+		return new Magazzino(dir, new Date(2022, 1, 1, 7, 0));
 	}
 	
 	@SuppressWarnings("deprecation")
