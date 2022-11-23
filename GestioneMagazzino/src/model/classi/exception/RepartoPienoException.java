@@ -6,6 +6,6 @@ public class RepartoPienoException extends RuntimeException {
 
 	// costruttore
 	public RepartoPienoException(int n, int f) {
-		super("il reparto è pieno. La quantità attuale è: " + n + "/" + f);
+		super("il reparto è pieno. \nLa quantità attuale è: " + n + "/" + f);
 	}
 }

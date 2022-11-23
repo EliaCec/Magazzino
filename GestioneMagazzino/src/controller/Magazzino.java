@@ -32,14 +32,15 @@ public class Magazzino {
 		return null;
 	}
 	
+	// metodo che costruisce i prodotti finiti e stampa il messaggio di conferma/errore
 	public String costruisciProdotti(RepartoProdottiFiniti rep, int o, int n, Date giorno) {
 		try {
 			dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
 			return "prodotto costruito con successo";
 		}catch(RepartoPienoException e){
-			return "hai costruito troppi prodotti finiti, spazio insufficente!!";
+			return e.getMessage();
 		}catch(SemilavoratiInsufficientiException f) {
-			return "Semilavorati insufficenti";
+			return f.getMessage();
 		}
 	}
 }
