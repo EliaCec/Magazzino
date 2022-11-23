@@ -9,12 +9,14 @@ import model.classi.exception.SemilavoratiInsufficientiException;
 
 public class Magazzino {
 	
-	// campo interno
+	// campi interni
 	private Dirigente dir;
+	private Date dataCorrente; 		// data per controllare che le operazioni avvengano in ordine cronologico
 	
 	// costruttore
-	public Magazzino(Dirigente dir) {
+	public Magazzino(Dirigente dir, Date d) {
 		this.dir = dir;
+		this.dataCorrente = d;
 	}
 	
 	// metodo getter
@@ -42,4 +44,10 @@ public class Magazzino {
 			return "Semilavorati insufficenti";
 		}
 	}
+	
+	// metodo che controlla la correttezza delle date, nuovaData deve essere strettamente maggiore della data corrente
+	private boolean controllaData(Date nuovaData) {
+		return nuovaData.after(this.dataCorrente);
+	}
+	
 }
