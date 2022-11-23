@@ -204,14 +204,14 @@ public class InterfacciaOperaio extends JFrame {
         lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
         // acquisizione minuto in input
         minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(1));
+        minuto.setText(String.valueOf(0));
         pannelloData.add(minuto);
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
         JLabel lora = new JLabel();
         lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
-        ora.setText(String.valueOf(1));
+        ora.setText(String.valueOf(7));
         pannelloData.add(lora);
         pannelloData.add(ora);
         // acquisizione giorno in input

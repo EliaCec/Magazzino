@@ -1,23 +1,30 @@
 package view;
 
 import java.util.Date;
+import java.util.LinkedList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import controller.Magazzino;
 
 @SuppressWarnings("serial")
 public class InterfacciaDirigente extends JFrame {
 	
 	private Magazzino mag;
-
+	LinkedList<String> ciao = new LinkedList<>();
 	// costruttore
 	public InterfacciaDirigente(Magazzino mag) {
 		this.mag = mag;
@@ -115,6 +122,16 @@ public class InterfacciaDirigente extends JFrame {
 		pD.add(pannelloData, BorderLayout.CENTER);
 		// creazione bottone per effettuare cambio turno
 		JButton btnCambioTurno = new JButton("Cambia turno");
+		btnCambioTurno.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				JOptionPane.showMessageDialog(btnCambioTurno, "ciao");
+			}	
+		});
+		
 		pD.add(btnCambioTurno, BorderLayout.PAGE_END);
 	}
 	

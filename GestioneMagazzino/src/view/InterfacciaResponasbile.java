@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import controller.Magazzino;
 import model.RepartoProdottiFiniti;
+import model.RepartoSemilavorati;
 
 @SuppressWarnings("serial")
 public class InterfacciaResponasbile extends JFrame {
@@ -172,17 +173,20 @@ public class InterfacciaResponasbile extends JFrame {
 		pannelloPrincipale.add(pannelloDestro, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
 	}
 
-
+	@SuppressWarnings("deprecation")
 	private void inizializzaDeposito(JPanel pannelloDestro, JComboBox<String> listaResponsabili) {
 		
 		final JPanel pannelloDeposito = new JPanel();
 		pannelloDeposito.setBorder(BorderFactory.createTitledBorder("pannello deposito"));
 		pannelloDeposito.setPreferredSize(new Dimension(400, 200));
 		
-		// creo JcomboBox per lista Pfiniti
-		JComboBox<String> elencoProdottiFiniti1 = new JComboBox<>();
+		// creo JcomboBox per lista semilavorati
+		JComboBox<String> elencoSemilavorati = new JComboBox<>();
 		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
-			elencoProdottiFiniti1.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
+			for(int j = 0; j < mag.getDirigente().getReparti().get(i).getListaRepartiSemilavorati().size(); j++) {
+					elencoSemilavorati.addItem(mag.getDirigente().getReparti().get(i)
+										  		  .getListaRepartiSemilavorati().get(j).getGiacenzaReparto().getNome());
+			}
 		}
 		
 		// PANNELLO QUANTIA ---------------------------------
@@ -206,14 +210,14 @@ public class InterfacciaResponasbile extends JFrame {
         lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
         // acquisizione minuto in input
         minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(1));
+        minuto.setText(String.valueOf(0));
         pannelloData.add(minuto);
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
         JLabel lora = new JLabel();
         lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
-        ora.setText(String.valueOf(1));
+        ora.setText(String.valueOf(7));
         pannelloData.add(lora);
         pannelloData.add(ora);
         // acquisizione giorno in input
@@ -245,37 +249,36 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
-		final JButton costruisci = new JButton("costruisci");
-		costruisci.addActionListener(new ActionListener() {
+		final JButton deposita = new JButton("deposita");
+		deposita.addActionListener(new ActionListener() {
 	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RepartoProdottiFiniti rep = mag.getRepPfinit(elencoProdottiFiniti1.getSelectedItem().toString());
+				RepartoSemilavorati rep = mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString());
 				int q = Integer.parseInt(testoQuantità.getText());
-				@SuppressWarnings("deprecation")
 				Date data =  new Date(Integer.parseInt(anno.getText()),
 			   			  			  Integer.parseInt(mese.getText()),
 			   			  			  Integer.parseInt(giorno.getText()),
 			   			  			  Integer.parseInt(ora.getText()),
 			   			  			  Integer.parseInt(minuto.getText()));
 				
-				String ris = mag.costruisciProdotti(rep, listaResponsabili.getSelectedIndex(), q, data);
+				String ris = mag.depositaSemilavorati(rep, listaResponsabili.getSelectedIndex(), q, data);
 	
-				JOptionPane.showMessageDialog(costruisci, ris);
+				JOptionPane.showMessageDialog(deposita, ris);
 			}	
 		});
 	
-		pannelloDeposito.add(elencoProdottiFiniti1);						// aggiunto combobox dei prodotti finiti al pannello principale
+		pannelloDeposito.add(elencoSemilavorati);							// aggiunto combobox dei prodotti finiti al pannello principale
 		pannelloQuant.add(testo);											// aggiunto testo a quantità
 		pannelloQuant.add(testoQuantità);									// aggiunto text area a quantità
 		pannelloDeposito.add(pannelloQuant);								// aggiunto quantità al pannello principale
 		pannelloDeposito.add(pannelloDataTotale);							// aggiunto data al pannello principale
-		pannelloDeposito.add(costruisci);									// aggiunto bottone costruisco al pannello principale
-		pannelloDestro.add(pannelloDeposito, BorderLayout.PAGE_START);
+		pannelloDeposito.add(deposita);										// aggiunto bottone costruisco al pannello principale
+		pannelloDestro.add(pannelloDeposito, BorderLayout.PAGE_START);		// aggiunti depositi al pannello destro
 				
 	}
 
-
+	@SuppressWarnings("deprecation")
 	private void inizializzaVendita(JPanel pannelloDestro, JComboBox<String> listaResponsabili) {
 		
 		final JPanel pannelloVendite = new JPanel();
@@ -309,14 +312,14 @@ public class InterfacciaResponasbile extends JFrame {
         lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
         // acquisizione minuto in input
         minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(1));
+        minuto.setText(String.valueOf(0));
         pannelloData.add(minuto);
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
         JLabel lora = new JLabel();
         lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
-        ora.setText(String.valueOf(1));
+        ora.setText(String.valueOf(7));
         pannelloData.add(lora);
         pannelloData.add(ora);
         // acquisizione giorno in input
@@ -348,23 +351,22 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
-		final JButton costruisci = new JButton("costruisci");
-		costruisci.addActionListener(new ActionListener() {
+		final JButton vendi = new JButton("vendi");
+		vendi.addActionListener(new ActionListener() {
 	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RepartoProdottiFiniti rep = mag.getRepPfinit(elencoProdottiFiniti1.getSelectedItem().toString());
 				int q = Integer.parseInt(testoQuantità.getText());
-				@SuppressWarnings("deprecation")
 				Date data =  new Date(Integer.parseInt(anno.getText()),
 			   			  			  Integer.parseInt(mese.getText()),
 			   			  			  	Integer.parseInt(giorno.getText()),
 			   			  			  	Integer.parseInt(ora.getText()),
 			   			  			  	Integer.parseInt(minuto.getText()));
 				
-				String ris = mag.costruisciProdotti(rep, listaResponsabili.getSelectedIndex(), q, data);
+				String ris = mag.vendiProdotti(rep, listaResponsabili.getSelectedIndex(), q, data);
 	
-				JOptionPane.showMessageDialog(costruisci, ris);
+				JOptionPane.showMessageDialog(vendi, ris);
 			}	
 		});
 	
@@ -373,7 +375,7 @@ public class InterfacciaResponasbile extends JFrame {
 		pannelloQuant.add(testoQuantità);									// aggiunto text area a quantità
 		pannelloVendite.add(pannelloQuant);									// aggiunto quantità al pannello principale
 		pannelloVendite.add(pannelloDataTotale);							// aggiunto data al pannello principale
-		pannelloVendite.add(costruisci);									// aggiunto bottone costruisco al pannello principale
-		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);		
+		pannelloVendite.add(vendi);											// aggiunto bottone costruisco al pannello principale
+		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);			// aggiunte vendite al pannello destro
 	}
 }
