@@ -34,9 +34,9 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 	}
 
 	public void costruisciProdottiFiniti(RepartoProdottiFiniti rep, int n, Date giorno) {
-		if(rep.isPieno()) {
+		if(rep.isPieno() || rep.getQuantita() + n > rep.getCapacita()) {
 			throw new RepartoPienoException(rep.getQuantita(), rep.getCapacita());
-		}else if(this.calcoloProdottiFinitiCostruibili(rep) < n) {
+		}else if(this.calcoloProdottiFinitiCostruibili(rep, n) < n) {
 			throw new SemilavoratiInsufficientiException(semilavoratiMancanti);
 		}else {
 			for(int i = 0; i < n; i++) {
@@ -59,7 +59,7 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 							.collect(Collectors.summingInt(m -> 1));
 	}
 
-	public int calcoloProdottiFinitiCostruibili(RepartoProdottiFiniti rep) {
+	public int calcoloProdottiFinitiCostruibili(RepartoProdottiFiniti rep, int n) {
 		this.semilavoratiMancanti.clear();
 		int prodottiCostruibili = 1000;
 		HashMap<String, Integer> componenti = new HashMap<>(((ProdottoFinito)rep.getGiacenzaReparto()).getComponenti());
@@ -70,8 +70,8 @@ public class OperaioImpl extends DipendenteImpl implements Operaio {
 														    .getNome()
 														    .equals(listaComponenti.get(k))) {
 					
-					if(rep.getListaRepartiSemilavorati().get(j).getQuantita() < componenti.get(listaComponenti.get(k))) {
-						int numSemilavoratiMancanti = componenti.get(listaComponenti.get(k)) - rep.getListaRepartiSemilavorati().get(j).getQuantita();
+					if(rep.getListaRepartiSemilavorati().get(j).getQuantita() < componenti.get(listaComponenti.get(k)) * n) {
+						int numSemilavoratiMancanti = componenti.get(listaComponenti.get(k))*n - rep.getListaRepartiSemilavorati().get(j).getQuantita();
 						this.semilavoratiMancanti.put(listaComponenti.get(k), numSemilavoratiMancanti);
 					}
 					

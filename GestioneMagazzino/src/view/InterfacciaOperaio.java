@@ -27,7 +27,7 @@ public class InterfacciaOperaio extends JFrame {
 		this.mag = mag;
 		
 		this.setTitle("Pannello operaio");
-		this.setLocation(650, 320);
+		this.setLocation(670, 320);
 		
 		InizializzaInterfaccia();
 		
@@ -90,7 +90,7 @@ public class InterfacciaOperaio extends JFrame {
 		});
 		
 		// bottone per Lista semilavorati usati
-		final JButton listaSemilavorati = new JButton("Lista semilavorati");
+		final JButton listaSemilavorati = new JButton("Semilavorati usati");
 		listaSemilavorati.addActionListener(e -> {
 			this.mag.getDirigente().getOperaiAttivi().get(listaOperai.getSelectedIndex())
 									 				 .getSemilavoratiPrelevati()
@@ -98,7 +98,7 @@ public class InterfacciaOperaio extends JFrame {
 		});
 		
 		// bottone per lista prodotti finiti costruiti
-		final JButton listaProdottiFiniti = new JButton("Lista prodotti finiti costruiti");
+		final JButton listaProdottiFiniti = new JButton("Prodotti finiti costruiti");
 		listaProdottiFiniti.addActionListener(e -> {
 				this.mag.getDirigente().getOperaiAttivi().get(listaOperai.getSelectedIndex())
 									   .getProdottiCostruiti()
@@ -144,7 +144,7 @@ public class InterfacciaOperaio extends JFrame {
 				areaStampa.append(String.valueOf(this.mag.getDirigente()
 					  .getOperaiAttivi()
 					  .get(listaOperai.getSelectedIndex())
-					  .calcoloProdottiFinitiCostruibili(mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString()))) + "\n");
+					  .calcoloProdottiFinitiCostruibili(mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString()), 0)) + "\n");
 		});
 		
 		// bottone per ripulire textarea

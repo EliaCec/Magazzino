@@ -45,14 +45,14 @@ class TestOperaio {
 		l.depositaSemilavorati(dir.cercaRepartoPerNome(NomiReparti.REPARTO_PANNELLO_GRANDE_ARMADIO.getNome(), repArmadio.getListaRepartiSemilavorati()), 4, new Date(2022, 10, 11, 7, 50));
 		
 		// test su quanti prodotti posso costruirci
-		assertEquals(4, d.calcoloProdottiFinitiCostruibili(repArmadio));
+		assertEquals(4, d.calcoloProdottiFinitiCostruibili(repArmadio, 0));
 		
 		// costruisco 2 armadi
 		d.costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 7, 55));
 		assertEquals(2, repArmadio.getQuantita());
 		
 		// controllo ora quanti prodotti posso costruire
-		assertEquals(2, d.calcoloProdottiFinitiCostruibili(repArmadio));
+		assertEquals(2, d.calcoloProdottiFinitiCostruibili(repArmadio, 0));
 		
 		// controllo quanti pannelli grandi ho utilizzato (get(2))
 		assertEquals(8, d.prelievoPerSemilavorato(repArmadio.getListaRepartiSemilavorati()
@@ -73,7 +73,7 @@ class TestOperaio {
 		l.depositaSemilavorati(repScrivania.getListaRepartiSemilavorati().get(1), 80,  new Date(2022, 10, 12, 7, 40));
 		
 		// controllo prodotti costruibili
-		assertEquals(20, d.calcoloProdottiFinitiCostruibili(repScrivania));
+		assertEquals(20, d.calcoloProdottiFinitiCostruibili(repScrivania, 0));
 		
 		// costruisco 10 scrivanie
 		d.costruisciProdottiFiniti(repScrivania, 10, new Date(2022, 10, 12, 7, 55));

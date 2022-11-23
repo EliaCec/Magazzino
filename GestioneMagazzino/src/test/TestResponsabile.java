@@ -16,7 +16,6 @@ import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
 import model.classi.exception.ProdottiInsufficientiException;
 import model.classi.exception.RepartoPienoException;
-import model.classi.exception.SemilavoratiInsufficientiException;
 import model.classi.reparti.NomiReparti;
 import model.classi.reparti.RepartoArmadio;
 import model.classi.reparti.RepartoMensola;

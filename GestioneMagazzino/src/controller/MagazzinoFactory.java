@@ -81,7 +81,7 @@ public class MagazzinoFactory {
 	    // costruisco prodotti finiti
 	    ((Operaio) dir.cercaDipendentePerNome("Gianluca_Bianchi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 2, new Date(2022, 10, 11, 9, 00));
 	    ((Operaio) dir.cercaDipendentePerNome("Marco_Rossi", dir.getOperaiAttivi())).costruisciProdottiFiniti(repArmadio, 1, new Date(2022, 10, 11, 9, 00));
-	    for(int i = 0; i < dir.getReparti().get(2).getCapacita(); i++)
+	    for(int i = 0; i < 197; i++)
 	    dir.getReparti().get(2).depositaScorte();
 	    // FINO A QUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 		return dir;
