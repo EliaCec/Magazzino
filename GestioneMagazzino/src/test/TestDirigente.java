@@ -15,7 +15,7 @@ import model.Responsabile;
 import model.classi.DirigenteImpl;
 import model.classi.OperaioImpl;
 import model.classi.ResponsabileImpl;
-import model.classi.exception.TurnoInvalidoException;
+import model.classi.exception.DataErrataException;
 import model.classi.reparti.NomiReparti;
 import model.classi.reparti.RepartoArmadio;
 import model.classi.reparti.RepartoMensola;
@@ -89,7 +89,7 @@ class TestDirigente {
 		assertEquals(2, dir.getOperaiAttivi().size());
 		assertEquals(1, dir.getResponsabiliAttivi().size());
 		// cambio turno errato (data nuovo turno più vecchia)
-		assertThrows(TurnoInvalidoException.class, () -> dir.cambioTurno(operai, responsabili, new Date(1900, 1, 2, 7, 30)));
+		assertThrows(DataErrataException.class, () -> dir.cambioTurno(operai, responsabili, new Date(1900, 1, 2, 7, 30)));
 	}
 	
 	// metodo che testa la correttezza della ricerca dei dipendenti assunti

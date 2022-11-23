@@ -4,6 +4,7 @@ import java.util.Date;
 
 import model.Dirigente;
 import model.RepartoProdottiFiniti;
+import model.classi.exception.DataErrataException;
 import model.classi.exception.RepartoPienoException;
 import model.classi.exception.SemilavoratiInsufficientiException;
 
@@ -39,16 +40,20 @@ public class Magazzino {
 		try {
 			dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
 			return "prodotto costruito con successo";
-		}catch(RepartoPienoException e){
+		} catch(RepartoPienoException e){
 			return e.getMessage();
-		}catch(SemilavoratiInsufficientiException f) {
+		} catch(SemilavoratiInsufficientiException f) {
 			return f.getMessage();
+		} catch(DataErrataException d) {
+			return d.getMessage();
 		}
 	}
 	
 	// metodo che controlla la correttezza delle date, nuovaData deve essere strettamente maggiore della data corrente
-	private boolean controllaData(Date nuovaData) {
-		return nuovaData.after(this.dataCorrente);
+	private void controllaData(Date nuovaData) {
+		if (!nuovaData.after(this.dataCorrente)) {
+			throw new DataErrataException("L'ultima operazione effettuata nel magazzino è stata il: " + this.dataCorrente + ", inserisci un'operazione con data/ora successive a questa");
+		}
 	}
 	
 }
