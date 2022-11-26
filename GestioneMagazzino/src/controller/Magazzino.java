@@ -33,6 +33,9 @@ public class Magazzino {
 	// metodo per ritornare il reparto con un semilavorato
 	public RepartoSemilavorati getRepSemi(String pf) {
 		for (int i = 0; i < this.dir.getReparti().size(); i++) {
+			if(this.dir.getReparti().get(i).getGiacenzaReparto().getNome().equals(pf)) {
+				return this.dir.getReparti().get(i);
+			}
 			for(int j = 0; j < this.dir.getReparti().get(i).getListaRepartiSemilavorati().size(); j++) {
 				if(this.dir.getReparti().get(i).getListaRepartiSemilavorati().get(j).getGiacenzaReparto().getNome().equals(pf)) {
 					return this.dir.getReparti().get(i).getListaRepartiSemilavorati().get(j);

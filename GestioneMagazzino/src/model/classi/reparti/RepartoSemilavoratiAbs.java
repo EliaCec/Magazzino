@@ -56,6 +56,10 @@ public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 		return g;
 	}
 	
+	public List<Giacenza> scorteAttuali(){
+		return new LinkedList<>(this.scorte);
+	}
+	
 	protected abstract Giacenza creaGiacenza();
 	
 }
