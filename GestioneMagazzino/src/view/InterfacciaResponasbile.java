@@ -206,27 +206,24 @@ public class InterfacciaResponasbile extends JFrame {
         JPanel pannelloData = new JPanel();
         // acquisizione titolo
         JTextArea minuto = new JTextArea();
-        JLabel lMinuto = new JLabel();
-        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
-        // acquisizione minuto in input
-        minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(0));
-        pannelloData.add(minuto);
+        JLabel testoIniziale = new JLabel();
+        testoIniziale.setText("Data (hh/mm/dd/MM/yyyy): ");
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
-        JLabel lora = new JLabel();
-        lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
         ora.setText(String.valueOf(7));
-        pannelloData.add(lora);
         pannelloData.add(ora);
+        // acquisizione minuto in input
+        JLabel lminuto = new JLabel();
+        lminuto.setText(":");     
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(0));
+        pannelloData.add(lminuto);
+        pannelloData.add(minuto);
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
-        JLabel lGiorno = new JLabel();
-        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
-        pannelloData.add(lGiorno);
         pannelloData.add(giorno);
         // acquisizione mese in input
         JTextArea mese = new JTextArea();
@@ -245,7 +242,7 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloData.add(lAnno);
         pannelloData.add(anno);
         // aggiunto titolo e data al pannelloDataTotale
-        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(testoIniziale, BorderLayout.PAGE_START);
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
@@ -308,27 +305,24 @@ public class InterfacciaResponasbile extends JFrame {
         JPanel pannelloData = new JPanel();
         // acquisizione titolo
         JTextArea minuto = new JTextArea();
-        JLabel lMinuto = new JLabel();
-        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
-        // acquisizione minuto in input
-        minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(0));
-        pannelloData.add(minuto);
+        JLabel testoIniziale = new JLabel();
+        testoIniziale.setText("Data (mm/hh/dd/MM/yyyy): ");
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
-        JLabel lora = new JLabel();
-        lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
         ora.setText(String.valueOf(7));
-        pannelloData.add(lora);
         pannelloData.add(ora);
+        // acquisizione minuto in input
+        JLabel lora = new JLabel();
+        lora.setText("/");
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(0));
+        pannelloData.add(lora);
+        pannelloData.add(minuto);  
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
-        JLabel lGiorno = new JLabel();
-        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
-        pannelloData.add(lGiorno);
         pannelloData.add(giorno);
         // acquisizione mese in input
         JTextArea mese = new JTextArea();
@@ -347,7 +341,7 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloData.add(lAnno);
         pannelloData.add(anno);
         // aggiunto titolo e data al pannelloDataTotale
-        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(testoIniziale, BorderLayout.PAGE_START);
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione

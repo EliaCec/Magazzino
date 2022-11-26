@@ -56,8 +56,8 @@ public class Magazzino {
 	public String costruisciProdotti(RepartoProdottiFiniti rep, int o, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
-			this.dataCorrente = giorno;
 			this.dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
+			this.dataCorrente = giorno;
 			return "prodotto costruito con successo";
 		} catch(RepartoPienoException e){
 			return e.getMessage();
@@ -72,8 +72,8 @@ public class Magazzino {
 	public String vendiProdotti(RepartoProdottiFiniti rep, int r, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
-			this.dataCorrente = giorno;
 			this.dir.getResponsabiliAttivi().get(r).vendiProdottiFiniti(rep, n, giorno);
+			this.dataCorrente = giorno;
 			return "prodotto venduto con successo";
 		} catch(ProdottiInsufficientiException p) {
 			return p.getMessage();
@@ -86,8 +86,8 @@ public class Magazzino {
 	public String depositaSemilavorati(RepartoSemilavorati rep, int r, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
-			this.dataCorrente = giorno;
 			this.dir.getResponsabiliAttivi().get(r).depositaSemilavorati(rep, n, giorno);
+			this.dataCorrente = giorno;
 			return "semilavorati depositati con successo";
 		} catch(RepartoPienoException e) {
 			return e.getMessage();
@@ -107,10 +107,16 @@ public class Magazzino {
 		}
 	}
 	
+	// metodo che stampa l'ora
+	@SuppressWarnings("deprecation")
+	private String stampaData(Date d) {
+		return d.getDate() + "/" + d.getMonth() + "/" + d.getYear() + " alle ore " + d.getHours() + ":" + d.getMinutes();
+	}
+	
 	// metodo che controlla la correttezza delle date, nuovaData deve essere strettamente maggiore della data corrente
 	private void controllaData(Date nuovaData) {
 		if (!nuovaData.after(this.dataCorrente)) {
-			throw new DataErrataException("L'ultima operazione effettuata nel magazzino è stata il: " + this.dataCorrente + ", inserisci un'operazione con data/ora successive a questa");
+			throw new DataErrataException("L'ultima operazione effettuata nel magazzino è stata il: " + this.stampaData(this.dataCorrente) + " \nInserisci un'operazione con data/ora successive a questa");
 		}
 	}
 	

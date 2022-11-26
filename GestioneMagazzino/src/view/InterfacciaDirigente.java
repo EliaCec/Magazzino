@@ -41,8 +41,8 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloPrincipale.setLayout(new BorderLayout());
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		this.creaPannelloSinistra(pannelloPrincipale);	// creazione pannelloSinistra
-		this.creaPannelloDestra(pannelloPrincipale);	// creazione pannelloDestra
+		this.creaPannelloSinistra(pannelloPrincipale);		// creazione pannelloSinistra
+		this.creaPannelloDestra(pannelloPrincipale);		// creazione pannelloDestra
 		
 		this.add(pannelloPrincipale);
 	}
