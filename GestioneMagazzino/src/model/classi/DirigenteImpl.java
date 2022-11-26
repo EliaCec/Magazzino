@@ -19,6 +19,7 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 	@SuppressWarnings("deprecation")
 	public DirigenteImpl() {
 		super("DIRIGENTE");
+		GeneratoreID.inizializzaGeneratore();
 		this.responsabili 		= new LinkedList<>();
 		this.operai 			= new LinkedList<>();
 		this.responsabiliAttivi = new LinkedList<>();

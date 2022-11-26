@@ -1,8 +1,6 @@
 package model;
 
 public interface RepartoSemilavorati {
-	/* Metodo che restituisce il codice univoco che identifica il reparto */
-	public int getId();
 	
 	/* Metodo che restituisce il nome del reparto */
 	public String getNome();
@@ -30,5 +28,6 @@ public interface RepartoSemilavorati {
 	 * Restituisce true nel caso in cui il prelievo avvenga con successo, false altrimenti */
 	public Giacenza prelevaScorte();
 	
+	/* Metodo che restituisce il tipo di giacenza presente in quel reparto*/
 	public Giacenza getGiacenzaReparto();
 }
