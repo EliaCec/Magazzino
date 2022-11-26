@@ -1,28 +1,35 @@
 package view;
 
 import java.util.Date;
+import java.util.LinkedList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import controller.Magazzino;
 
 @SuppressWarnings("serial")
 public class InterfacciaDirigente extends JFrame {
 	
 	private Magazzino mag;
-
+	LinkedList<String> ciao = new LinkedList<>();
 	// costruttore
 	public InterfacciaDirigente(Magazzino mag) {
 		this.mag = mag;
 		this.setTitle("Pannello dirigente");
-		this.setLocation(10,100);
+		this.setLocation(100, 0);
 		this.inizializzaInterfaccia();
 		pack();
 	}
@@ -115,6 +122,16 @@ public class InterfacciaDirigente extends JFrame {
 		pD.add(pannelloData, BorderLayout.CENTER);
 		// creazione bottone per effettuare cambio turno
 		JButton btnCambioTurno = new JButton("Cambia turno");
+		btnCambioTurno.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				JOptionPane.showMessageDialog(btnCambioTurno, "ciao");
+			}	
+		});
+		
 		pD.add(btnCambioTurno, BorderLayout.PAGE_END);
 	}
 	
@@ -159,21 +176,31 @@ public class InterfacciaDirigente extends JFrame {
 		// creazione bottone per storico giornaliero semilavorati utilizzati
 		JButton btnStoricoSemi = new JButton("Ricerca semilavorati utilizzati");
 		btnStoricoSemi.addActionListener(e -> {
-			mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).forEach(n -> ris.append(n.getSemilavorato().getNome() + "\n"));
+			mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																			Integer.parseInt(mese.getText()),
+																			Integer.parseInt(giorno.getText())))
+																			.forEach(n -> ris.append(n.getSemilavorato().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoSemi);
 		// creazione bottone per storico giornaliero vendite effettuate
 		JButton btnStoricoVendite = new JButton("Ricerca vendite effettuate");
 		btnStoricoVendite.addActionListener(e -> {
-			ris.append(String.valueOf(this.mag.getDirigente().storicoVenditeGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).size()));
+			this.mag.getDirigente().storicoVenditeGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																	   Integer.parseInt(mese.getText()),
+																	   Integer.parseInt(giorno.getText())))
+																	   .forEach(n -> ris.append(n.getProdottoFinito().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoVendite);
 		// creazione bottone per storico giornaliero costruzioni effettuate
 		JButton btnStoricoCostr = new JButton("Ricerca costruzioni effettuate");
 		btnStoricoCostr.addActionListener(e -> {
-			ris.append(String.valueOf(this.mag.getDirigente().storicoCostruzioniGiornaliero(new Date(Integer.parseInt(anno.getText()),Integer.parseInt(mese.getText()),Integer.parseInt(giorno.getText()))).size()));
+			this.mag.getDirigente().storicoCostruzioniGiornaliero(new Date(Integer.parseInt(anno.getText()),
+																		   Integer.parseInt(mese.getText()),
+																		   Integer.parseInt(giorno.getText())))
+																	   	   .forEach(n -> ris.append(n.getProdotto().getNome() + "\n"));
 		});
 		pannelloBot.add(btnStoricoCostr);
+		
 		// creazione bottone per cancellare il contenuto dell'output
 		JButton btnPulisci = new JButton("Pulisci");
 		btnPulisci.addActionListener(e -> {

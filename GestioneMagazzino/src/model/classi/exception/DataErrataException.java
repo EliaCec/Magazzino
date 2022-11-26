@@ -1,11 +1,11 @@
 package model.classi.exception;
 
-public class TurnoInvalidoException extends RuntimeException {
+public class DataErrataException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 
 	// costruttore
-	public TurnoInvalidoException(String msg) {
+	public DataErrataException(String msg) {
 		super(msg);
 	}
 }

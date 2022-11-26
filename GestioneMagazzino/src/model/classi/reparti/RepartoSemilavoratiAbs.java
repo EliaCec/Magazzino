@@ -1,8 +1,8 @@
 package model.classi.reparti;
 
+
 import java.util.LinkedList;
 import java.util.List;
-
 import model.Giacenza;
 import model.RepartoSemilavorati;
 
@@ -10,7 +10,7 @@ public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
 	private final int numeroReparto;			 // codice univoco del reparto
 	private final NomiReparti nome;  			 // nome del reparto
-	private List<Giacenza> scorte; 				 // scorte presenti nel reparto
+	private final List<Giacenza> scorte; 		 // scorte presenti nel reparto
 	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore

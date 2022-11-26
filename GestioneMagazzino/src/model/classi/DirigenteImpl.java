@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.*;
-import model.classi.exception.TurnoInvalidoException;
+import model.classi.exception.DataErrataException;
 
 public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 	private List<Responsabile> responsabili;				// responsabili totali
@@ -81,7 +81,7 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 			this.responsabiliAttivi = responsabili;
 			this.turnoCorrente = nuovoTurno;
 		} else {
-			throw new TurnoInvalidoException("L'ultimo turno è iniziato il: " + this.turnoCorrente + ", inserire un turno con data/ora successivi a questo");
+			throw new DataErrataException("L'ultimo turno è iniziato il: " + this.turnoCorrente + ", inserire un turno con data/ora successivi a questo");
 		}
 	}
 
