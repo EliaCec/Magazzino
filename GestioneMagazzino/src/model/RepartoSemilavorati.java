@@ -1,8 +1,6 @@
 package model;
 
 public interface RepartoSemilavorati {
-	/* Metodo che restituisce il codice univoco che identifica il reparto */
-	public int getId();
 	
 	/* Metodo che restituisce il nome del reparto */
 	public String getNome();

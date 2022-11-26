@@ -3,7 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public interface Dirigente {
+public interface Dirigente extends Dipendente{
 	/* Metodo che restituisce il numero totale dei reparti presenti nel magazzino */
 	public int getNumeroReparti();
 	

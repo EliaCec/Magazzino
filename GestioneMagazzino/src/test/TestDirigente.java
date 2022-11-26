@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.junit.jupiter.api.Test;
 import model.Dirigente;
 import model.Operaio;
@@ -58,6 +57,13 @@ class TestDirigente {
 	// metodo che testa l'assunzione dipendenti (sia operai che responsabili)
 	@Test
 	void testAssunzioneDipendenti() {
+		// test ID dirigente
+		assertEquals(0,  dir.getId());
+		// test ID dei dipendenti
+		assertEquals(1,  d.getId());
+		assertEquals(2,  f.getId());
+		assertEquals(3,  t.getId());
+		assertEquals(4,  a.getId());
 		assertEquals(0, dir.getOperaiAssunti().size()); // verifica assenza di operai
 		assertEquals(0, dir.getResponsabiliAssunti().size()); // verifica assenza di operai
 		// assunzione di quattro operai
