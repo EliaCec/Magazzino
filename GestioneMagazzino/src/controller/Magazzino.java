@@ -18,11 +18,14 @@ public class Magazzino {
 	// campi interni
 	private Dirigente dir;
 	private Date dataCorrente; 		// data per controllare che le operazioni avvengano in ordine cronologico
+	private Date ultimoCambioTurno; // data per controllare che le operazioni avvengano entro le 8 ore successive dell'inizio del turno
 	
 	// costruttore
+	@SuppressWarnings("deprecation")
 	public Magazzino(Dirigente dir) {
 		this.dir = dir;
-		this.dataCorrente = new Date();
+		this.ultimoCambioTurno= new Date(2022, 1, 1, 7, 00);
+		this.dataCorrente = new Date(2022, 1, 1, 7, 00);
 	}
 	
 	// metodo getter
@@ -56,6 +59,7 @@ public class Magazzino {
 	public String costruisciProdotti(RepartoProdottiFiniti rep, int o, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
+			this.controllaDataTurno(giorno);
 			this.dir.getOperaiAttivi().get(o).costruisciProdottiFiniti(rep, n, giorno);
 			this.dataCorrente = giorno;
 			return "prodotto costruito con successo";
@@ -72,6 +76,7 @@ public class Magazzino {
 	public String vendiProdotti(RepartoProdottiFiniti rep, int r, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
+			this.controllaDataTurno(giorno);
 			this.dir.getResponsabiliAttivi().get(r).vendiProdottiFiniti(rep, n, giorno);
 			this.dataCorrente = giorno;
 			return "prodotto venduto con successo";
@@ -86,6 +91,7 @@ public class Magazzino {
 	public String depositaSemilavorati(RepartoSemilavorati rep, int r, int n, Date giorno) {
 		try {
 			this.controllaData(giorno);
+			this.controllaDataTurno(giorno);
 			this.dir.getResponsabiliAttivi().get(r).depositaSemilavorati(rep, n, giorno);
 			this.dataCorrente = giorno;
 			return "semilavorati depositati con successo";
@@ -100,6 +106,7 @@ public class Magazzino {
 	public String cambioTurno(List<Operaio> nuoviOperai, List<Responsabile> nuoviResponsabili, Date data) {
 		try {
 			this.controllaData(data);
+			this.ultimoCambioTurno = data;
 			this.dir.cambioTurno(nuoviOperai, nuoviResponsabili, data);
 			return "cambio turno avvenuto con successo";
 		} catch(DataErrataException d) {
@@ -116,7 +123,17 @@ public class Magazzino {
 	// metodo che controlla la correttezza delle date, nuovaData deve essere strettamente maggiore della data corrente
 	private void controllaData(Date nuovaData) {
 		if (!nuovaData.after(this.dataCorrente)) {
-			throw new DataErrataException("L'ultima operazione effettuata nel magazzino è stata il: " + this.stampaData(this.dataCorrente) + " \nInserisci un'operazione con data/ora successive a questa");
+			throw new DataErrataException("L'ultima operazione effettuata nel magazzino è stata il: " + this.stampaData(this.dataCorrente) + " \nEffettua un'operazione con data/ora successive a questa");
+		}
+	}
+	
+	// metodo che controlla che un'operazione effettuata in dataOp sia entro le 8 ore successive dall'inizio del turno
+	@SuppressWarnings("deprecation")
+	private void controllaDataTurno(Date dataOp) {
+		Date cloneData = (Date)this.ultimoCambioTurno.clone();
+		cloneData.setHours(this.ultimoCambioTurno.getHours() + 8);
+		if (!dataOp.before(cloneData)) {
+			throw new DataErrataException("Il turno di questo dipendente finisce il " + this.stampaData(cloneData) + " \nEffettua un'operazione con data/ora precedenti a questa");
 		}
 	}
 	
