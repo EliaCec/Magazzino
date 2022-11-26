@@ -130,6 +130,22 @@ public class InterfacciaResponasbile extends JFrame {
 		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
 			elencoProdottiFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
 		}
+		
+		// bottone per numero p finiti attuali
+		final JButton btnAttualiPfiniti = new JButton("Tot quantità attuale");
+		btnAttualiPfiniti.addActionListener(e -> {
+			mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString())
+																   .scorteAttuali()
+																   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
+		
+		// bottone per numero semilavorati attuali
+		final JButton btnAttualiSemi = new JButton("Tot quantità attuale");
+		btnAttualiSemi.addActionListener(e -> {
+			mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString())
+			   												   .scorteAttuali()
+			   												   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
 	
 		// bottone per numero prodotti finiti venduti
 		final JButton numProdottiFiniti = new JButton("n° prodotti finiti venduti");
@@ -147,7 +163,9 @@ public class InterfacciaResponasbile extends JFrame {
 		});
 	
 		pannelloDepSemilavorati.add(elencoSemilavorati);									// aggiunto combobox al pannello Semilavorati
+		pannelloDepSemilavorati.add(btnAttualiSemi);										// aggiunto bottone qta totali al pannello semilavorati
 		pannelloVenditePfiniti.add(elencoProdottiFiniti);									// aggiunto combobox al pannello prodotti finiti
+		pannelloVenditePfiniti.add(btnAttualiPfiniti);										// aggiunto bottone qta totali al pannello prodotti finiti
 		pannelloDepSemilavorati.add(numSemilavoratiDepositati);								// aggiungo bottone per numero semilavorati usati
 		pannelloVenditePfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti costruiti
 		pannelloPulsanti.add(pannelloVenditePfiniti);										// aggiunto al pannello pulsanti il pannello prodotti finiti
