@@ -64,7 +64,7 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloSx.setBorder(BorderFactory.createTitledBorder("Gestionale"));
 		pannelloSx.setLayout(l);
 		this.creaPannelloBottoni(pannelloSx);
-		pp.add(pannelloSx, BorderLayout.LINE_START);
+		pp.add(pannelloSx, BorderLayout.LINE_START);		// aggiunto pannello degli storici al pannello principale
 	}
 	
 	// metodo che crea il pannello dei bottoni per gli storici giornalieri
@@ -74,7 +74,7 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloDx.setLayout(new BorderLayout());
 		pannelloDx.setBorder(BorderFactory.createTitledBorder("Cambi turni"));
 		this.creaPannelloCambiTurni(pannelloDx);
-		pp.add(pannelloDx);
+		pp.add(pannelloDx);									// aggiunto pannello dei cambi turni al pannello principale
 	}
 	
 	// metodo che crea pannello per cambi turno
