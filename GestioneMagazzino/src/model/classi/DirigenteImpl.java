@@ -76,13 +76,19 @@ public class DirigenteImpl extends DipendenteImpl implements Dirigente {
 		return new LinkedList<>(this.operaiAttivi);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void cambioTurno(List<Operaio> operai, List<Responsabile> responsabili, Date nuovoTurno) {
 		if (nuovoTurno.after(this.turnoCorrente)) {
 			this.operaiAttivi = operai;
 			this.responsabiliAttivi = responsabili;
 			this.turnoCorrente = nuovoTurno;
 		} else {
-			throw new DataErrataException("L'ultimo turno è iniziato il: " + this.turnoCorrente + ", inserire un turno con data/ora successivi a questo");
+			throw new DataErrataException("L'ultimo turno è iniziato il: " + this.turnoCorrente.getDate() 
+																		   + "/" + this.turnoCorrente.getMonth() 
+																		   + "/" + this.turnoCorrente.getYear() 
+																		   + " alle ore " + this.turnoCorrente.getHours() 
+																		   + ":" + this.turnoCorrente.getMinutes() 
+																		   + ", inserire un turno con data/ora successivi a questo");
 		}
 	}
 
