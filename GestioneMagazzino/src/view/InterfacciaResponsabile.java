@@ -135,17 +135,15 @@ public class InterfacciaResponsabile extends JFrame {
 		// bottone per numero p finiti attuali
 		final JButton btnAttualiPfiniti = new JButton("Tot quantità attuale");
 		btnAttualiPfiniti.addActionListener(e -> {
-			mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString())
-																   .scorteAttuali()
-																   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+			areaStampa.append(String.valueOf(mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString())
+																   .scorteAttuali().size()) + "\n");
 		});
 		
 		// bottone per numero semilavorati attuali
 		final JButton btnAttualiSemi = new JButton("Tot quantità attuale");
 		btnAttualiSemi.addActionListener(e -> {
-			mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString())
-			   												   .scorteAttuali()
-			   												   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+			areaStampa.append(String.valueOf(mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString())
+			   												   .scorteAttuali().size()) + "\n");
 		});
 	
 		// bottone per numero prodotti finiti venduti
