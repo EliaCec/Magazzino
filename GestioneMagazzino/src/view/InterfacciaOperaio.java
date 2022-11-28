@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +28,7 @@ public class InterfacciaOperaio extends JFrame {
 		this.mag = mag;
 		
 		this.setTitle("Pannello operaio");
-		this.setLocation(600, 320);
+		this.setLocation(450, 300);
 		
 		InizializzaInterfaccia();
 		
@@ -129,6 +130,22 @@ public class InterfacciaOperaio extends JFrame {
 			elencoProdottiFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
 		}
 
+		// bottone per numero p finiti attuali
+		final JButton btnAttualiPfiniti = new JButton("Tot quantità attuale");
+		btnAttualiPfiniti.addActionListener(e -> {
+			mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString())
+																   .scorteAttuali()
+																   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
+		
+		// bottone per numero semilavorati attuali
+		final JButton btnAttualiSemi = new JButton("Tot quantità attuale");
+		btnAttualiSemi.addActionListener(e -> {
+			mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString())
+			   												   .scorteAttuali()
+			   												   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
+		
 		// bottone per numero prodotti finiti costruiti
 		final JButton numProdottiFiniti = new JButton("n° prodotti finiti costruiti");
 		numProdottiFiniti.addActionListener(e -> {
@@ -154,7 +171,9 @@ public class InterfacciaOperaio extends JFrame {
 		});
 
 		pannelloSemilavorati.add(elencoSemilavorati);										// aggiunto combobox al pannello Semilavorati
+		pannelloSemilavorati.add(btnAttualiSemi);											// aggiunto bottone qta totali al pannello semilavorati
 		pannelloPfiniti.add(elencoProdottiFiniti);											// aggiunto combobox al pannello prodotti finiti
+		pannelloPfiniti.add(btnAttualiPfiniti);												// aggiunto bottone qta totali al pannello prodotti finiti
 		pannelloSemilavorati.add(numSemilavorati);											// aggiungo bottone per numero semilavorati usati
 		pannelloPfiniti.add(numProdottiFiniti);												// aggiungo bottone per numero prodotti finiti costruiti
 		pannelloPfiniti.add(numProdFinitiCostruibili);										// aggiungo bottone per numero prodotti finiti costruibili
@@ -200,27 +219,28 @@ public class InterfacciaOperaio extends JFrame {
         JPanel pannelloData = new JPanel();
         // acquisizione titolo
         JTextArea minuto = new JTextArea();
-        JLabel lMinuto = new JLabel();
-        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
+        JLabel testoIniziale = new JLabel();
+        testoIniziale.setText("Data (hh/mm/dd/MM/yyyy): ");
         // acquisizione minuto in input
         minuto.setPreferredSize(new Dimension(70, 18));
         minuto.setText(String.valueOf(0));
         pannelloData.add(minuto);
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
-        JLabel lora = new JLabel();
-        lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
         ora.setText(String.valueOf(7));
-        pannelloData.add(lora);
         pannelloData.add(ora);
+        // acquisizione minuto in input
+        JLabel lminuto = new JLabel();
+        lminuto.setText(":");
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(0));
+        pannelloData.add(lminuto);
+        pannelloData.add(minuto);
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
-        JLabel lGiorno = new JLabel();
-        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
-        pannelloData.add(lGiorno);
         pannelloData.add(giorno);
         // acquisizione mese in input
         JTextArea mese = new JTextArea();
@@ -239,7 +259,7 @@ public class InterfacciaOperaio extends JFrame {
         pannelloData.add(lAnno);
         pannelloData.add(anno);
         // aggiunto titolo e data al pannelloDataTotale
-        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(testoIniziale, BorderLayout.PAGE_START);
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
@@ -270,4 +290,14 @@ public class InterfacciaOperaio extends JFrame {
 		pannelloCostruzione.add(costruisci);									// aggiunto bottone costruisco al pannello principale
 		pannelloPrincipale.add(pannelloCostruzione, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
 	}
+	
+	// metodo che permette il refresh edll'intera interfaccia grafica degli operai
+	public InterfacciaOperaio aggiorna(InterfacciaOperaio i) {
+		i.dispose();
+		InterfacciaOperaio iNuova = new InterfacciaOperaio(mag);
+		iNuova.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		iNuova.setVisible(true);
+		return iNuova;
+	}
+	
 }

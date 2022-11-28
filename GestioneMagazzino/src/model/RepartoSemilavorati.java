@@ -1,8 +1,8 @@
 package model;
 
+import java.util.List;
+
 public interface RepartoSemilavorati {
-	/* Metodo che restituisce il codice univoco che identifica il reparto */
-	public int getId();
 	
 	/* Metodo che restituisce il nome del reparto */
 	public String getNome();
@@ -29,6 +29,9 @@ public interface RepartoSemilavorati {
 	/* Metodo usato per prelevare una scorta dal reparto corrente.
 	 * Restituisce true nel caso in cui il prelievo avvenga con successo, false altrimenti */
 	public Giacenza prelevaScorte();
+	
+	/* metodo che ritorna la lista delle scorte attuali */
+	public List<Giacenza> scorteAttuali();
 	
 	/* Metodo che restituisce il tipo di giacenza presente in quel reparto*/
 	public Giacenza getGiacenzaReparto();

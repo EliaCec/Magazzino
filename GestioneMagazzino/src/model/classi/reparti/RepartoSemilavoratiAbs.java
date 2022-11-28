@@ -3,27 +3,21 @@ package model.classi.reparti;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import model.Giacenza;
 import model.RepartoSemilavorati;
+import model.classi.GeneratoreID;
 
 public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
-	private static int NUOVO_NUMERO_REPARTO = 0; // codice univoco che verrà assegnato all'eventuale nuovo reparto che (e se) verrà creato
-	private final int numeroReparto;			 // codice univoco del reparto
 	private final NomiReparti nome;  			 // nome del reparto
 	private final List<Giacenza> scorte; 		 // scorte presenti nel reparto
 	private final int capacita;					 // capacità del magazzino
 	
 	// costruttore
 	public RepartoSemilavoratiAbs(int c, NomiReparti name) {
-		this.numeroReparto 	  = RepartoSemilavoratiAbs.NUOVO_NUMERO_REPARTO;
 		this.nome 	  		  = name;
 		this.scorte 		  = new LinkedList<>();
 		this.capacita 		  = c;
-		RepartoSemilavoratiAbs.NUOVO_NUMERO_REPARTO++;
-	}
-
-	public int getId() {
-		return this.numeroReparto;
 	}
 
 	public String getNome() {
@@ -58,8 +52,12 @@ public abstract class RepartoSemilavoratiAbs implements RepartoSemilavorati {
 	
 	public Giacenza getGiacenzaReparto() {
 		Giacenza g = creaGiacenza();
-		g.setId(g.getId() - 1);
+		GeneratoreID.decrementaIdGiacenza();
 		return g;
+	}
+	
+	public List<Giacenza> scorteAttuali(){
+		return new LinkedList<>(this.scorte);
 	}
 	
 	protected abstract Giacenza creaGiacenza();

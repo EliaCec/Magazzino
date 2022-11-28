@@ -9,7 +9,9 @@ public class Pannello {
 	
 	// costruttore
 	public Pannello(Magazzino mag) {
-		this.creaInterfacce(new InterfacciaDirigente(mag), new InterfacciaOperaio(mag), new InterfacciaResponasbile(mag));
+		InterfacciaOperaio i = new InterfacciaOperaio(mag);
+		InterfacciaResponsabile r = new InterfacciaResponsabile(mag);
+		this.creaInterfacce(new InterfacciaDirigente(mag, i, r), i, r);
 	}
 
 	private void creaInterfacce(final JFrame... interfacce) {

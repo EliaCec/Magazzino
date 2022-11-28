@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,12 +20,12 @@ import model.RepartoProdottiFiniti;
 import model.RepartoSemilavorati;
 
 @SuppressWarnings("serial")
-public class InterfacciaResponasbile extends JFrame {
+public class InterfacciaResponsabile extends JFrame {
 	
 	private final Magazzino mag;
 
 	// costruttore
-	public InterfacciaResponasbile(Magazzino mag) {
+	public InterfacciaResponsabile(Magazzino mag) {
 		this.mag = mag;
 		
 		this.setTitle("Pannello responsabile");
@@ -44,12 +45,12 @@ public class InterfacciaResponasbile extends JFrame {
 		pannelloPrincipale.setLayout(new BorderLayout());
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		// crea combobox operaio e resto dell'interfaccia
+		// crea combobox responsabile e resto dell'interfaccia
 		this.inizializzaResponsabili(pannelloPrincipale);
 	}
 	
 	private void inizializzaResponsabili(JPanel pannelloPrincipale) {
-		// creo JcomboBox per operai
+		// creo JcomboBox per responsabili
 		JComboBox<String> listaResponsabili = new JComboBox<>();
 		for (int i = 0; i < mag.getDirigente().getResponsabiliAttivi().size(); i++) {
 			listaResponsabili.addItem(mag.getDirigente().getResponsabiliAttivi().get(i).getNomeCognome());
@@ -86,7 +87,7 @@ public class InterfacciaResponasbile extends JFrame {
 		final JTextArea areaStampa = new JTextArea(10, 10);
 		areaStampa.setEditable(false);
 		
-		// ogni volta che cambio operaio ripulisco l'output
+		// ogni volta che cambio responsabile ripulisco l'output
 		listaResponsabili.addActionListener(e -> {
 			areaStampa.setText("");
 		});
@@ -130,6 +131,22 @@ public class InterfacciaResponasbile extends JFrame {
 		for (int i = 0; i < mag.getDirigente().getReparti().size(); i++) {
 			elencoProdottiFiniti.addItem(mag.getDirigente().getReparti().get(i).getGiacenzaReparto().getNome());
 		}
+		
+		// bottone per numero p finiti attuali
+		final JButton btnAttualiPfiniti = new JButton("Tot quantità attuale");
+		btnAttualiPfiniti.addActionListener(e -> {
+			mag.getRepPfinit(elencoProdottiFiniti.getSelectedItem().toString())
+																   .scorteAttuali()
+																   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
+		
+		// bottone per numero semilavorati attuali
+		final JButton btnAttualiSemi = new JButton("Tot quantità attuale");
+		btnAttualiSemi.addActionListener(e -> {
+			mag.getRepSemi(elencoSemilavorati.getSelectedItem().toString())
+			   												   .scorteAttuali()
+			   												   .forEach(n -> areaStampa.append(n.getNome() + "\n"));
+		});
 	
 		// bottone per numero prodotti finiti venduti
 		final JButton numProdottiFiniti = new JButton("n° prodotti finiti venduti");
@@ -147,13 +164,15 @@ public class InterfacciaResponasbile extends JFrame {
 		});
 	
 		pannelloDepSemilavorati.add(elencoSemilavorati);									// aggiunto combobox al pannello Semilavorati
+		pannelloDepSemilavorati.add(btnAttualiSemi);										// aggiunto bottone qta totali attuali al pannello semilavorati
 		pannelloVenditePfiniti.add(elencoProdottiFiniti);									// aggiunto combobox al pannello prodotti finiti
-		pannelloDepSemilavorati.add(numSemilavoratiDepositati);								// aggiungo bottone per numero semilavorati usati
-		pannelloVenditePfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti costruiti
-		pannelloPulsanti.add(pannelloVenditePfiniti);										// aggiunto al pannello pulsanti il pannello prodotti finiti
-		pannelloPulsanti.add(pannelloDepSemilavorati);										// aggiunto al pannello pulsanti il pannello semilavorati
-		pannelloPulsanti.add(listaSemilavoratiDepositati);									// aggiungo bottone per Lista semilavorati usati
-		pannelloPulsanti.add(listaProdottiFinitiVenduti);									// aggiungo bottone per lista prodotti finiti costruiti
+		pannelloVenditePfiniti.add(btnAttualiPfiniti);										// aggiunto bottone qta totali attuali al pannello prodotti finiti
+		pannelloDepSemilavorati.add(numSemilavoratiDepositati);								// aggiungo bottone per numero semilavorati depositati
+		pannelloVenditePfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti venduti
+		pannelloPulsanti.add(pannelloVenditePfiniti);										// aggiunto al pannello pulsanti il pannello vendite dei prodotti finiti
+		pannelloPulsanti.add(pannelloDepSemilavorati);										// aggiunto al pannello pulsanti il pannello deposito dei semilavorati
+		pannelloPulsanti.add(listaSemilavoratiDepositati);									// aggiungo bottone per lista semilavorati depositati
+		pannelloPulsanti.add(listaProdottiFinitiVenduti);									// aggiungo bottone per lista prodotti finiti venduti
 		pannelloPulsanti.add(pulisci);														// aggiungo bottone per ripulire textarea
 		pannelloGestionale.add(new JScrollPane(areaStampa),  BorderLayout.PAGE_END);		// aggiungo casella di testa al pannello sinistro
 		pannelloGestionale.add(pannelloPulsanti,  BorderLayout.PAGE_START);					// aggiungo pannello pulsanti al pannello sinistro
@@ -189,7 +208,7 @@ public class InterfacciaResponasbile extends JFrame {
 			}
 		}
 		
-		// PANNELLO QUANTIA ---------------------------------
+		// PANNELLO QUANTITA ---------------------------------
 		// creato pannello
 		JPanel pannelloQuant = new JPanel();
 		// creato testo quantità
@@ -206,27 +225,24 @@ public class InterfacciaResponasbile extends JFrame {
         JPanel pannelloData = new JPanel();
         // acquisizione titolo
         JTextArea minuto = new JTextArea();
-        JLabel lMinuto = new JLabel();
-        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
-        // acquisizione minuto in input
-        minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(0));
-        pannelloData.add(minuto);
+        JLabel testoIniziale = new JLabel();
+        testoIniziale.setText("Data (hh/mm/dd/MM/yyyy): ");
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
-        JLabel lora = new JLabel();
-        lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
         ora.setText(String.valueOf(7));
-        pannelloData.add(lora);
         pannelloData.add(ora);
+        // acquisizione minuto in input
+        JLabel lminuto = new JLabel();
+        lminuto.setText(":");     
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(0));
+        pannelloData.add(lminuto);
+        pannelloData.add(minuto);
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
-        JLabel lGiorno = new JLabel();
-        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
-        pannelloData.add(lGiorno);
         pannelloData.add(giorno);
         // acquisizione mese in input
         JTextArea mese = new JTextArea();
@@ -245,7 +261,7 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloData.add(lAnno);
         pannelloData.add(anno);
         // aggiunto titolo e data al pannelloDataTotale
-        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(testoIniziale, BorderLayout.PAGE_START);
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
@@ -308,27 +324,24 @@ public class InterfacciaResponasbile extends JFrame {
         JPanel pannelloData = new JPanel();
         // acquisizione titolo
         JTextArea minuto = new JTextArea();
-        JLabel lMinuto = new JLabel();
-        lMinuto.setText("Data (mm/hh/dd/MM/yyyy): ");
-        // acquisizione minuto in input
-        minuto.setPreferredSize(new Dimension(70, 18));
-        minuto.setText(String.valueOf(0));
-        pannelloData.add(minuto);
+        JLabel testoIniziale = new JLabel();
+        testoIniziale.setText("Data (mm/hh/dd/MM/yyyy): ");
         // acquisizione ora in input
         JTextArea ora = new JTextArea();
-        JLabel lora = new JLabel();
-        lora.setText("/");
         ora.setPreferredSize(new Dimension(70, 18));
         ora.setText(String.valueOf(7));
-        pannelloData.add(lora);
         pannelloData.add(ora);
+        // acquisizione minuto in input
+        JLabel lora = new JLabel();
+        lora.setText("/");
+        minuto.setPreferredSize(new Dimension(70, 18));
+        minuto.setText(String.valueOf(0));
+        pannelloData.add(lora);
+        pannelloData.add(minuto);  
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
-        JLabel lGiorno = new JLabel();
-        lGiorno.setText("/");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
-        pannelloData.add(lGiorno);
         pannelloData.add(giorno);
         // acquisizione mese in input
         JTextArea mese = new JTextArea();
@@ -347,7 +360,7 @@ public class InterfacciaResponasbile extends JFrame {
         pannelloData.add(lAnno);
         pannelloData.add(anno);
         // aggiunto titolo e data al pannelloDataTotale
-        pannelloDataTotale.add(lMinuto, BorderLayout.PAGE_START);
+        pannelloDataTotale.add(testoIniziale, BorderLayout.PAGE_START);
         pannelloDataTotale.add(pannelloData, BorderLayout.PAGE_END);
 		
 		// bottone per far partire la costruzione
@@ -378,4 +391,14 @@ public class InterfacciaResponasbile extends JFrame {
 		pannelloVendite.add(vendi);											// aggiunto bottone costruisco al pannello principale
 		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);			// aggiunte vendite al pannello destro
 	}
+	
+	// metodo che permette il refresh edll'intera interfaccia grafica dei responsabili
+	public InterfacciaResponsabile aggiorna(InterfacciaResponsabile i) {
+		i.dispose();
+		InterfacciaResponsabile iNuova = new InterfacciaResponsabile(mag);
+		iNuova.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		iNuova.setVisible(true);
+		return iNuova;
+	}
+	
 }

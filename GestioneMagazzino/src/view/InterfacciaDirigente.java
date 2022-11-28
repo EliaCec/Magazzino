@@ -2,7 +2,7 @@ package view;
 
 import java.util.Date;
 import java.util.LinkedList;
-
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,17 +17,25 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import controller.Magazzino;
+import model.Operaio;
+import model.Responsabile;
 
 @SuppressWarnings("serial")
 public class InterfacciaDirigente extends JFrame {
 	
 	private Magazzino mag;
-	LinkedList<String> ciao = new LinkedList<>();
+	private InterfacciaOperaio intOper;
+	private InterfacciaResponsabile intResp;
+	
 	// costruttore
-	public InterfacciaDirigente(Magazzino mag) {
+	public InterfacciaDirigente(Magazzino mag, InterfacciaOperaio i, InterfacciaResponsabile r) {
 		this.mag = mag;
+		this.intOper = i;
+		this.intResp = r;
 		this.setTitle("Pannello dirigente");
 		this.setLocation(100, 0);
 		this.inizializzaInterfaccia();
@@ -41,8 +49,8 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloPrincipale.setLayout(new BorderLayout());
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		this.creaPannelloSinistra(pannelloPrincipale);	// creazione pannelloSinistra
-		this.creaPannelloDestra(pannelloPrincipale);	// creazione pannelloDestra
+		this.creaPannelloSinistra(pannelloPrincipale);		// creazione pannelloSinistra
+		this.creaPannelloDestra(pannelloPrincipale);		// creazione pannelloDestra
 		
 		this.add(pannelloPrincipale);
 	}
@@ -56,7 +64,7 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloSx.setBorder(BorderFactory.createTitledBorder("Gestionale"));
 		pannelloSx.setLayout(l);
 		this.creaPannelloBottoni(pannelloSx);
-		pp.add(pannelloSx, BorderLayout.LINE_START);
+		pp.add(pannelloSx, BorderLayout.LINE_START);		// aggiunto pannello degli storici al pannello principale
 	}
 	
 	// metodo che crea il pannello dei bottoni per gli storici giornalieri
@@ -66,7 +74,7 @@ public class InterfacciaDirigente extends JFrame {
 		pannelloDx.setLayout(new BorderLayout());
 		pannelloDx.setBorder(BorderFactory.createTitledBorder("Cambi turni"));
 		this.creaPannelloCambiTurni(pannelloDx);
-		pp.add(pannelloDx);
+		pp.add(pannelloDx);									// aggiunto pannello dei cambi turni al pannello principale
 	}
 	
 	// metodo che crea pannello per cambi turno
@@ -78,27 +86,78 @@ public class InterfacciaDirigente extends JFrame {
 		JPanel pannelloResponsabili = new JPanel();
 		pannelloResponsabili.setBorder(BorderFactory.createTitledBorder("Responsabili assunti"));
 		// PANNELLO CAMBI TURNO ----------------------------------------------------------------------------------------------
+		List<JCheckBox> listaBoxOperai = new LinkedList<>();
+		List<JCheckBox> listaBoxResponsabili = new LinkedList<>();
 		// checkbox per operai
-		for (int i = 0; i < mag.getDirigente().getOperaiAssunti().size(); i++) {
-			JCheckBox operaio = new JCheckBox(mag.getDirigente().getOperaiAssunti().get(i).getNomeCognome());
+		for (int i = 0; i < this.mag.getDirigente().getOperaiAssunti().size(); i++) {
+			JCheckBox operaio = new JCheckBox(this.mag.getDirigente().getOperaiAssunti().get(i).getNomeCognome());
+			listaBoxOperai.add(operaio);
 			pannelloOperai.add(operaio);
 		}
 		// checkbox per responsabili
-		for (int i = 0; i < mag.getDirigente().getResponsabiliAssunti().size(); i++) {
-			JCheckBox responsabile = new JCheckBox(mag.getDirigente().getResponsabiliAssunti().get(i).getNomeCognome());
+		for (int i = 0; i < this.mag.getDirigente().getResponsabiliAssunti().size(); i++) {
+			JCheckBox responsabile = new JCheckBox(this.mag.getDirigente().getResponsabiliAssunti().get(i).getNomeCognome());
+			listaBoxResponsabili.add(responsabile);
 			pannelloResponsabili.add(responsabile);
 		}
 		pannelloTurni.add(pannelloOperai, BorderLayout.PAGE_START);
 		pannelloTurni.add(pannelloResponsabili, BorderLayout.PAGE_END);
 		pD.add(pannelloTurni, BorderLayout.PAGE_START);
 		
+		List<Operaio> nuoviOperai = new LinkedList<>();
+		List<Responsabile> nuoviResposanbili = new LinkedList<>();
+		// listener modifica di eventi delle checkbox degli operai
+		for (JCheckBox j : listaBoxOperai) {
+			j.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					int state = e.getStateChange();
+					if (state == ItemEvent.SELECTED) {
+						nuoviOperai.add((Operaio)mag.getDirigente().cercaDipendentePerNome(j.getText(), mag.getDirigente().getOperaiAssunti()));
+					} else {
+						nuoviOperai.remove((Operaio)mag.getDirigente().cercaDipendentePerNome(j.getText(), mag.getDirigente().getOperaiAssunti()));
+					}
+				}
+			});
+		}
+		// listener modifica di eventi delle checkbox dei responsabili
+		for (JCheckBox j : listaBoxResponsabili) {
+			j.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					int state = e.getStateChange();
+					if (state == ItemEvent.SELECTED) {
+						nuoviResposanbili.add((Responsabile)mag.getDirigente().cercaDipendentePerNome(j.getText(), mag.getDirigente().getResponsabiliAssunti()));
+					} else {
+						nuoviResposanbili.remove((Responsabile)mag.getDirigente().cercaDipendentePerNome(j.getText(), mag.getDirigente().getResponsabiliAssunti()));
+					}
+				}
+			});
+		}
+		
 		// PANNELLO DATA ------------------------------------------------------------------------------------------------------
         //creazione pannello data
         JPanel pannelloData = new JPanel();
+        // acquisizione ora in input
+  		JTextArea ora = new JTextArea();
+  		JLabel lOra = new JLabel();
+        lOra.setText("Data (hh:mm dd/MM/yyyy): ");
+        ora.setPreferredSize(new Dimension(70, 18));
+        ora.setText(String.valueOf(7));
+        pannelloData.add(lOra);
+        pannelloData.add(ora);
+        // acquisizione minuti in input
+        JTextArea minuti = new JTextArea();
+        JLabel lMinuti = new JLabel();
+        lMinuti.setText(":");
+        minuti.setPreferredSize(new Dimension(70, 18));
+        minuti.setText(String.valueOf(0));
+        pannelloData.add(lMinuti);
+        pannelloData.add(minuti);
         // acquisizione giorno in input
         JTextArea giorno = new JTextArea();
         JLabel lGiorno = new JLabel();
-        lGiorno.setText("Data (dd/MM/yyyy): ");
+        lGiorno.setText("");
         giorno.setPreferredSize(new Dimension(70, 18));
         giorno.setText(String.valueOf(1));
         pannelloData.add(lGiorno);
@@ -123,12 +182,21 @@ public class InterfacciaDirigente extends JFrame {
 		// creazione bottone per effettuare cambio turno
 		JButton btnCambioTurno = new JButton("Cambia turno");
 		btnCambioTurno.addActionListener(new ActionListener() {
-			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			
-				
-				JOptionPane.showMessageDialog(btnCambioTurno, "ciao");
+				if (!(nuoviOperai.size() > 0) || !(nuoviResposanbili.size() > 0)) {
+					JOptionPane.showMessageDialog(btnCambioTurno, "Errore, selezionare almeno un dipendente e un responsabile");
+				} else {
+					String ris = mag.cambioTurno(nuoviOperai, nuoviResposanbili, new Date(Integer.parseInt(anno.getText()),
+						   												 			  Integer.parseInt(mese.getText()),
+						   												 			  Integer.parseInt(giorno.getText()),
+						   												 			  Integer.parseInt(ora.getText()),
+						   												 			  Integer.parseInt(minuti.getText())));
+					intOper = intOper.aggiorna(intOper);
+					intResp = intResp.aggiorna(intResp);
+					JOptionPane.showMessageDialog(btnCambioTurno, ris);
+				}
 			}	
 		});
 		
@@ -176,7 +244,7 @@ public class InterfacciaDirigente extends JFrame {
 		// creazione bottone per storico giornaliero semilavorati utilizzati
 		JButton btnStoricoSemi = new JButton("Ricerca semilavorati utilizzati");
 		btnStoricoSemi.addActionListener(e -> {
-			mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),
+			this.mag.getDirigente().storicoSemilavoratiUsatiGiornaliero(new Date(Integer.parseInt(anno.getText()),
 																			Integer.parseInt(mese.getText()),
 																			Integer.parseInt(giorno.getText())))
 																			.forEach(n -> ris.append(n.getSemilavorato().getNome() + "\n"));
