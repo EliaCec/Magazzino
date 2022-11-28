@@ -31,8 +31,7 @@ public interface Dirigente extends Dipendente{
 	/* Metodo che restituisce gli operai che stanno lavorando in questo momento nel magazzino */
 	public List<Operaio> getOperaiAttivi();
 	
-	/* Metodo che serve per effettuare il cambio turno degli impiegati del magazzino.
-	 * Restituisce true se il cambio di turno è avvenuto con successo, false altrimenti */
+	/* Metodo che serve per effettuare il cambio turno degli impiegati del magazzino. */
 	public void cambioTurno(List<Operaio> operai, 
 							   List<Responsabile> responsabili,
 							   Date nuovoTurno);
@@ -49,10 +48,10 @@ public interface Dirigente extends Dipendente{
 	/* Metodo che restituisce i responsabili assunti*/
 	public List<Responsabile> getResponsabiliAssunti();
 	
-	/* metodo che permette la ricerca per nome dei dipendenti assunti. Restituisce il dipendente se presente */
+	/* Metodo che permette la ricerca per nome dei dipendenti assunti. Restituisce il dipendente se presente */
 	public Dipendente cercaDipendentePerNome(String nome, List<? extends Dipendente> lista);
 	
-	/* metodo che permette la ricerca per nome dei reparti presenti nel magazzino. Restituisce il reparto se presente */
+	/* Metodo che permette la ricerca per nome dei reparti presenti nel magazzino. Restituisce il reparto se presente */
 	public RepartoSemilavorati cercaRepartoPerNome(String nome, List<? extends RepartoSemilavorati> lista);
 	
 }

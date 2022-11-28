@@ -12,7 +12,6 @@ public class RepartoPianaleScrivania extends RepartoSemilavoratiAbs{
 
 	@Override
 	protected Giacenza creaGiacenza() {
-		// TODO Auto-generated method stub
 		return new PianaleScrivania();
 	}
 	
