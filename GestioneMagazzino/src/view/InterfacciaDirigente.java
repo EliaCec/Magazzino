@@ -28,11 +28,14 @@ import model.Responsabile;
 public class InterfacciaDirigente extends JFrame {
 	
 	private Magazzino mag;
-	LinkedList<String> ciao = new LinkedList<>();
+	private InterfacciaOperaio intOper;
+	private InterfacciaResponsabile intResp;
 	
 	// costruttore
-	public InterfacciaDirigente(Magazzino mag) {
+	public InterfacciaDirigente(Magazzino mag, InterfacciaOperaio i, InterfacciaResponsabile r) {
 		this.mag = mag;
+		this.intOper = i;
+		this.intResp = r;
 		this.setTitle("Pannello dirigente");
 		this.setLocation(100, 0);
 		this.inizializzaInterfaccia();
@@ -190,6 +193,8 @@ public class InterfacciaDirigente extends JFrame {
 						   												 			  Integer.parseInt(giorno.getText()),
 						   												 			  Integer.parseInt(ora.getText()),
 						   												 			  Integer.parseInt(minuti.getText())));
+					intOper = intOper.aggiorna(intOper);
+					intResp = intResp.aggiorna(intResp);
 					JOptionPane.showMessageDialog(btnCambioTurno, ris);
 				}
 			}	

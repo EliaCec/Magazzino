@@ -52,7 +52,7 @@ public class MagazzinoFactory {
 		nuoviOperaiAttivi.add((Operaio)dir.cercaDipendentePerNome("Marco_Rossi", dir.getOperaiAssunti()));
 		nuoviResponsabiliAttivi.add((Responsabile)dir.cercaDipendentePerNome("Gianfranco_Blu", dir.getResponsabiliAssunti()));
 		nuoviResponsabiliAttivi.add((Responsabile)dir.cercaDipendentePerNome("Simone_Rossi", dir.getResponsabiliAssunti()));
-		dir.cambioTurno(nuoviOperaiAttivi, nuoviResponsabiliAttivi, new Date(2022, 01, 01, 7, 30));
+		dir.cambioTurno(nuoviOperaiAttivi, nuoviResponsabiliAttivi, new Date(2022, 01, 01, 7, 0));
 		
 		//TUTTO DA TOGLIERE A FINE TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		// deposito semilavorati per test

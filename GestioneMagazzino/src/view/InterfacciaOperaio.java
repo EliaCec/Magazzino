@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -289,4 +290,13 @@ public class InterfacciaOperaio extends JFrame {
 		pannelloCostruzione.add(costruisci);									// aggiunto bottone costruisco al pannello principale
 		pannelloPrincipale.add(pannelloCostruzione, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
 	}
+	
+	public InterfacciaOperaio aggiorna(InterfacciaOperaio i) {
+		i.dispose();
+		InterfacciaOperaio iNuova = new InterfacciaOperaio(mag);
+		iNuova.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		iNuova.setVisible(true);
+		return iNuova;
+	}
+	
 }

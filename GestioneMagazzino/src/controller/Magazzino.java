@@ -109,8 +109,8 @@ public class Magazzino {
 	public String cambioTurno(List<Operaio> nuoviOperai, List<Responsabile> nuoviResponsabili, Date data) {
 		try {
 			this.controllaData(data);
-			this.ultimoCambioTurno = data;
 			this.dir.cambioTurno(nuoviOperai, nuoviResponsabili, data);
+			this.ultimoCambioTurno = data;
 			return "cambio turno avvenuto con successo";
 		} catch(DataErrataException d) {
 			return d.getMessage();

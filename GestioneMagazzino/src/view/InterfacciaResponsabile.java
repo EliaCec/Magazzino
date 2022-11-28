@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,12 +20,12 @@ import model.RepartoProdottiFiniti;
 import model.RepartoSemilavorati;
 
 @SuppressWarnings("serial")
-public class InterfacciaResponasbile extends JFrame {
+public class InterfacciaResponsabile extends JFrame {
 	
 	private final Magazzino mag;
 
 	// costruttore
-	public InterfacciaResponasbile(Magazzino mag) {
+	public InterfacciaResponsabile(Magazzino mag) {
 		this.mag = mag;
 		
 		this.setTitle("Pannello responsabile");
@@ -390,4 +391,13 @@ public class InterfacciaResponasbile extends JFrame {
 		pannelloVendite.add(vendi);											// aggiunto bottone costruisco al pannello principale
 		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);			// aggiunte vendite al pannello destro
 	}
+	
+	public InterfacciaResponsabile aggiorna(InterfacciaResponsabile i) {
+		i.dispose();
+		InterfacciaResponsabile iNuova = new InterfacciaResponsabile(mag);
+		iNuova.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		iNuova.setVisible(true);
+		return iNuova;
+	}
+	
 }
