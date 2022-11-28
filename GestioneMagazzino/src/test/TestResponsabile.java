@@ -60,13 +60,13 @@ public class TestResponsabile {
 	    l.vendiProdottiFiniti(repScrivania, 2, new Date(2022, 10, 11, 8, 30));
 	    l.vendiProdottiFiniti(repSedia, 4, new Date(2022, 10, 11, 8, 30));
 	    
-		// vendite per tipologia
+		// verifico che le vendite siano avvenute grazie a vendite per tipologia
 		assertEquals(1, l.venditaPerTipologia("armadio"));
 		assertEquals(3, l.venditaPerTipologia("mensola"));
 		assertEquals(2, l.venditaPerTipologia("scrivania"));
 		assertEquals(4, l.venditaPerTipologia("sedia"));
 		
-		// numero semilavorati depositati
+		// verifico che il numero semilavorati depositati sia corretto grazie a deposita per semilavorato
 		assertEquals(8, l.depositoPerSemilavorato("anta_armadio"));
 		assertEquals(16, l.depositoPerSemilavorato("pannello_piccolo_armadio"));
 		assertEquals(4, l.depositoPerSemilavorato("pannello_grande_armadio"));

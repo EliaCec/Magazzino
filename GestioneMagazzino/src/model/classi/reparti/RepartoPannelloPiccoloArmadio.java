@@ -11,8 +11,6 @@ public class RepartoPannelloPiccoloArmadio extends RepartoSemilavoratiAbs{
 	}
 
 	protected Giacenza creaGiacenza() {
-		// TODO Auto-generated method stub
 		return new PannelloPiccoloArmadio();
 	}
-	
 }
