@@ -291,6 +291,7 @@ public class InterfacciaOperaio extends JFrame {
 		pannelloPrincipale.add(pannelloCostruzione, BorderLayout.LINE_END);		// aggiunto pannello gestione al pannello principale
 	}
 	
+	// metodo che permette il refresh edll'intera interfaccia grafica degli operai
 	public InterfacciaOperaio aggiorna(InterfacciaOperaio i) {
 		i.dispose();
 		InterfacciaOperaio iNuova = new InterfacciaOperaio(mag);

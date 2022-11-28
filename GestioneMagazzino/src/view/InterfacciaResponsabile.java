@@ -45,12 +45,12 @@ public class InterfacciaResponsabile extends JFrame {
 		pannelloPrincipale.setLayout(new BorderLayout());
 		pannelloPrincipale.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
-		// crea combobox operaio e resto dell'interfaccia
+		// crea combobox responsabile e resto dell'interfaccia
 		this.inizializzaResponsabili(pannelloPrincipale);
 	}
 	
 	private void inizializzaResponsabili(JPanel pannelloPrincipale) {
-		// creo JcomboBox per operai
+		// creo JcomboBox per responsabili
 		JComboBox<String> listaResponsabili = new JComboBox<>();
 		for (int i = 0; i < mag.getDirigente().getResponsabiliAttivi().size(); i++) {
 			listaResponsabili.addItem(mag.getDirigente().getResponsabiliAttivi().get(i).getNomeCognome());
@@ -87,7 +87,7 @@ public class InterfacciaResponsabile extends JFrame {
 		final JTextArea areaStampa = new JTextArea(10, 10);
 		areaStampa.setEditable(false);
 		
-		// ogni volta che cambio operaio ripulisco l'output
+		// ogni volta che cambio responsabile ripulisco l'output
 		listaResponsabili.addActionListener(e -> {
 			areaStampa.setText("");
 		});
@@ -164,15 +164,15 @@ public class InterfacciaResponsabile extends JFrame {
 		});
 	
 		pannelloDepSemilavorati.add(elencoSemilavorati);									// aggiunto combobox al pannello Semilavorati
-		pannelloDepSemilavorati.add(btnAttualiSemi);										// aggiunto bottone qta totali al pannello semilavorati
+		pannelloDepSemilavorati.add(btnAttualiSemi);										// aggiunto bottone qta totali attuali al pannello semilavorati
 		pannelloVenditePfiniti.add(elencoProdottiFiniti);									// aggiunto combobox al pannello prodotti finiti
-		pannelloVenditePfiniti.add(btnAttualiPfiniti);										// aggiunto bottone qta totali al pannello prodotti finiti
-		pannelloDepSemilavorati.add(numSemilavoratiDepositati);								// aggiungo bottone per numero semilavorati usati
-		pannelloVenditePfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti costruiti
-		pannelloPulsanti.add(pannelloVenditePfiniti);										// aggiunto al pannello pulsanti il pannello prodotti finiti
-		pannelloPulsanti.add(pannelloDepSemilavorati);										// aggiunto al pannello pulsanti il pannello semilavorati
-		pannelloPulsanti.add(listaSemilavoratiDepositati);									// aggiungo bottone per Lista semilavorati usati
-		pannelloPulsanti.add(listaProdottiFinitiVenduti);									// aggiungo bottone per lista prodotti finiti costruiti
+		pannelloVenditePfiniti.add(btnAttualiPfiniti);										// aggiunto bottone qta totali attuali al pannello prodotti finiti
+		pannelloDepSemilavorati.add(numSemilavoratiDepositati);								// aggiungo bottone per numero semilavorati depositati
+		pannelloVenditePfiniti.add(numProdottiFiniti);										// aggiungo bottone per numero prodotti finiti venduti
+		pannelloPulsanti.add(pannelloVenditePfiniti);										// aggiunto al pannello pulsanti il pannello vendite dei prodotti finiti
+		pannelloPulsanti.add(pannelloDepSemilavorati);										// aggiunto al pannello pulsanti il pannello deposito dei semilavorati
+		pannelloPulsanti.add(listaSemilavoratiDepositati);									// aggiungo bottone per lista semilavorati depositati
+		pannelloPulsanti.add(listaProdottiFinitiVenduti);									// aggiungo bottone per lista prodotti finiti venduti
 		pannelloPulsanti.add(pulisci);														// aggiungo bottone per ripulire textarea
 		pannelloGestionale.add(new JScrollPane(areaStampa),  BorderLayout.PAGE_END);		// aggiungo casella di testa al pannello sinistro
 		pannelloGestionale.add(pannelloPulsanti,  BorderLayout.PAGE_START);					// aggiungo pannello pulsanti al pannello sinistro
@@ -208,7 +208,7 @@ public class InterfacciaResponsabile extends JFrame {
 			}
 		}
 		
-		// PANNELLO QUANTIA ---------------------------------
+		// PANNELLO QUANTITA ---------------------------------
 		// creato pannello
 		JPanel pannelloQuant = new JPanel();
 		// creato testo quantità
@@ -392,6 +392,7 @@ public class InterfacciaResponsabile extends JFrame {
 		pannelloDestro.add(pannelloVendite, BorderLayout.PAGE_END);			// aggiunte vendite al pannello destro
 	}
 	
+	// metodo che permette il refresh edll'intera interfaccia grafica dei responsabili
 	public InterfacciaResponsabile aggiorna(InterfacciaResponsabile i) {
 		i.dispose();
 		InterfacciaResponsabile iNuova = new InterfacciaResponsabile(mag);
