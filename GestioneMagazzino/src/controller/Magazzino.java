@@ -3,6 +3,7 @@ package controller;
 import java.util.Date;
 import java.util.List;
 
+import model.Dipendente;
 import model.Dirigente;
 import model.RepartoProdottiFiniti;
 import model.RepartoSemilavorati;
@@ -138,6 +139,11 @@ public class Magazzino {
 		if (!dataOp.before(cloneData)) {
 			throw new DataErrataException("Il turno di questo dipendente finisce il " + this.stampaData(cloneData) + " \nEffettua un'operazione con data/ora precedenti a questa");
 		}
+	}
+	
+	// metodo utilizzato per l'assunzione di un nuovo responsabile
+	public void assumiDipendente(Dipendente dip) {
+		this.dir.assumiDipendente(dip);
 	}
 	
 }

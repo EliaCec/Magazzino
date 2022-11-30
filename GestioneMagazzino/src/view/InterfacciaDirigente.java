@@ -6,12 +6,14 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
@@ -23,13 +25,15 @@ import java.awt.event.ItemListener;
 import controller.Magazzino;
 import model.Operaio;
 import model.Responsabile;
+import model.classi.OperaioImpl;
+import model.classi.ResponsabileImpl;
 
 @SuppressWarnings("serial")
 public class InterfacciaDirigente extends JFrame {
 	
-	private Magazzino mag;
-	private InterfacciaOperaio intOper;
-	private InterfacciaResponsabile intResp;
+	private Magazzino mag;						// controller
+	private InterfacciaOperaio intOper;			// interfaccia operaio
+	private InterfacciaResponsabile intResp;	// interfaccia responsabile 
 	
 	// costruttore
 	public InterfacciaDirigente(Magazzino mag, InterfacciaOperaio i, InterfacciaResponsabile r) {
@@ -72,15 +76,53 @@ public class InterfacciaDirigente extends JFrame {
 		// creazione pannello destro
 		JPanel pannelloDx = new JPanel();
 		pannelloDx.setLayout(new BorderLayout());
-		pannelloDx.setBorder(BorderFactory.createTitledBorder("Cambi turni"));
+		
 		this.creaPannelloCambiTurni(pannelloDx);
+		this.creaPannelloAssunzioni(pannelloDx);
 		pp.add(pannelloDx);									// aggiunto pannello dei cambi turni al pannello principale
+	}
+	
+	private void creaPannelloAssunzioni(JPanel pD) {
+		JPanel pannelloAssunzioni = new JPanel();
+		pannelloAssunzioni.setBorder(BorderFactory.createTitledBorder("Assunzioni dipendenti"));
+		// etichetta
+		JLabel nDip = new JLabel("Nome dipendente: ");
+		// campo di testo per inserire il nome
+		JTextArea nomeDipendente = new JTextArea();
+		nomeDipendente.setPreferredSize(new Dimension(250, 18));
+		// menu a tendina per scegliere il tipo di dipendente
+		JComboBox<String> tipoDipendente = new JComboBox<>();
+		tipoDipendente.addItem("Operaio");
+		tipoDipendente.addItem("Responsabile");
+		// bottone per effettuare l'assunzione
+		JButton btnAssunzioni = new JButton("Assumi");
+		btnAssunzioni.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tipoDipendente.getSelectedItem().toString().equals("Operaio")) {
+					mag.assumiDipendente(new OperaioImpl(nomeDipendente.getText()));
+					JOptionPane.showMessageDialog(btnAssunzioni, "L'operaio " + nomeDipendente.getText() + " è stato aggiunto con successo");
+				} else {
+					mag.assumiDipendente(new ResponsabileImpl(nomeDipendente.getText()));
+					JOptionPane.showMessageDialog(btnAssunzioni, "Il responsabile " + nomeDipendente.getText() + " è stato aggiunto con successo");
+				}
+				aggiornaDirigente();
+			}	
+		});
+		pannelloAssunzioni.add(nDip);
+		pannelloAssunzioni.add(nomeDipendente);
+		pannelloAssunzioni.add(tipoDipendente);
+		pannelloAssunzioni.add(btnAssunzioni);
+		pD.add(pannelloAssunzioni, BorderLayout.PAGE_END);
 	}
 	
 	// metodo che crea pannello per cambi turno
 	private void creaPannelloCambiTurni(JPanel pD) {
 		JPanel pannelloTurni = new JPanel();
 		pannelloTurni.setLayout(new BorderLayout());
+		pannelloTurni.setBorder(BorderFactory.createTitledBorder("Cambi turni"));
+		JPanel pannelloDipendenti = new JPanel();
+		pannelloDipendenti.setLayout(new BorderLayout());
 		JPanel pannelloOperai = new JPanel();
 		pannelloOperai.setBorder(BorderFactory.createTitledBorder("Operai assunti"));
 		JPanel pannelloResponsabili = new JPanel();
@@ -100,9 +142,9 @@ public class InterfacciaDirigente extends JFrame {
 			listaBoxResponsabili.add(responsabile);
 			pannelloResponsabili.add(responsabile);
 		}
-		pannelloTurni.add(pannelloOperai, BorderLayout.PAGE_START);
-		pannelloTurni.add(pannelloResponsabili, BorderLayout.PAGE_END);
-		pD.add(pannelloTurni, BorderLayout.PAGE_START);
+		pannelloDipendenti.add(pannelloOperai, BorderLayout.PAGE_START);
+		pannelloDipendenti.add(pannelloResponsabili, BorderLayout.PAGE_END);
+		pannelloTurni.add(pannelloDipendenti, BorderLayout.PAGE_START);
 		
 		List<Operaio> nuoviOperai = new LinkedList<>();
 		List<Responsabile> nuoviResposanbili = new LinkedList<>();
@@ -178,7 +220,7 @@ public class InterfacciaDirigente extends JFrame {
         anno.setText(String.valueOf(2022));
         pannelloData.add(lAnno);
         pannelloData.add(anno);
-		pD.add(pannelloData, BorderLayout.CENTER);
+		pannelloTurni.add(pannelloData, BorderLayout.CENTER);
 		// creazione bottone per effettuare cambio turno
 		JButton btnCambioTurno = new JButton("Cambia turno");
 		btnCambioTurno.addActionListener(new ActionListener() {
@@ -200,7 +242,8 @@ public class InterfacciaDirigente extends JFrame {
 			}	
 		});
 		
-		pD.add(btnCambioTurno, BorderLayout.PAGE_END);
+		pannelloTurni.add(btnCambioTurno, BorderLayout.PAGE_END);
+		pD.add(pannelloTurni, BorderLayout.PAGE_START);
 	}
 	
 	// metodo che crea il pannello dei bottoni per gli storici giornalieri
@@ -281,4 +324,11 @@ public class InterfacciaDirigente extends JFrame {
 		pS.add(new JScrollPane(ris), BorderLayout.PAGE_END);
 	}
 	
+	// metodo che permette il refresh dell'intera interfaccia grafica del dirigente
+	private void aggiornaDirigente() {
+		this.dispose();
+		InterfacciaDirigente iNuova = new InterfacciaDirigente(mag, this.intOper, this.intResp);
+		iNuova.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		iNuova.setVisible(true);
+	}
 }
