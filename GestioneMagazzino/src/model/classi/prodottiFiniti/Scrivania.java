@@ -1,7 +1,10 @@
 package model.classi.prodottiFiniti;
 
 public class Scrivania extends ProdottoFinitoImpl{
-
+	
+	private final static int GAMBE_NECESSARIE = 4;
+	private final static int PIANALI_NECESSARI = 1;
+	
 	// costruttore
 	public Scrivania() {
 		super("scrivania");
@@ -9,8 +12,8 @@ public class Scrivania extends ProdottoFinitoImpl{
 	}
 
 	protected void inserisciComponenti() {
-		this.getListaComponenti().put("gamba_scrivania", 4);
-		this.getListaComponenti().put("pianale_scrivania", 1);
+		this.getListaComponenti().put("gamba_scrivania", GAMBE_NECESSARIE);
+		this.getListaComponenti().put("pianale_scrivania", PIANALI_NECESSARI);
 	}
 	
 }

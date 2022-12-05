@@ -1,6 +1,10 @@
 package model.classi.prodottiFiniti;
 
 public class Armadio extends ProdottoFinitoImpl{
+	
+	private final static int ANTE_NECESSARIE = 2;
+	private final static int PANNELLI_PICCOLI_NECESSARI = 4;
+	private final static int PANNELLI_GRANDI_NECESSARI = 1;
 
 	// costruttore
 	public Armadio() {
@@ -9,9 +13,9 @@ public class Armadio extends ProdottoFinitoImpl{
 	}
 
 	protected void inserisciComponenti() {
-		this.getListaComponenti().put("anta_armadio", 2);
-		this.getListaComponenti().put("pannello_piccolo_armadio", 4);
-		this.getListaComponenti().put("pannello_grande_armadio", 1);
+		this.getListaComponenti().put("anta_armadio", ANTE_NECESSARIE);
+		this.getListaComponenti().put("pannello_piccolo_armadio", PANNELLI_PICCOLI_NECESSARI);
+		this.getListaComponenti().put("pannello_grande_armadio", PANNELLI_GRANDI_NECESSARI);
 	}
 	
 }

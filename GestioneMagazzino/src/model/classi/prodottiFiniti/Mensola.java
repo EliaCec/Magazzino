@@ -1,7 +1,10 @@
 package model.classi.prodottiFiniti;
 
 public class Mensola extends ProdottoFinitoImpl{
-
+	
+	private final static int STAFFE_NECESSARIE = 2;
+	private final static int RIPIANI_NECESSARI = 1;
+	
 	// costruttore
 	public Mensola() {
 		super("mensola");
@@ -9,8 +12,8 @@ public class Mensola extends ProdottoFinitoImpl{
 	}
 
 	protected void inserisciComponenti() {
-		this.getListaComponenti().put("staffa_mensola", 2);
-		this.getListaComponenti().put("ripiano_mensola", 1);
+		this.getListaComponenti().put("staffa_mensola", STAFFE_NECESSARIE);
+		this.getListaComponenti().put("ripiano_mensola", RIPIANI_NECESSARI);
 	}
 	
 }
