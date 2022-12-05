@@ -5,9 +5,11 @@ import model.classi.prodottiFiniti.Mensola;
 
 public class RepartoMensola extends RepartoProdottoFinitiAbs {
 	
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoMensola() {
-		super(200, NomiReparti.REPARTO_MENSOLA);
+		super(CAPACITA, NomiReparti.REPARTO_MENSOLA);
 		this.aggiungiInListaRepartiSemilavorati();
 	}
 

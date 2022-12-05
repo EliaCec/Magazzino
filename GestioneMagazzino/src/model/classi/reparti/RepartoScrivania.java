@@ -5,9 +5,11 @@ import model.classi.prodottiFiniti.Scrivania;
 
 public class RepartoScrivania extends RepartoProdottoFinitiAbs {
 
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoScrivania() {
-		super(200, NomiReparti.REPARTO_SCRIVANIA);
+		super(CAPACITA, NomiReparti.REPARTO_SCRIVANIA);
 		this.aggiungiInListaRepartiSemilavorati();
 	}
 		

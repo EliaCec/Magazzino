@@ -5,9 +5,11 @@ import model.classi.semilavorati.PianaleScrivania;
 
 public class RepartoPianaleScrivania extends RepartoSemilavoratiAbs{
 	
+	private final static int CAPACITA = 375;
+	
 	// costruttore
 	public RepartoPianaleScrivania() {
-		super(375, NomiReparti.REPARTO_PIANALE_SCRIVANIA);
+		super(CAPACITA, NomiReparti.REPARTO_PIANALE_SCRIVANIA);
 	}
 
 	@Override

@@ -5,9 +5,11 @@ import model.classi.semilavorati.GambaSedia;
 
 public class RepartoGambaSedia extends RepartoSemilavoratiAbs {
 	
+	private final static int CAPACITA = 350;
+	
 	// costruttore
 	public RepartoGambaSedia() {
-		super(350,  NomiReparti.REPARTO_GAMBA_SEDIA);
+		super(CAPACITA,  NomiReparti.REPARTO_GAMBA_SEDIA);
 	}
 
 	protected Giacenza creaGiacenza() {

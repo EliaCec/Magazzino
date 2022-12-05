@@ -5,9 +5,11 @@ import model.classi.semilavorati.SedutaSedia;
 
 public class RepartoSedutaSedia extends RepartoSemilavoratiAbs {
 
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoSedutaSedia() {
-		super(200, NomiReparti.REPARTO_SEDUTA_SEDIA);
+		super(CAPACITA, NomiReparti.REPARTO_SEDUTA_SEDIA);
 	}
 	
 	protected Giacenza creaGiacenza() {

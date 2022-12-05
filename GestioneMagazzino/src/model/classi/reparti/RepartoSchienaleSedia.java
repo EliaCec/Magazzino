@@ -5,9 +5,11 @@ import model.classi.semilavorati.SchienaleSedia;
 
 public class RepartoSchienaleSedia extends RepartoSemilavoratiAbs {
 	
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoSchienaleSedia() {
-		super(200, NomiReparti.REPARTO_SCHIENALE_SEDIA);
+		super(CAPACITA, NomiReparti.REPARTO_SCHIENALE_SEDIA);
 	}
 	
 	protected Giacenza creaGiacenza() {

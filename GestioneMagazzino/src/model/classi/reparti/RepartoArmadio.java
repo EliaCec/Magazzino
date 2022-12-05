@@ -5,9 +5,11 @@ import model.classi.prodottiFiniti.Armadio;
 
 public class RepartoArmadio extends RepartoProdottoFinitiAbs {
 	
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoArmadio() {
-		super(200, NomiReparti.REPARTO_ARMADIO);
+		super(CAPACITA, NomiReparti.REPARTO_ARMADIO);
 		this.aggiungiInListaRepartiSemilavorati();
 	}
 

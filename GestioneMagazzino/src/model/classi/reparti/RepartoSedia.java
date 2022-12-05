@@ -6,9 +6,11 @@ import model.classi.prodottiFiniti.Sedia;
 
 public class RepartoSedia extends RepartoProdottoFinitiAbs {
 	
+	private final static int CAPACITA = 200;
+	
 	// costruttore
 	public RepartoSedia() {
-		super(200, NomiReparti.REPARTO_SEDIA);
+		super(CAPACITA, NomiReparti.REPARTO_SEDIA);
 		this.aggiungiInListaRepartiSemilavorati();
 	}
 

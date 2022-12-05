@@ -5,9 +5,11 @@ import model.classi.semilavorati.PannelloPiccoloArmadio;
 
 public class RepartoPannelloPiccoloArmadio extends RepartoSemilavoratiAbs{
 	
+	private final static int CAPACITA = 300;
+	
 	// costruttore
 	public RepartoPannelloPiccoloArmadio() {
-		super(300, NomiReparti.REPARTO_PANNELLO_PICCOLO_ARMADIO);
+		super(CAPACITA, NomiReparti.REPARTO_PANNELLO_PICCOLO_ARMADIO);
 	}
 
 	protected Giacenza creaGiacenza() {

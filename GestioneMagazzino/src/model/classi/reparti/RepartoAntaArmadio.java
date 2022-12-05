@@ -5,9 +5,11 @@ import model.classi.semilavorati.AntaArmadio;
 
 public class RepartoAntaArmadio extends RepartoSemilavoratiAbs {
 	
+	private final static int CAPACITA = 100;
+	
 	// costruttore
 	public RepartoAntaArmadio() {
-		super(100, NomiReparti.REPARTO_ANTA_ARMADIO);
+		super(CAPACITA, NomiReparti.REPARTO_ANTA_ARMADIO);
 	}
 
 	protected Giacenza creaGiacenza() {

@@ -5,9 +5,11 @@ import model.classi.semilavorati.BraccioloSedia;
 
 public class RepartoBraccioloSedia extends RepartoSemilavoratiAbs {
 	
+	private final static int CAPACITA = 400;
+	
 	// costruttore
 	public RepartoBraccioloSedia() {
-		super(400, NomiReparti.REPARTO_BRACCIOLO_SEDIA);
+		super(CAPACITA, NomiReparti.REPARTO_BRACCIOLO_SEDIA);
 	}
 	
 	protected Giacenza creaGiacenza() {
